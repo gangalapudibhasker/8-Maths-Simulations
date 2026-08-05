@@ -1,0 +1,9 @@
+# Git Ignore for Interactive Simulations Hub
+
+# IDE and agent files
+.agents/
+.gemini/
+
+# System files
+Thumbs.db
+.DS_Store

@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proportional Reasoning-1 • Ganita Prakash Grade 8</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100vw;height:100vh;background:#0b0f19;color:#f3f4f6;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow:hidden;display:flex;justify-content:center;align-items:center}
+.viewport-wrapper{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at center,#1e293b 0%,#0f172a 100%)}
+.simulation-container{width:100vw;height:56.25vw;max-height:100vh;max-width:177.78vh;position:relative;box-shadow:0 25px 50px -12px rgba(0,0,0,.7);display:flex;flex-direction:column;overflow:hidden;background:#0f172a;border-radius:12px;border:1px solid rgba(255,255,255,.1)}
+.simulation-container:fullscreen,.simulation-container:-webkit-full-screen{width:100vw;height:100vh;max-width:none;max-height:none;border-radius:0;border:none}
+.glass-panel{background:rgba(30,41,59,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14)}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:rgba(15,23,42,.5)}::-webkit-scrollbar-thumb{background:rgba(249,115,22,.55);border-radius:3px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}.animate-fade-in{animation:fadeIn .3s ease-out forwards}
+.flex{display:flex}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.space-x-2>*+*{margin-left:.5rem}.space-x-3>*+*{margin-left:.75rem}.space-y-2>*+*{margin-top:.5rem}.space-y-3>*+*{margin-top:.75rem}
+.grid{display:grid}.grid-cols-1{grid-template-columns:1fr}.grid-cols-2{grid-template-columns:1fr 1fr}.grid-cols-3{grid-template-columns:1fr 1fr 1fr}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}
+.p-3{padding:.75rem}.p-4{padding:1rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}
+.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}
+.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}
+.text-xs{font-size:.8rem}.text-sm{font-size:.95rem}.text-base{font-size:1.05rem}.text-lg{font-size:1.2rem}.text-xl{font-size:1.35rem}.text-2xl{font-size:1.6rem}.text-3xl{font-size:2rem}
+.font-bold{font-weight:700}.font-black{font-weight:900}.font-semibold{font-weight:600}.font-mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+.text-center{text-align:center}.text-left{text-align:left}
+.text-orange-400{color:#fb923c}.text-orange-500{color:#f97316}.text-amber-400{color:#fbbf24}.text-slate-200{color:#e2e8f0}.text-slate-300{color:#cbd5e1}.text-slate-400{color:#94a3b8}.text-slate-500{color:#64748b}.text-white{color:#fff}.text-emerald-400{color:#34d399}.text-red-400{color:#f87171}.text-blue-400{color:#60a5fa}.text-violet-400{color:#a78bfa}
+.bg-slate-900{background:#0f172a}.bg-slate-800{background:#1e293b}.bg-orange-600{background:#ea580c}
+.w-full{width:100%}.h-full{height:100%}.w-8{width:2rem}.h-8{height:2rem}.w-10{width:2.5rem}.h-10{height:2.5rem}.w-12{width:3rem}.h-12{height:3rem}.w-16{width:4rem}.h-16{height:4rem}.w-20{width:5rem}.w-24{width:6rem}
+.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.relative{position:relative}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.cursor-pointer{cursor:pointer}
+.transition{transition:all .15s}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}
+.border-white\/10{border-color:rgba(255,255,255,.1)}.border-slate-700{border-color:#334155}.border-slate-800{border-color:#1e293b}.border-orange-500{border-color:#f97316}.border-emerald-500{border-color:#10b981}
+.shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,.1)}
+.leading-relaxed{line-height:1.65}.tracking-tight{letter-spacing:-.025em}.tracking-widest{letter-spacing:.1em}.uppercase{text-transform:uppercase}.whitespace-nowrap{white-space:nowrap}
+.z-20{z-index:20}.z-30{z-index:30}.hidden{display:none}
+@media(min-width:768px){.md\:flex{display:flex}.md\:grid-cols-2{grid-template-columns:1fr 1fr}.md\:grid-cols-3{grid-template-columns:1fr 1fr 1fr}.md\:col-span-2{grid-column:span 2}}
+.input-dark{background:#0f172a;border:1px solid #334155;color:#fff;border-radius:.5rem;padding:.45rem .7rem;font-size:.9rem;outline:none}
+.input-dark:focus{border-color:#f97316}
+.input-dark.w-16{width:4rem}.input-dark.w-20{width:5rem}.input-dark.w-24{width:6rem}
+.btn{cursor:pointer;border:none;border-radius:.6rem;font-weight:700;transition:all .15s;font-size:.85rem}
+.btn-orange{background:#ea580c;color:#fff}.btn-orange:hover{background:#f97316}
+.btn-slate{background:#1e293b;color:#cbd5e1;border:1px solid #334155}.btn-slate:hover{background:#334155}
+.btn-emerald{background:#059669;color:#fff}.btn-red{background:#dc2626;color:#fff}.btn-red:hover{background:#ef4444}
+.tab-btn{display:flex;align-items:center;gap:.35rem;padding:.5rem .8rem;border-radius:.55rem;font-size:.76rem;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+.tab-active{background:#ea580c;color:#fff;box-shadow:0 4px 12px rgba(234,88,12,.35)}
+.tab-idle{background:transparent;color:#94a3b8}.tab-idle:hover{background:#1e293b;color:#e2e8f0}
+.ratio-bar{height:12px;border-radius:6px;background:linear-gradient(90deg,#f97316,#fbbf24);transition:width .3s}
+.def-box{background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.35);border-radius:.75rem;padding:.7rem .9rem}
+.formula-box{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35);border-radius:.75rem;padding:.7rem .9rem;font-family:ui-monospace,Menlo,Consolas,monospace}
+.pronounce-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.3rem .65rem;border-radius:.5rem;font-size:.72rem;font-weight:600;background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.4);color:#c4b5fd;cursor:pointer;transition:all .15s}
+.pronounce-btn:hover{background:rgba(167,139,250,.3)}
+.tiger-box{background:#1e293b;border:2px solid #334155;border-radius:8px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
+.tiger-inner{background:linear-gradient(135deg,#f59e0b 0%,#ea580c 40%,#b45309 100%);position:relative;width:100%;height:100%}
+.tiger-stripe{position:absolute;background:rgba(0,0,0,.35);width:16%;height:100%}
+.checker-input{width:5rem;text-align:center;font-size:1.35rem;font-weight:900;padding:.55rem .3rem;border-radius:.7rem;background:#0f172a;border:2px solid #475569;color:#fff;outline:none}
+.checker-input:focus{border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,.25)}
+.cross-box{background:#0f172a;border:2px solid #334155;border-radius:.9rem;padding:.75rem 1rem;min-width:4.2rem;text-align:center}
+.share-person{display:flex;flex-direction:column;align-items:center;gap:.3rem}
+.counter-dot{width:1.25rem;height:1.25rem;border-radius:50%;display:inline-block;margin:1.5px}
+</style>
+</head>
+<body>
+<div id="root" class="viewport-wrapper"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useMemo, useEffect, useRef } = React;
+
+class SoundEngine {
+  constructor(){ this.ctx=null; this.muted=false; }
+  init(){ if(!this.ctx) this.ctx=new (window.AudioContext||window.webkitAudioContext)(); if(this.ctx.state==='suspended') this.ctx.resume(); }
+  setMuted(v){ this.muted=v; }
+  playClick(){ if(this.muted)return; this.init(); try{ const o=this.ctx.createOscillator(),g=this.ctx.createGain(); o.type='sine'; o.frequency.setValueAtTime(600,this.ctx.currentTime); o.frequency.exponentialRampToValueAtTime(400,this.ctx.currentTime+.05); g.gain.setValueAtTime(.12,this.ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,this.ctx.currentTime+.05); o.connect(g); g.connect(this.ctx.destination); o.start(); o.stop(this.ctx.currentTime+.05);}catch(e){} }
+  playSuccess(){ if(this.muted)return; this.init(); try{ const now=this.ctx.currentTime; [523.25,659.25,783.99].forEach((f,i)=>{ const o=this.ctx.createOscillator(),g=this.ctx.createGain(); o.type='sine'; o.frequency.setValueAtTime(f,now+i*.1); g.gain.setValueAtTime(.15,now+i*.1); g.gain.exponentialRampToValueAtTime(.001,now+i*.1+.25); o.connect(g); g.connect(this.ctx.destination); o.start(now+i*.1); o.stop(now+i*.1+.25); }); }catch(e){} }
+}
+const sound = new SoundEngine();
+
+function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ const t=b; b=a%b; a=t; } return a||1; }
+function simplify(a,b){ const g=gcd(a,b); return [a/g,b/g]; }
+function isProportional(a,b,c,d){ return a*d===b*c; }
+
+function pronounce(text){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-IN'; u.rate = 0.92;
+  window.speechSynthesis.speak(u);
+  sound.playClick();
+}
+function PronounceBtn({text, label='Pronounce'}){
+  return (
+    <button className="pronounce-btn" onClick={()=>pronounce(text)} title="Listen">
+      🔊 {label}
+    </button>
+  );
+}
+
+const LOGO = "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";
+
+function App(){
+  const [dark, setDark] = useState(true);
+  const [muted, setMuted] = useState(false);
+  const [tab, setTab] = useState('intro');
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(()=>{ sound.setMuted(muted); },[muted]);
+  useEffect(()=>{ document.documentElement.classList.toggle('dark', dark); },[dark]);
+  useEffect(()=>{
+    const onFs = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', onFs);
+    return () => document.removeEventListener('fullscreenchange', onFs);
+  },[]);
+
+  const toggleFullscreen = () => {
+    sound.playClick();
+    const el = document.querySelector('.simulation-container');
+    if (!document.fullscreenElement) (el||document.documentElement).requestFullscreen?.().catch(()=>{});
+    else document.exitFullscreen?.().catch(()=>{});
+  };
+
+  const tabs = [
+    {id:'intro', label:'0. Overview', icon:'📖'},
+    {id:'similar', label:'1. Similar Images', icon:'🖼️'},
+    {id:'ratios', label:'2. Ratios', icon:'⚖️'},
+    {id:'simplest', label:'3. Simplest Form', icon:'✂️'},
+    {id:'check', label:'4. Check Proportion', icon:'✓'},
+    {id:'scale', label:'5. Scaling Factor', icon:'🔍'},
+    {id:'rule3', label:'6. Rule of Three', icon:'3️⃣'},
+    {id:'cross', label:'7. Cross Multiply', icon:'✖️'},
+    {id:'examples', label:'8. Real-Life', icon:'🍋'},
+    {id:'coffee', label:'9. Filter Coffee', icon:'☕'},
+    {id:'share', label:'10. Sharing', icon:'🤝'},
+    {id:'figout', label:'11. Figure it Out', icon:'📝'},
+    {id:'whiteboard', label:'12. Whiteboard', icon:'✍️'},
+    {id:'quiz', label:'13. Quiz', icon:'🏆'},
+  ];
+
+  return (
+    <div className="simulation-container">
+      <header className="glass-panel px-4 py-2 flex justify-between items-center z-30 flex-shrink-0 border-b border-white/10">
+        <div className="flex items-center space-x-3">
+          <img src={"data:image/png;base64,"+LOGO} alt="APMF" className="w-11 h-11 rounded-xl shadow-lg object-contain bg-white" style={{padding:'2px'}} />
+          <div>
+            <h1 className="text-lg font-bold tracking-tight text-white">Proportional Reasoning-1</h1>
+            <p className="text-xs text-slate-400">Ganita Prakash Grade 8 • Complete Simulation</p>
+          </div>
+        </div>
+        <div className="flex items-center space-x-3">
+          <div className="hidden md:flex flex-col items-end">
+            <span className="text-xs font-semibold text-orange-400">Andhra Pradesh Mathematics Forum</span>
+            <span className="text-sm font-bold text-white">Gangalapudi Bhasker Reddy</span>
+          </div>
+          <div className="flex items-center space-x-1.5 bg-slate-800 p-1.5 rounded-xl border border-slate-700">
+            <button onClick={()=>{sound.playClick();setDark(!dark);}} className="p-1.5 rounded-lg text-slate-300 cursor-pointer" title={dark?'Light':'Dark'}>{dark?'🌙':'☀️'}</button>
+            <button onClick={()=>{sound.playClick();setMuted(!muted);}} className="p-1.5 rounded-lg text-slate-300 cursor-pointer" title={muted?'Unmute':'Mute'}>{muted?'🔇':'🔊'}</button>
+            <button onClick={toggleFullscreen} className="p-1.5 rounded-lg text-slate-300 cursor-pointer" title="Fullscreen">{isFullscreen?'🗗':'⛶'}</button>
+          </div>
+        </div>
+      </header>
+
+      <nav className="bg-slate-900/90 px-2 py-1.5 border-b border-slate-800 flex-shrink-0 z-20">
+        <div className="flex flex-wrap gap-1 justify-center">
+          {tabs.map(t=>(
+            <button key={t.id} onClick={()=>{sound.playClick();setTab(t.id);}} className={`tab-btn ${tab===t.id?'tab-active':'tab-idle'}`}>
+              <span>{t.icon}</span><span>{t.label}</span>
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      <main className="flex-1 overflow-hidden relative flex flex-col p-3">
+        {tab==='intro' && <IntroTab />}
+        {tab==='similar' && <SimilarTab />}
+        {tab==='ratios' && <RatiosTab />}
+        {tab==='simplest' && <SimplestTab />}
+        {tab==='check' && <CheckTab />}
+        {tab==='scale' && <ScaleTab />}
+        {tab==='rule3' && <Rule3Tab />}
+        {tab==='cross' && <CrossTab />}
+        {tab==='examples' && <ExamplesTab />}
+        {tab==='coffee' && <CoffeeTab />}
+        {tab==='share' && <ShareTab />}
+        {tab==='figout' && <FigOutTab />}
+        {tab==='whiteboard' && <WhiteboardTab />}
+        {tab==='quiz' && <QuizTab />}
+      </main>
+
+      <footer className="glass-panel px-4 py-1.5 flex justify-between items-center text-xs text-slate-400 flex-shrink-0 border-t border-white/10 z-30">
+        <span>NCERT Ganita Prakash • Chapter 7 • Proportional Reasoning-1</span>
+        <span>APMF • <strong>Gangalapudi Bhasker Reddy</strong></span>
+      </footer>
+    </div>
+  );
+}
+
+/* ===== 0. Overview ===== */
+function IntroTab(){
+  const ideas = [
+    {t:'Similarity in Change', d:'Images look similar only when width & height change by the SAME factor (multiply), not the same amount (subtract).'},
+    {t:'Ratio a : b', d:'For every a units of the first quantity there are b units of the second. These are the terms of the ratio.'},
+    {t:'Simplest Form', d:'Divide both terms by their HCF. Two ratios are proportional when their simplest forms are identical.'},
+    {t:'Proportion ∷', d:'a : b ∷ c : d means the ratios are proportional. Equivalent to a/b = c/d or a×d = b×c.'},
+    {t:'Rule of Three', d:'Given three quantities, find the fourth so ratios stay proportional. Called Trairasika by Āryabhaṭa.'},
+    {t:'Cross Multiplication', d:'If a : b ∷ c : d then a×d = b×c. Unknown d = (b×c)/a.'},
+  ];
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+          <h3 className="text-xl font-bold text-orange-400">Welcome — Proportional Reasoning</h3>
+          <PronounceBtn text="Welcome to Proportional Reasoning. This chapter teaches how quantities change together by the same factor, how to write ratios, simplify them, and solve problems using the ancient Indian Rule of Three." />
+        </div>
+        <p className="text-sm text-slate-300 leading-relaxed mb-3">
+          Discover why some enlarged pictures look “right” and others look stretched, how ratios capture that idea, and how the Rule of Three solves everyday problems.
+        </p>
+        <div className="def-box mb-3 text-sm">
+          <strong className="text-amber-400">Key Idea:</strong> Two quantities change <em>proportionally</em> when both are multiplied (or divided) by the <strong>same factor</strong>. Adding or subtracting the same number does <em>not</em> keep the ratio the same.
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {ideas.map((s,i)=>(
+            <div key={i} className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 flex gap-3 items-start">
+              <div className="w-7 h-7 rounded-full bg-orange-600 flex items-center justify-center text-xs font-black text-white flex-shrink-0">{i+1}</div>
+              <div>
+                <div className="text-sm font-bold text-white">{s.t}</div>
+                <div className="text-xs text-slate-400 mt-0.5 leading-relaxed">{s.d}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="glass-panel p-3 rounded-2xl text-sm text-slate-300">
+        <p><strong className="text-orange-400">How to use:</strong> Work through the tabs in order. Every tab is interactive — drag sliders, try numbers, check answers, finish with the Quiz.</p>
+        <p className="text-emerald-400 font-semibold mt-1">The climax is the Rule of Three and cross-multiplication — the practical power of proportional thinking.</p>
+      </div>
+    </div>
+  );
+}
+
+/* ===== 1. Similar Images ===== */
+function SimilarTab(){
+  const [baseW,setBaseW]=useState(60);
+  const [baseH,setBaseH]=useState(40);
+  const [factor,setFactor]=useState(1.5);
+  const [distort,setDistort]=useState(false);
+
+  const scaledW = Math.round(baseW*factor);
+  const scaledH = Math.round(baseH*(distort?factor*0.7:factor));
+  const ratioBase = simplify(baseW,baseH);
+  const ratioScaled = simplify(scaledW,scaledH);
+  const same = ratioBase[0]===ratioScaled[0] && ratioBase[1]===ratioScaled[1];
+
+  const Tiger = ({w,h,label}) => (
+    <div className="text-center">
+      <div className="tiger-box mx-auto" style={{width:Math.min(w*1.7,200),height:Math.min(h*1.7,140)}}>
+        <div className="tiger-inner">
+          <div className="tiger-stripe" style={{left:'10%'}}/>
+          <div className="tiger-stripe" style={{left:'30%'}}/>
+          <div className="tiger-stripe" style={{left:'50%'}}/>
+          <div className="tiger-stripe" style={{left:'70%'}}/>
+          <div className="absolute inset-0 flex items-center justify-center text-white font-black text-lg opacity-90">🐯</div>
+        </div>
+      </div>
+      <div className="text-xs text-slate-400 mt-1">{label}</div>
+      <div className="text-sm font-mono text-orange-400">{w} × {h}</div>
+    </div>
+  );
+
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+          <h3 className="text-lg font-bold text-orange-400">7.1 Observing Similarity in Change</h3>
+          <PronounceBtn text="Images look similar only when both width and height are multiplied by the same factor. Changing by the same amount or using different factors produces distortion." />
+        </div>
+        <p className="text-sm text-slate-300 mb-3">Images look similar only when both width and height are multiplied by the <strong>same factor</strong>.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+          <div className="space-y-2">
+            <div>
+              <label className="text-sm text-slate-400">Base width: <strong className="text-orange-400">{baseW} mm</strong></label>
+              <input type="range" min="20" max="100" value={baseW} onChange={e=>setBaseW(+e.target.value)} className="w-full accent-orange-500 cursor-pointer"/>
+            </div>
+            <div>
+              <label className="text-sm text-slate-400">Base height: <strong className="text-orange-400">{baseH} mm</strong></label>
+              <input type="range" min="15" max="80" value={baseH} onChange={e=>setBaseH(+e.target.value)} className="w-full accent-orange-500 cursor-pointer"/>
+            </div>
+            <div>
+              <label className="text-sm text-slate-400">Scale factor: <strong className="text-orange-400">{factor.toFixed(2)}</strong></label>
+              <input type="range" min="0.4" max="2.5" step="0.05" value={factor} onChange={e=>setFactor(+e.target.value)} className="w-full accent-orange-500 cursor-pointer"/>
+            </div>
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-slate-300">
+              <input type="checkbox" checked={distort} onChange={()=>{setDistort(!distort);sound.playClick();}} className="accent-orange-500"/>
+              <span>Distort (different height factor)</span>
+            </label>
+          </div>
+          <div className="flex flex-wrap gap-4 justify-center items-end">
+            <Tiger w={baseW} h={baseH} label="Original"/>
+            <Tiger w={scaledW} h={scaledH} label={distort?'Distorted':'Scaled'}/>
+          </div>
+        </div>
+
+        <div className={`p-3 rounded-xl text-sm ${same?'bg-emerald-500/15 border border-emerald-500/40 text-emerald-200':'bg-red-500/15 border border-red-500/40 text-red-200'}`}>
+          {same
+            ? `✓ Similar! Both ratios simplify to ${ratioBase[0]} : ${ratioBase[1]}. Changed by factor ${factor.toFixed(2)}.`
+            : `✗ Distorted. Original ${ratioBase[0]}:${ratioBase[1]} ≠ scaled ${ratioScaled[0]}:${ratioScaled[1]}.`}
+        </div>
+      </div>
+
+      <div className="glass-panel p-3 rounded-2xl">
+        <h4 className="text-base font-bold text-orange-400 mb-2">Textbook Table (page 160)</h4>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left">
+            <thead><tr className="text-amber-400 border-b border-slate-700">
+              <th className="p-2">Image</th><th className="p-2">Width</th><th className="p-2">Height</th><th className="p-2">Ratio</th><th className="p-2">Simplest</th><th className="p-2">Similar?</th>
+            </tr></thead>
+            <tbody className="text-slate-300">
+              {[{n:'A',w:60,h:40},{n:'B',w:40,h:20},{n:'C',w:30,h:20},{n:'D',w:90,h:60},{n:'E',w:60,h:60}].map(r=>{
+                const [s1,s2]=simplify(r.w,r.h);
+                const ok = s1===3 && s2===2;
+                return (
+                  <tr key={r.n} className="border-b border-slate-800">
+                    <td className="p-2 font-bold">Image {r.n}</td>
+                    <td className="p-2">{r.w}</td><td className="p-2">{r.h}</td>
+                    <td className="p-2 font-mono">{r.w}:{r.h}</td>
+                    <td className="p-2 font-mono text-orange-400">{s1}:{s2}</td>
+                    <td className="p-2">{ok?'✅ Yes':'❌ No'}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm text-emerald-400 mt-2 font-semibold">A, C, D → 3:2 (proportional). B is 2:1 and E is 1:1 → different.</p>
+      </div>
+    </div>
+  );
+}
+
+/* ===== 2. Ratios ===== */
+function RatiosTab(){
+  const [a,setA]=useState(60);
+  const [b,setB]=useState(40);
+  const [c,setC]=useState(30);
+  const [d,setD]=useState(20);
+  const [sa,sb]=simplify(a,b);
+  const [sc,sd]=simplify(c,d);
+  const prop = isProportional(a,b,c,d);
+
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+          <h3 className="text-lg font-bold text-orange-400">7.2 Ratios</h3>
+          <PronounceBtn text="A ratio a to b means for every a units of the first quantity there are b units of the second. The numbers a and b are called the terms of the ratio." />
+        </div>
+        <p className="text-sm text-slate-300 mb-3">A ratio a : b means “for every a units of the first there are b units of the second.”</p>
+        <div className="def-box mb-3 text-sm">
+          <strong className="text-amber-400">In a ratio a : b</strong> — for every ‘a’ units of the first quantity there are ‘b’ units of the second.
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {[{lab:'Ratio 1',a,b,setA,setB,sa,sb},{lab:'Ratio 2',a:c,b:d,setA:setC,setB:setD,sa:sc,sb:sd}].map((r,i)=>(
+            <div key={i} className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2">
+              <div className="text-sm font-bold text-white">{r.lab}</div>
+              <div className="flex gap-2 items-center">
+                <input type="number" className="input-dark w-20 text-center font-mono" value={r.a} onChange={e=>r.setA(+e.target.value||0)}/>
+                <span className="text-2xl text-orange-400 font-black">:</span>
+                <input type="number" className="input-dark w-20 text-center font-mono" value={r.b} onChange={e=>r.setB(+e.target.value||0)}/>
+              </div>
+              <div className="text-sm text-slate-400">Simplest → <span className="text-orange-400 font-mono font-bold">{r.sa} : {r.sb}</span></div>
+              <div className="flex items-center gap-2">
+                <div className="ratio-bar" style={{width:`${Math.min(100,r.a/(r.a+r.b||1)*100)}%`}}/>
+                <span className="text-xs text-slate-500">{r.a}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="ratio-bar" style={{width:`${Math.min(100,r.b/(r.a+r.b||1)*100)}%`,background:'linear-gradient(90deg,#3b82f6,#60a5fa)'}}/>
+                <span className="text-xs text-slate-500">{r.b}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className={`mt-3 p-3 rounded-xl text-sm font-semibold ${prop?'bg-emerald-500/20 border border-emerald-500/50 text-emerald-300':'bg-red-500/20 border border-red-500/50 text-red-300'}`}>
+          {prop
+            ? `✓ ${a}:${b} ∷ ${c}:${d} — proportional (both → ${sa}:${sb}).`
+            : `✗ Not proportional. Simplest forms ${sa}:${sb} and ${sc}:${sd} differ.`}
+        </div>
+      </div>
+
+      <div className="glass-panel p-3 rounded-2xl">
+        <h4 className="text-base font-bold text-orange-400 mb-2">Quick Examples from the Textbook</h4>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+          {[
+            {r:'60 : 40', s:'3 : 2', n:'Image A'},
+            {r:'30 : 20', s:'3 : 2', n:'Image C'},
+            {r:'90 : 60', s:'3 : 2', n:'Image D'},
+            {r:'40 : 20', s:'2 : 1', n:'Image B'},
+            {r:'60 : 60', s:'1 : 1', n:'Image E'},
+            {r:'6 : 10', s:'3 : 5', n:'Lemonade'},
+          ].map((x,i)=>(
+            <div key={i} className="bg-slate-900/80 p-2.5 rounded-xl border border-slate-800 flex justify-between items-center gap-1">
+              <span className="font-mono text-orange-400 text-xs">{x.r}</span>
+              <span className="text-slate-500">→</span>
+              <span className="font-mono text-emerald-400 font-bold text-xs">{x.s}</span>
+              <span className="text-[10px] text-slate-500">{x.n}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ===== 3. Simplest Form ===== */
+function SimplestTab(){
+  const [a,setA]=useState(72);
+  const [b,setB]=useState(96);
+  const g = gcd(a,b);
+  const [sa,sb] = simplify(a,b);
+  const steps = [];
+  let x=a, y=b;
+  while(y){ steps.push(`${x} = ${Math.floor(x/y)}×${y} + ${x%y}`); const t=y; y=x%y; x=t; }
+
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+          <h3 className="text-lg font-bold text-orange-400">7.3 Ratios in their Simplest Form</h3>
+          <PronounceBtn text="To write a ratio in simplest form, divide both terms by their highest common factor, or H C F. The resulting ratio cannot be simplified further." />
+        </div>
+        <p className="text-sm text-slate-300 mb-3">Divide both terms by their HCF. The result cannot be simplified further.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="space-y-3">
+            <div className="flex gap-3 items-center justify-center">
+              <input type="number" className="input-dark w-24 text-center font-mono text-lg" value={a} onChange={e=>setA(+e.target.value||1)}/>
+              <span className="text-3xl text-orange-400 font-black">:</span>
+              <input type="number" className="input-dark w-24 text-center font-mono text-lg" value={b} onChange={e=>setB(+e.target.value||1)}/>
+            </div>
+            <div className="bg-slate-900/80 p-4 rounded-xl border border-orange-500/40 text-center">
+              <div className="text-xs text-slate-400 mb-1">HCF</div>
+              <div className="text-3xl font-black text-amber-400">{g}</div>
+              <div className="text-sm text-slate-300 mt-2">
+                {a} ÷ {g} = <strong className="text-orange-400">{sa}</strong> &nbsp;
+                {b} ÷ {g} = <strong className="text-orange-400">{sb}</strong>
+              </div>
+              <div className="text-2xl font-black text-emerald-400 mt-2">{sa} : {sb}</div>
+            </div>
+            <div className="flex flex-wrap gap-1.5 justify-center">
+              {[[3,4],[72,96],[60,40],[90,60],[14,21],[18,24],[15,35]].map(([x,y])=>(
+                <button key={x+':'+y} className={`btn px-2.5 py-1 text-xs ${a===x&&b===y?'btn-orange':'btn-slate'}`}
+                  onClick={()=>{setA(x);setB(y);sound.playClick();}}>{x}:{y}</button>
+              ))}
+            </div>
+          </div>
+          <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+            <div className="text-sm font-bold text-amber-400 mb-2">Euclidean Algorithm</div>
+            <div className="space-y-1 font-mono text-sm text-slate-300">
+              {steps.map((s,i)=><div key={i}>{s}</div>)}
+              <div className="text-emerald-400 font-bold mt-2">HCF = {g}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="formula-box text-sm">
+        <strong className="text-emerald-400">Rule:</strong> a : b is simplest when gcd(a,b)=1.
+        Two ratios are proportional ⇔ simplest forms identical ⇔ a×d = b×c.
+      </div>
+    </div>
+  );
+}
+
+/* ===== 4. Check Proportion ===== */
+function CheckTab(){
+  const pairs = [
+    {a:4,b:7,c:12,d:21,label:'(i)'},
+    {a:8,b:3,c:24,d:6,label:'(ii)'},
+    {a:7,b:12,c:12,d:7,label:'(iii)'},
+    {a:21,b:6,c:35,d:10,label:'(iv)'},
+    {a:12,b:18,c:28,d:42,label:'(v)'},
+    {a:24,b:8,c:9,d:3,label:'(vi)'},
+  ];
+  const [revealed,setRevealed]=useState({});
+
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+          <h3 className="text-lg font-bold text-orange-400">Is it a Proportion?</h3>
+          <PronounceBtn text="Two ratios are proportional when their simplest forms are the same, or when the cross products are equal. Click each statement to check." />
+        </div>
+        <p className="text-sm text-slate-300 mb-3">Click each statement to reveal whether it is true.</p>
+        <div className="space-y-2">
+          {pairs.map((p,i)=>{
+            const ok = isProportional(p.a,p.b,p.c,p.d);
+            const show = revealed[i];
+            return (
+              <div key={i} className={`p-3 rounded-xl border cursor-pointer transition ${show?(ok?'bg-emerald-500/15 border-emerald-500/50':'bg-red-500/15 border-red-500/50'):'bg-slate-900/80 border-slate-700 hover:border-orange-500'}`}
+                onClick={()=>{setRevealed({...revealed,[i]:true});sound.playClick();if(ok)sound.playSuccess();}}>
+                <div className="flex justify-between items-center">
+                  <span className="font-mono text-base text-white">{p.label} &nbsp; {p.a} : {p.b} ∷ {p.c} : {p.d}</span>
+                  {show && <span className={`font-bold text-lg ${ok?'text-emerald-400':'text-red-400'}`}>{ok?'✓ True':'✗ False'}</span>}
+                </div>
+                {show && (
+                  <div className="text-sm text-slate-400 mt-1">
+                    Cross: {p.a}×{p.d}={p.a*p.d} &nbsp;|&nbsp; {p.b}×{p.c}={p.b*p.c}
+                    {ok?' → equal':' → unequal'}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="glass-panel p-4 rounded-2xl">
+        <h4 className="text-base font-bold text-orange-400 mb-3">Custom Checker</h4>
+        <CustomChecker />
+      </div>
+    </div>
+  );
+}
+
+function CustomChecker(){
+  const [a,setA]=useState(3); const [b,setB]=useState(4);
+  const [c,setC]=useState(72); const [d,setD]=useState(96);
+  const ok = isProportional(a,b,c,d);
+  const [sa,sb]=simplify(a,b); const [sc,sd]=simplify(c,d);
+  return (
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <div className="text-center">
+          <div className="text-[10px] text-slate-500 mb-1 uppercase tracking-wider">First ratio</div>
+          <div className="flex items-center gap-1.5">
+            <input type="number" className="checker-input" value={a} onChange={e=>setA(+e.target.value||0)}/>
+            <span className="text-2xl text-orange-400 font-black">:</span>
+            <input type="number" className="checker-input" value={b} onChange={e=>setB(+e.target.value||0)}/>
+          </div>
+        </div>
+        <div className="text-3xl text-amber-400 font-black">∷</div>
+        <div className="text-center">
+          <div className="text-[10px] text-slate-500 mb-1 uppercase tracking-wider">Second ratio</div>
+          <div className="flex items-center gap-1.5">
+            <input type="number" className="checker-input" value={c} onChange={e=>setC(+e.target.value||0)}/>
+            <span className="text-2xl text-orange-400 font-black">:</span>
+            <input type="number" className="checker-input" value={d} onChange={e=>setD(+e.target.value||0)}/>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-wrap justify-center gap-2 text-sm">
+        <div className="bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-700">
+          <span className="text-slate-400">Simplest 1 → </span><span className="font-mono font-bold text-orange-400">{sa}:{sb}</span>
+        </div>
+        <div className="bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-700">
+          <span className="text-slate-400">Simplest 2 → </span><span className="font-mono font-bold text-orange-400">{sc}:{sd}</span>
+        </div>
+        <div className="bg-slate-900/90 px-3 py-1.5 rounded-xl border border-slate-700">
+          <span className="text-slate-400">Cross → </span>
+          <span className="font-mono font-bold text-amber-400">{a}×{d}={a*d}</span>
+          <span className="text-slate-500 mx-1">vs</span>
+          <span className="font-mono font-bold text-amber-400">{b}×{c}={b*c}</span>
+        </div>
+      </div>
+      <div className={`p-3 rounded-2xl text-center text-base font-bold ${ok?'bg-emerald-500/20 text-emerald-300 border-2 border-emerald-500/50':'bg-red-500/20 text-red-300 border-2 border-red-500/50'}`}>
+        {ok ? `✅ Yes! Proportional (both become ${sa}:${sb})` : `❌ Not proportional — forms differ and cross products unequal`}
+      </div>
+      <div className="flex flex-wrap justify-center gap-1.5">
+        {[[3,4,72,96],[4,7,12,21],[8,3,24,6],[6,10,18,30],[15,35,3,7]].map(([w,x,y,z],i)=>(
+          <button key={i} className="btn btn-slate px-2.5 py-1 text-xs"
+            onClick={()=>{setA(w);setB(x);setC(y);setD(z);sound.playClick();}}>
+            {w}:{x} ∷ {y}:{z}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ===== 5. Scaling Factor ===== */
+function ScaleTab(){
+  const [a,setA]=useState(6);
+  const [b,setB]=useState(10);
+  const [c,setC]=useState(18);
+  const factor = a!==0 ? c/a : 0;
+  const d = Math.round(b*factor*1000)/1000;
+
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+          <h3 className="text-lg font-bold text-orange-400">Finding the Scaling Factor</h3>
+          <PronounceBtn text="When one term of a ratio changes, divide the new value by the old value to get the scaling factor. Then multiply the other term by the same factor to keep the ratio proportional. For lemonade: 6 glasses to 18 glasses is a factor of 3, so 10 spoons become 30 spoons." />
+        </div>
+        <p className="text-sm text-slate-300 mb-3">When one term changes from <strong>a</strong> to <strong>c</strong>, factor = c ÷ a. Multiply the other term by the same factor.</p>
+
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          <div className="bg-slate-900/90 p-3 rounded-xl border border-slate-700 text-center">
+            <div className="text-3xl mb-1">🧃</div>
+            <div className="text-[11px] text-slate-400">Glasses (start)</div>
+            <div className="text-2xl font-black text-orange-400">{a}</div>
+          </div>
+          <div className="bg-slate-900/90 p-3 rounded-xl border border-slate-700 text-center">
+            <div className="text-3xl mb-1">🥄</div>
+            <div className="text-[11px] text-slate-400">Spoons (start)</div>
+            <div className="text-2xl font-black text-blue-400">{b}</div>
+          </div>
+          <div className="bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/50 text-center">
+            <div className="text-3xl mb-1">✨</div>
+            <div className="text-[11px] text-emerald-400">Spoons needed</div>
+            <div className="text-2xl font-black text-emerald-400">{d}</div>
+          </div>
+        </div>
+
+        <div className="bg-slate-900/90 p-3 rounded-xl border border-slate-700 mb-3">
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-3">
+            <div className="text-center">
+              <div className="text-[10px] text-slate-500 mb-0.5">a</div>
+              <input type="number" className="input-dark w-16 text-center font-bold text-lg" value={a} onChange={e=>setA(+e.target.value||1)}/>
+            </div>
+            <span className="text-xl text-orange-400 font-black self-end mb-1">:</span>
+            <div className="text-center">
+              <div className="text-[10px] text-slate-500 mb-0.5">b</div>
+              <input type="number" className="input-dark w-16 text-center font-bold text-lg" value={b} onChange={e=>setB(+e.target.value||1)}/>
+            </div>
+            <span className="text-2xl text-amber-400 font-black self-end mb-0.5 px-1">∷</span>
+            <div className="text-center">
+              <div className="text-[10px] text-slate-500 mb-0.5">c</div>
+              <input type="number" className="input-dark w-16 text-center font-bold text-lg" value={c} onChange={e=>setC(+e.target.value||1)}/>
+            </div>
+            <span className="text-xl text-orange-400 font-black self-end mb-1">:</span>
+            <div className="text-center min-w-[3.2rem]">
+              <div className="text-[10px] text-emerald-400 mb-0.5 font-bold">d</div>
+              <div className="text-2xl font-black text-emerald-400 leading-none py-1">{d}</div>
+            </div>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2 text-sm border-t border-slate-700 pt-2">
+            <div className="bg-slate-800 px-3 py-1.5 rounded-lg">
+              Factor = <span className="text-orange-400 font-bold">{c} ÷ {a} = {factor.toFixed(3)}</span>
+            </div>
+            <div className="bg-slate-800 px-3 py-1.5 rounded-lg">
+              {b} × {factor.toFixed(3)} = <span className="text-emerald-400 font-bold">{d}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="def-box text-sm">
+            <strong className="text-amber-400">Lemonade rule:</strong><br/>
+            6 glasses : 10 spoons ∷ 18 glasses : ?<br/>
+            Factor = 18÷6 = <strong>3</strong> → spoons = 10×3 = <strong className="text-emerald-400">30</strong>
+          </div>
+          <div>
+            <div className="text-xs font-bold text-slate-400 mb-1.5">Quick examples</div>
+            <div className="flex flex-wrap gap-1.5">
+              {[
+                {a:6,b:10,c:18,label:'🍋 Lemonade'},
+                {a:60,b:40,c:90,label:'🖼️ A→D'},
+                {a:14,b:21,c:28,label:'14:21→28'},
+                {a:14,b:21,c:6,label:'14:21→6'},
+                {a:120,b:15,c:80,label:'🍚 Rice'},
+              ].map((ex,i)=>(
+                <button key={i} className={`btn px-2.5 py-1 text-[11px] ${a===ex.a&&b===ex.b&&c===ex.c?'btn-orange':'btn-slate'}`}
+                  onClick={()=>{setA(ex.a);setB(ex.b);setC(ex.c);sound.playClick();}}>{ex.label}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ===== 6. Rule of Three ===== */
+function Rule3Tab(){
+  const [a,setA]=useState(120);
+  const [b,setB]=useState(15);
+  const [c,setC]=useState(80);
+  const d = a!==0 ? (b*c)/a : 0;
+  const dDisp = Number.isInteger(d)?d:Number(d.toFixed(2));
+
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+          <h3 className="text-lg font-bold text-orange-400">Trairasika — The Rule of Three</h3>
+          <PronounceBtn text="The Rule of Three, called Trairasika in ancient India, finds a fourth unknown quantity when three are known and the ratios must stay proportional. Aryabhata called the knowns pramana, phala and ichchha, and the unknown ichchhaphala." />
+        </div>
+        <p className="text-sm text-slate-300 mb-3">Four quantities linked proportionally; three known, one unknown. Āryabhaṭa (499 CE) called them:</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3 text-center text-sm">
+          <div className="bg-slate-900/80 p-2.5 rounded-xl border border-slate-700"><div className="text-amber-400 font-bold">pramāṇa</div><div className="text-xs text-slate-400">measure (a)</div></div>
+          <div className="bg-slate-900/80 p-2.5 rounded-xl border border-slate-700"><div className="text-amber-400 font-bold">phala</div><div className="text-xs text-slate-400">fruit (b)</div></div>
+          <div className="bg-slate-900/80 p-2.5 rounded-xl border border-slate-700"><div className="text-amber-400 font-bold">ichchhā</div><div className="text-xs text-slate-400">requisition (c)</div></div>
+          <div className="bg-slate-900/80 p-2.5 rounded-xl border border-orange-500"><div className="text-emerald-400 font-bold">ichchhāphala</div><div className="text-xs text-slate-400">yield (d)</div></div>
+        </div>
+        <div className="formula-box text-center text-base mb-3">
+          ichchhāphala = (phala × ichchhā) / pramāṇa &nbsp;→&nbsp; d = (b × c) / a
+        </div>
+        <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+          <div className="flex flex-wrap gap-2 items-center justify-center text-lg font-mono mb-2">
+            <div className="text-center"><div className="text-[10px] text-slate-500">pramāṇa</div>
+              <input type="number" className="input-dark w-20 text-center" value={a} onChange={e=>setA(+e.target.value||1)}/></div>
+            <span className="text-orange-400">:</span>
+            <div className="text-center"><div className="text-[10px] text-slate-500">phala</div>
+              <input type="number" className="input-dark w-20 text-center" value={b} onChange={e=>setB(+e.target.value||1)}/></div>
+            <span className="text-amber-400 text-2xl">∷</span>
+            <div className="text-center"><div className="text-[10px] text-slate-500">ichchhā</div>
+              <input type="number" className="input-dark w-20 text-center" value={c} onChange={e=>setC(+e.target.value||1)}/></div>
+            <span className="text-orange-400">:</span>
+            <div className="text-center"><div className="text-[10px] text-slate-500">ichchhāphala</div>
+              <div className="text-3xl font-black text-emerald-400">{dDisp}</div></div>
+          </div>
+          <div className="text-center text-sm text-slate-400">({b} × {c}) ÷ {a} = <strong className="text-emerald-400">{dDisp}</strong></div>
+        </div>
+      </div>
+      <div className="glass-panel p-3 rounded-2xl">
+        <h4 className="text-base font-bold text-orange-400 mb-2">Classic Problem</h4>
+        <p className="text-sm text-slate-300 mb-2">For 120 students the cook makes 15 kg rice. Only 80 students come. How much rice?</p>
+        <button className="btn btn-orange px-4 py-1.5" onClick={()=>{setA(120);setB(15);setC(80);sound.playClick();sound.playSuccess();}}>
+          Load: 120 : 15 ∷ 80 : ?
+        </button>
+        <p className="text-sm text-emerald-400 mt-2 font-semibold">Answer: 10 kg (factor 80/120 = 2/3 → 15×2/3 = 10)</p>
+      </div>
+      <div className="def-box text-sm">
+        <strong className="text-amber-400">Āryabhaṭa:</strong> “Multiply the phala by the ichchhā and divide by the pramāṇa.”
+      </div>
+    </div>
+  );
+}
+
+/* ===== 7. Cross Multiplication ===== */
+function CrossTab(){
+  const [a,setA]=useState(150);
+  const [b,setB]=useState(90);
+  const [c,setC]=useState(240);
+  const d = a!==0 ? (b*c)/a : 0;
+  const dDisp = Number.isInteger(d)?d:Number(d.toFixed(1));
+
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+          <h3 className="text-lg font-bold text-orange-400">Cross Multiplication</h3>
+          <PronounceBtn text="When two ratios a to b and c to d are proportional, the product of the extremes equals the product of the means. That is a times d equals b times c. We can solve for the unknown by rearranging: d equals b times c divided by a." />
+        </div>
+        <p className="text-sm text-slate-300 mb-3">When a : b ∷ c : d, the products of extremes and means are equal: <strong>a × d = b × c</strong>.</p>
+        <div className="formula-box text-center text-lg mb-3">a × d = b × c &nbsp;⇒&nbsp; d = (b × c) / a</div>
+
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-3">
+          <div className="cross-box" style={{borderColor:'#f97316'}}>
+            <div className="text-[10px] text-slate-500 uppercase">a</div>
+            <input type="number" className="input-dark w-16 text-center text-lg font-bold mt-1" value={a} onChange={e=>setA(+e.target.value||1)}/>
+          </div>
+          <span className="text-xl text-orange-400 font-black">:</span>
+          <div className="cross-box">
+            <div className="text-[10px] text-slate-500 uppercase">b</div>
+            <input type="number" className="input-dark w-16 text-center text-lg font-bold mt-1" value={b} onChange={e=>setB(+e.target.value||1)}/>
+          </div>
+          <span className="text-2xl text-amber-400 font-black">∷</span>
+          <div className="cross-box">
+            <div className="text-[10px] text-slate-500 uppercase">c</div>
+            <input type="number" className="input-dark w-16 text-center text-lg font-bold mt-1" value={c} onChange={e=>setC(+e.target.value||1)}/>
+          </div>
+          <span className="text-xl text-orange-400 font-black">:</span>
+          <div className="cross-box" style={{borderColor:'#10b981',boxShadow:'0 0 0 3px rgba(16,185,129,.25)'}}>
+            <div className="text-[10px] text-emerald-400 uppercase font-bold">d</div>
+            <div className="text-2xl font-black text-emerald-400 mt-1">{dDisp}</div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
+          <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-700 text-center">
+            <div className="text-xs text-slate-400 mb-1">Extremes (a × d)</div>
+            <div className="text-xl font-black text-orange-400">{a} × {dDisp} = <span className="text-white">{(a*d).toFixed(1)}</span></div>
+          </div>
+          <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-700 text-center">
+            <div className="text-xs text-slate-400 mb-1">Means (b × c)</div>
+            <div className="text-xl font-black text-blue-400">{b} × {c} = <span className="text-white">{b*c}</span></div>
+          </div>
+        </div>
+        <div className={`p-2.5 rounded-xl text-center text-sm font-bold ${Math.abs(a*d-b*c)<0.01?'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40':'bg-red-500/20 text-red-300 border border-red-500/40'}`}>
+          {Math.abs(a*d-b*c)<0.01 ? '✅ Cross products match — proportion is true!' : 'Products differ'}
+        </div>
+      </div>
+      <div className="glass-panel p-3 rounded-2xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+          <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+            <div className="text-amber-400 font-bold mb-1">🚗 Car example</div>
+            <p className="text-slate-300">150 min : 90 km ∷ 240 min : ?</p>
+            <button className="btn btn-slate px-3 py-1 mt-1.5 text-xs" onClick={()=>{setA(150);setB(90);setC(240);sound.playClick();}}>Load</button>
+            <p className="text-emerald-400 mt-1 font-semibold">→ 144 km</p>
+          </div>
+          <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+            <div className="text-amber-400 font-bold mb-1">Derivation</div>
+            <p className="text-slate-300 leading-relaxed text-xs">
+              c = f·a → f = c/a<br/>
+              d = f·b → d = (c/a)·b = (b·c)/a<br/>
+              Therefore a·d = b·c
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ===== 8. Real-Life ===== */
+function ExamplesTab(){
+  const [ex,setEx]=useState(0);
+  const examples = [
+    {title:'Lemonade Sweetness', q:'Kesang made 6 glasses with 10 spoons of sugar. How many spoons for 18 glasses?', setup:'6 : 10 ∷ 18 : ?', ans:'30', steps:['Factor = 18÷6 = 3','Spoons = 10×3 = 30']},
+    {title:'Cement Strength', q:'Nitin: 60 ft with 3 bags. Hari: 40 ft with 2 bags. Equally strong?', setup:'60:3 vs 40:2', ans:'Yes — both → 20:1', steps:['60:3 → 20:1','40:2 → 20:1','Proportional → same strength']},
+    {title:'Ages (non-proportional)', q:'Neelima 3, mother 30 (1:10). At 12, mother 39. Still 1:10?', setup:'3:30 → 12:39', ans:'No → 4:13', steps:['Adding same number changes the ratio','Ages do not stay proportional']},
+    {title:'Tea Price', q:'Himachal 200g=₹200. Meghalaya 1kg=₹800. Which costlier?', setup:'200:200 vs 1000:800', ans:'Himachal (₹1000/kg vs ₹800/kg)', steps:['Himachal 1kg = ₹1000','Meghalaya 1kg = ₹800']},
+    {title:'Earth Orbit', q:'Earth ~940 million km/year. How far in a week?', setup:'365 : 940 ∷ 7 : ?', ans:'≈18.03 million km', steps:['Factor = 7/365','Distance = 940×7/365 ≈ 18.03']},
+  ];
+  const cur = examples[ex];
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <h3 className="text-lg font-bold text-orange-400 mb-2">Real-Life Proportional Problems</h3>
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {examples.map((e,i)=>(
+            <button key={i} className={`btn px-2.5 py-1 text-xs ${ex===i?'btn-orange':'btn-slate'}`}
+              onClick={()=>{setEx(i);sound.playClick();}}>{e.title}</button>
+          ))}
+        </div>
+        <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
+          <div className="text-base font-bold text-white">{cur.title}</div>
+          <p className="text-sm text-slate-300">{cur.q}</p>
+          <div className="font-mono text-orange-400 text-lg">{cur.setup}</div>
+          <div className="text-emerald-400 font-bold text-lg">Answer: {cur.ans}</div>
+          <ul className="text-sm text-slate-400 space-y-0.5 mt-1">
+            {cur.steps.map((s,i)=><li key={i}>• {s}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ===== 9. Filter Coffee ===== */
+function CoffeeTab(){
+  const regular = [15,35];
+  const [dec,setDec]=useState(15);
+  const [milk,setMilk]=useState(35);
+  const [cR,cM] = simplify(dec,milk);
+  const strength = (dec/milk)>(regular[0]/regular[1])?'Stronger':(dec/milk)<(regular[0]/regular[1])?'Lighter':'Regular';
+  const table = [{d:300,m:600},{d:150,m:500},{d:200,m:400},{d:24,m:56},{d:100,m:300}];
+
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+          <h3 className="text-lg font-bold text-orange-400">Filter Coffee Ratios</h3>
+          <PronounceBtn text="Filter coffee strength depends on the ratio of decoction to milk. The regular mix is 15 to 35, which simplifies to 3 to 7. More decoction relative to milk makes stronger coffee." />
+        </div>
+        <p className="text-sm text-slate-300 mb-3">Regular mix is 15 mL decoction : 35 mL milk (→ 3 : 7). More decoction relative to milk → stronger.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+          <div className="space-y-2">
+            <div>
+              <label className="text-sm text-slate-400">Decoction (mL): <strong className="text-orange-400">{dec}</strong></label>
+              <input type="range" min="5" max="50" value={dec} onChange={e=>setDec(+e.target.value)} className="w-full accent-orange-500"/>
+            </div>
+            <div>
+              <label className="text-sm text-slate-400">Milk (mL): <strong className="text-orange-400">{milk}</strong></label>
+              <input type="range" min="10" max="80" value={milk} onChange={e=>setMilk(+e.target.value)} className="w-full accent-orange-500"/>
+            </div>
+            <div className="flex gap-1.5">
+              <button className="btn btn-slate px-2.5 py-1 text-xs" onClick={()=>{setDec(15);setMilk(35);sound.playClick();}}>Regular</button>
+              <button className="btn btn-slate px-2.5 py-1 text-xs" onClick={()=>{setDec(20);setMilk(30);sound.playClick();}}>Strong</button>
+              <button className="btn btn-slate px-2.5 py-1 text-xs" onClick={()=>{setDec(10);setMilk(40);sound.playClick();}}>Light</button>
+            </div>
+          </div>
+          <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
+            <div className="text-sm text-slate-400">Your mix</div>
+            <div className="text-2xl font-black text-orange-400 font-mono">{dec} : {milk}</div>
+            <div className="text-sm text-slate-400">→ {cR} : {cM}</div>
+            <div className={`mt-1.5 text-xl font-bold ${strength==='Stronger'?'text-red-400':strength==='Lighter'?'text-blue-400':'text-emerald-400'}`}>{strength}</div>
+            <div className="mt-2 flex justify-center gap-1">
+              <div className="h-7 rounded" style={{width:dec*1.4,background:'#78350f'}} title="Decoction"/>
+              <div className="h-7 rounded" style={{width:milk*1.4,background:'#fef3c7'}} title="Milk"/>
+            </div>
+          </div>
+        </div>
+
+        <h4 className="text-base font-bold text-orange-400 mb-2">Textbook Table</h4>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead><tr className="text-amber-400 border-b border-slate-700">
+              <th className="p-2 text-left">Decoction</th><th className="p-2 text-left">Milk</th><th className="p-2 text-left">Simplest</th><th className="p-2 text-left">vs 3:7</th>
+            </tr></thead>
+            <tbody className="text-slate-300">
+              {table.map((r,i)=>{
+                const [s1,s2]=simplify(r.d,r.m);
+                const cmp = (r.d/r.m)>(15/35)?'Stronger':(r.d/r.m)<(15/35)?'Lighter':'Regular';
+                return (
+                  <tr key={i} className="border-b border-slate-800">
+                    <td className="p-2">{r.d}</td><td className="p-2">{r.m}</td>
+                    <td className="p-2 font-mono text-orange-400">{s1}:{s2}</td>
+                    <td className={`p-2 font-bold ${cmp==='Stronger'?'text-red-400':cmp==='Lighter'?'text-blue-400':'text-emerald-400'}`}>{cmp}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ===== 10. Sharing ===== */
+function ShareTab(){
+  const [total,setTotal]=useState(12);
+  const [partA,setPartA]=useState(5);
+  const partB = total-partA;
+  const [sA,sB]=simplify(partA,partB);
+
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
+          <h3 className="text-lg font-bold text-orange-400">7.5 Sharing, but Not Equally!</h3>
+          <PronounceBtn text="Collect counters and share them between two people. The ratio of the two shares tells us how the total is divided. Equal sharing gives the ratio 1 to 1." />
+        </div>
+        <p className="text-sm text-slate-300 mb-3">Collect counters and share them. The ratio of shares describes the division.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="space-y-2">
+            <div>
+              <label className="text-sm text-slate-400">Total counters: <strong className="text-orange-400">{total}</strong></label>
+              <input type="range" min="4" max="24" value={total} onChange={e=>{setTotal(+e.target.value);if(partA>+e.target.value)setPartA(+e.target.value);}} className="w-full accent-orange-500"/>
+            </div>
+            <div>
+              <label className="text-sm text-slate-400">Partner’s share: <strong className="text-orange-400">{partA}</strong></label>
+              <input type="range" min="0" max={total} value={partA} onChange={e=>setPartA(+e.target.value)} className="w-full accent-orange-500"/>
+            </div>
+            <div className="text-sm text-slate-300">Your share = <strong className="text-blue-400">{partB}</strong></div>
+          </div>
+          <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+            <div className="flex justify-around items-end mb-2">
+              <div className="share-person">
+                <div className="text-3xl">👧</div>
+                <div className="text-xs text-slate-400">Partner</div>
+                <div className="text-xl font-black text-orange-400">{partA}</div>
+                <div className="flex flex-wrap justify-center max-w-[90px]">
+                  {Array.from({length:partA}).map((_,i)=><span key={'a'+i} className="counter-dot" style={{background:'#f97316'}}/>)}
+                </div>
+              </div>
+              <div className="text-xl text-slate-500 font-black">:</div>
+              <div className="share-person">
+                <div className="text-3xl">👦</div>
+                <div className="text-xs text-slate-400">You</div>
+                <div className="text-xl font-black text-blue-400">{partB}</div>
+                <div className="flex flex-wrap justify-center max-w-[90px]">
+                  {Array.from({length:partB}).map((_,i)=><span key={'b'+i} className="counter-dot" style={{background:'#3b82f6'}}/>)}
+                </div>
+              </div>
+            </div>
+            <div className="text-center border-t border-slate-700 pt-2">
+              <div className="text-sm text-slate-400">Ratio (Partner : You)</div>
+              <div className="text-2xl font-black text-orange-400 font-mono">{partA} : {partB}</div>
+              <div className="text-base text-emerald-400">Simplest → {sA} : {sB}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="def-box text-sm">
+        <strong className="text-amber-400">Equal share</strong> → ratio 1 : 1. Any other division produces a different ratio describing each person’s share of the whole.
+      </div>
+    </div>
+  );
+}
+
+/* ===== 11. Figure it Out ===== */
+function FigOutTab(){
+  const [ans,setAns]=useState({});
+  const questions = [
+    {id:1,q:'Give 3 ratios proportional to 4 : 9', hint:'Multiply both terms by the same number', sample:'8:18 , 12:27 , 20:45'},
+    {id:2,q:'Fill: 3 : ___ proportional to 18 : 24', hint:'Factor = 3/18 = 1/6 → 24×1/6 = 4', sample:'4'},
+    {id:3,q:'Fill: 12 : ___ proportional to 18 : 24', hint:'Factor = 12/18 = 2/3 → 24×2/3 = 16', sample:'16'},
+    {id:4,q:'Fill: 27 : ___ proportional to 18 : 24', hint:'Factor = 27/18 = 3/2 → 24×3/2 = 36', sample:'36'},
+    {id:5,q:'Are 4:7 and 12:21 proportional?', hint:'Cross: 4×21=84, 7×12=84', sample:'Yes'},
+    {id:6,q:'Are 8:3 and 24:6 proportional?', hint:'Cross: 8×6=48, 3×24=72', sample:'No'},
+  ];
+  return (
+    <div className="h-full overflow-y-auto pr-1 space-y-3">
+      <div className="glass-panel p-4 rounded-2xl">
+        <h3 className="text-lg font-bold text-orange-400 mb-2">Figure it Out — Practice</h3>
+        <div className="space-y-2">
+          {questions.map(q=>(
+            <div key={q.id} className="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+              <div className="text-sm font-semibold text-white mb-1">{q.id}. {q.q}</div>
+              <button className="btn btn-slate px-2.5 py-1 text-xs mb-1"
+                onClick={()=>{setAns({...ans,[q.id]:!ans[q.id]});sound.playClick();}}>
+                {ans[q.id]?'Hide':'Show'} Hint & Answer
+              </button>
+              {ans[q.id] && (
+                <div className="text-sm text-slate-300 mt-1 animate-fade-in">
+                  <div className="text-amber-400">Hint: {q.hint}</div>
+                  <div className="text-emerald-400 font-bold">Answer: {q.sample}</div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ===== 12. Whiteboard ===== */
+function WhiteboardTab(){
+  const canvasRef = useRef(null);
+  const isDrawing = useRef(false);
+  const lastPos = useRef({x:0,y:0});
+  const [drawingColor,setDrawingColor]=useState('#f97316');
+  const [brushSize,setBrushSize]=useState(4);
+
+  useEffect(()=>{
+    const canvas=canvasRef.current; if(!canvas)return;
+    const parent=canvas.parentElement;
+    const resize=()=>{
+      canvas.width=parent.clientWidth; canvas.height=parent.clientHeight;
+      const ctx=canvas.getContext('2d'); ctx.fillStyle='#1e293b'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    };
+    resize(); window.addEventListener('resize',resize);
+    return()=>window.removeEventListener('resize',resize);
+  },[]);
+
+  const getPos=(e)=>{
+    const rect=canvasRef.current.getBoundingClientRect();
+    const clientX=e.clientX??(e.touches&&e.touches[0].clientX);
+    const clientY=e.clientY??(e.touches&&e.touches[0].clientY);
+    return{x:clientX-rect.left,y:clientY-rect.top};
+  };
+  const startDrawing=(e)=>{e.preventDefault();isDrawing.current=true;const pos=getPos(e);lastPos.current=pos;};
+  const stopDrawing=()=>{isDrawing.current=false;};
+  const draw=(e)=>{
+    if(!isDrawing.current||!canvasRef.current)return;
+    e.preventDefault();
+    const pos=getPos(e); const ctx=canvasRef.current.getContext('2d');
+    ctx.lineWidth=brushSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=drawingColor;
+    ctx.beginPath();ctx.moveTo(lastPos.current.x,lastPos.current.y);ctx.lineTo(pos.x,pos.y);ctx.stroke();
+    lastPos.current=pos;
+  };
+  const clearWhiteboard=()=>{
+    sound.playClick();
+    const canvas=canvasRef.current;
+    if(canvas){const ctx=canvas.getContext('2d');ctx.fillStyle='#1e293b';ctx.fillRect(0,0,canvas.width,canvas.height);}
+  };
+
+  return (
+    <div className="h-full flex flex-col space-y-2 overflow-hidden">
+      <div className="glass-panel px-3 py-2 rounded-xl flex items-center justify-between flex-shrink-0 flex-wrap gap-2">
+        <div className="flex items-center gap-1.5">
+          <span className="text-xs font-bold text-slate-300">Color:</span>
+          {['#f97316','#3b82f6','#10b981','#eab308','#ec4899','#ffffff','#000000'].map(c=>(
+            <button key={c} onClick={()=>{sound.playClick();setDrawingColor(c);}}
+              className="w-5 h-5 rounded-full border-2 transition cursor-pointer"
+              style={{backgroundColor:c,borderColor:drawingColor===c?'#fff':'transparent',transform:drawingColor===c?'scale(1.15)':'scale(1)'}}/>
+          ))}
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="text-xs font-bold text-slate-300">Size:</span>
+          {[2,4,8,14].map(s=>(
+            <button key={s} onClick={()=>{sound.playClick();setBrushSize(s);}}
+              className={`btn px-2 py-0.5 text-xs ${brushSize===s?'btn-orange':'btn-slate'}`}>{s}px</button>
+          ))}
+          <button onClick={clearWhiteboard} className="btn btn-red px-2.5 py-0.5 text-xs">Clear</button>
+        </div>
+      </div>
+      <div className="glass-panel rounded-2xl flex-1 overflow-hidden relative border border-slate-800">
+        <canvas ref={canvasRef}
+          onMouseDown={startDrawing} onMouseUp={stopDrawing} onMouseLeave={stopDrawing} onMouseMove={draw}
+          onTouchStart={startDrawing} onTouchEnd={stopDrawing} onTouchMove={draw}
+          className="cursor-crosshair w-full h-full block" style={{touchAction:'none'}}/>
+      </div>
+      <p className="text-xs text-slate-500 text-center">Sketch ratio bars, similar rectangles, or cross-multiplication steps.</p>
+    </div>
+  );
+}
+
+/* ===== 13. Quiz ===== */
+function QuizTab(){
+  const qs = [
+    {q:'Images look similar when width and height change by…',options:['The same amount (subtraction)','The same factor (multiplication)','Any random numbers','Only when they stay the same size'],correct:1,exp:'Same multiplicative factor keeps the ratio constant → similar shapes.',wrong:'Adding/subtracting the same number changes the ratio.'},
+    {q:'The ratio 60 : 40 in simplest form is…',options:['6 : 4','15 : 10','3 : 2','30 : 20'],correct:2,exp:'HCF of 60 and 40 is 20 → 3 : 2.',wrong:'Divide both terms by their HCF (20).'},
+    {q:'Two ratios a:b and c:d are proportional when…',options:['a+b = c+d','a×d = b×c','a−b = c−d','a/b = c−d'],correct:1,exp:'Cross-multiplication equality is the definition of proportion.',wrong:'Remember a×d = b×c.'},
+    {q:'In the Rule of Three, ichchhāphala = …',options:['(pramāṇa × phala)/ichchhā','(phala × ichchhā)/pramāṇa','pramāṇa + phala + ichchhā','phala − ichchhā'],correct:1,exp:'Āryabhaṭa: multiply phala by ichchhā and divide by pramāṇa.',wrong:'d = (b×c)/a.'},
+    {q:'6 glasses : 10 spoons ∷ 18 glasses : ? spoons',options:['20','25','30','15'],correct:2,exp:'Factor 18/6=3 → 10×3=30.',wrong:'Scale both terms by the same factor 3.'},
+    {q:'Which tea is more expensive per kg? Himachal 200 g = ₹200, Meghalaya 1 kg = ₹800',options:['Meghalaya','Himachal','Same price','Cannot tell'],correct:1,exp:'Himachal costs ₹1000 per kg; Meghalaya ₹800 per kg.',wrong:'Convert to same weight first.'},
+    {q:'Adding the same number to both terms of a ratio…',options:['Keeps it proportional','Usually changes the ratio','Always gives 1:1','Doubles the ratio'],correct:1,exp:'Age example: 3:30 becomes 12:39 — no longer 1:10.',wrong:'Only multiplication/division by the same factor preserves the ratio.'},
+    {q:'Filter coffee 15:35 is regular. 20:30 is…',options:['Lighter','Stronger','The same','Not a ratio'],correct:1,exp:'20/30 > 15/35 → higher proportion of decoction → stronger.',wrong:'Compare the fractions decoction/milk.'},
+  ];
+  const [idx,setIdx]=useState(0);
+  const [sel,setSel]=useState(null);
+  const [score,setScore]=useState(0);
+  const [done,setDone]=useState(false);
+  const [show,setShow]=useState(false);
+
+  const submit=i=>{
+    if(show)return;
+    sound.playClick(); setSel(i); setShow(true);
+    if(i===qs[idx].correct){setScore(s=>s+1);sound.playSuccess();}
+  };
+  const next=()=>{
+    sound.playClick();
+    if(idx+1>=qs.length)setDone(true);
+    else{setIdx(idx+1);setSel(null);setShow(false);}
+  };
+  const restart=()=>{setIdx(0);setSel(null);setScore(0);setDone(false);setShow(false);sound.playClick();};
+
+  if(done) return (
+    <div className="h-full flex items-center justify-center">
+      <div className="glass-panel p-8 rounded-3xl max-w-md w-full text-center space-y-3">
+        <div className="text-5xl">{score>=qs.length*0.7?'🎉':'📚'}</div>
+        <h3 className="text-2xl font-black text-white">Quiz Complete</h3>
+        <div className="text-4xl font-black text-orange-400">{score} / {qs.length}</div>
+        <p className="text-sm text-slate-400">
+          {score===qs.length?'Perfect! You have mastered proportional reasoning.':
+           score>=qs.length*0.7?'Great work — review the few you missed.':
+           'Keep exploring the tabs and try again!'}
+        </p>
+        <button className="btn btn-orange px-6 py-2" onClick={restart}>Try Again</button>
+      </div>
+    </div>
+  );
+
+  const q=qs[idx];
+  const isCorrect=sel===q.correct;
+
+  return (
+    <div className="h-full flex items-center justify-center overflow-y-auto pr-1">
+      <div className="glass-panel p-5 rounded-3xl max-w-xl w-full space-y-3">
+        <div className="flex justify-between items-center text-sm">
+          <span className="text-slate-400 font-semibold">Question {idx+1} of {qs.length}</span>
+          <span className="bg-slate-800 text-orange-400 font-bold px-3 py-1 rounded-full">Score: {score}</span>
+        </div>
+        <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+          <div className="h-full bg-gradient-to-r from-orange-500 to-amber-400 transition-all" style={{width:`${((idx+(show?1:0))/qs.length)*100}%`}}/>
+        </div>
+        <h4 className="text-base font-bold text-white leading-snug">{q.q}</h4>
+        <div className="space-y-2">
+          {q.options.map((o,i)=>{
+            let cls='w-full text-left px-3 py-2.5 rounded-xl border-2 text-sm font-semibold transition flex items-center gap-2.5 cursor-pointer ';
+            if(show){
+              if(i===q.correct) cls+='bg-emerald-600/25 border-emerald-400 text-emerald-100';
+              else if(i===sel) cls+='bg-red-600/25 border-red-400 text-red-100';
+              else cls+='bg-slate-800/40 border-slate-700 text-slate-500';
+            }else cls+='bg-slate-800 border-slate-600 text-white hover:border-orange-400 hover:bg-orange-600/15';
+            return (
+              <button key={i} className={cls} onClick={()=>submit(i)} disabled={show}>
+                <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-sm font-black flex-shrink-0 ${
+                  show&&i===q.correct?'bg-emerald-500 text-white':
+                  show&&i===sel?'bg-red-500 text-white':'bg-orange-600 text-white'
+                }`}>{String.fromCharCode(65+i)}</span>
+                <span>{o}</span>
+              </button>
+            );
+          })}
+        </div>
+        {show && (
+          <div className={`p-3 rounded-xl text-sm animate-fade-in leading-relaxed ${
+            isCorrect?'bg-emerald-500/15 border border-emerald-500/40 text-emerald-200':'bg-amber-500/15 border border-amber-500/40 text-amber-100'
+          }`}>
+            <div className="font-bold mb-1 text-base">{isCorrect?'✅ Correct!':'❌ Incorrect'}</div>
+            <div className="text-sm opacity-95">{isCorrect?q.exp:q.wrong}</div>
+            {!isCorrect && (
+              <div className="mt-2 pt-2 border-t border-amber-500/30 text-sm text-emerald-300">
+                <strong>Right answer:</strong> {q.options[q.correct]}<br/>{q.exp}
+              </div>
+            )}
+            <button className="btn btn-orange px-5 py-1.5 mt-2" onClick={next}>
+              {idx+1<qs.length?'Next Question →':'See Results'}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

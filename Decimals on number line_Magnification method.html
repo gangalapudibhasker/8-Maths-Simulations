@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Interactive Mathematics Simulation: Decimal Zoom & More</title>
+    
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset & System Font Stack */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-glass: rgba(30, 41, 59, 0.75);
+            --bg-gradient: linear-gradient(135deg, #0b1120 0%, #1e1b4b 50%, #3b0764 100%);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-primary: #38bdf8;
+            --accent-secondary: #818cf8;
+            --accent-success: #34d399;
+            --accent-warning: #fbbf24;
+            --accent-danger: #f87171;
+            --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            --font-main: 'Outfit', sans-serif;
+            --font-display: 'Playfair Display', serif;
+        }
+
+        body.light-mode {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 60%, #fae8ff 100%);
+            --border-glass: rgba(0, 0, 0, 0.1);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* 16:9 Aspect Ratio Container Wrapper */
+        .viewport-wrapper {
+            width: 100vw;
+            height: 100vh;
+            max-width: 100vw;
+            max-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .simulation-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            max-height: 100vh;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-glass);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Header Styling */
+        header {
+            height: 10%;
+            padding: 0 20px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-glass);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .title-group h1 {
+            font-size: clamp(14px, 1.5vw, 20px);
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .author-badge {
+            font-size: clamp(10px, 1vw, 12px);
+            color: var(--text-muted);
+            background: var(--border-glass);
+            padding: 2px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: var(--border-glass);
+            border: none;
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s, background 0.2s, color 0.2s;
+        }
+
+        .icon-btn:hover {
+            transform: scale(1.05);
+            background: var(--accent-primary);
+            color: #000;
+        }
+
+        /* Main Workspace */
+        .workspace {
+            height: 90%;
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 15px;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        /* Left Panel: Simulation / Experiment */
+        .sim-panel {
+            background: var(--bg-glass);
+            border-radius: 14px;
+            border: 1px solid var(--border-glass);
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Interactive Ruler Canvas Area */
+        .canvas-container {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border: 1px solid var(--border-glass);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Simulation Controls / Sliders */
+        .sim-controls {
+            margin-top: 10px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: rgba(0,0,0,0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            flex-wrap: wrap;
+        }
+
+        .sim-controls input[type="range"] {
+            flex: 1;
+            accent-color: var(--accent-primary);
+            cursor: pointer;
+            min-width: 100px;
+        }
+
+        .sim-controls input[type="number"] {
+            width: 70px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .sim-controls select {
+            width: auto;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Right Panel: Tabs (Guide / Quiz / Practice Board / Certificate) */
+        .right-panel {
+            background: var(--bg-glass);
+            border-radius: 14px;
+            border: 1px solid var(--border-glass);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .tab-bar {
+            display: flex;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 4px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 11px;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-primary);
+            background: var(--border-glass);
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .tab-content {
+            flex: 1;
+            padding: 18px;
+            overflow-y: auto;
+            display: none;
+            font-size: 14.5px;
+            line-height: 1.6;
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Textbook Section Styling */
+        .textbook-section h3 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(56, 189, 248, 0.15);
+        }
+
+        .textbook-section p {
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        /* Takeaways Card Component */
+        .takeaways-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 18px 0;
+            box-shadow: var(--shadow);
+        }
+
+        body.light-mode .takeaways-card {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .takeaways-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .takeaways-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .takeaways-card li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .takeaways-card li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-size: 11px;
+        }
+
+        /* Callout Component */
+        .highlight-callout {
+            border-left: 4px solid var(--accent-success);
+            background: rgba(52, 211, 153, 0.08);
+            padding: 14px 18px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 18px;
+        }
+
+        body.light-mode .highlight-callout {
+            background: rgba(52, 211, 153, 0.04);
+        }
+
+        .highlight-callout p {
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        /* Student Login / Profile Setup */
+        .login-box {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.12));
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1.5px solid rgba(56, 189, 248, 0.25);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .login-box {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(129, 140, 248, 0.05));
+            border-color: rgba(56, 189, 248, 0.18);
+        }
+
+        .login-box label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-secondary);
+            border: 1.5px solid var(--border-glass);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 14.5px;
+            font-family: var(--font-main);
+            transition: all 0.2s ease;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+            background: var(--bg-primary);
+        }
+
+        /* Quiz Engine Styling */
+        .quiz-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .option-btn {
+            background: var(--border-glass);
+            border: 1px solid var(--border-glass);
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: var(--text-main);
+            text-align: left;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent-primary);
+        }
+
+        .option-btn.correct {
+            background: rgba(52, 211, 153, 0.2) !important;
+            border-color: var(--accent-success) !important;
+            color: var(--accent-success) !important;
+        }
+
+        .option-btn.incorrect {
+            background: rgba(248, 113, 113, 0.2) !important;
+            border-color: var(--accent-danger) !important;
+            color: var(--accent-danger) !important;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .primary-btn {
+            background: var(--accent-primary);
+            color: #0f172a;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .primary-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Practice Board (Whiteboard) - Friendly & Feature Rich */
+        .whiteboard-container {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+            border: 1px solid var(--border-glass);
+            min-height: 200px;
+        }
+
+        .whiteboard-toolbar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .wb-tool {
+            background: var(--border-glass);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            color: var(--text-main);
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .wb-tool.active {
+            background: var(--accent-primary);
+            color: #000;
+        }
+
+        .color-picker {
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            background: none;
+        }
+
+        /* Certificate Styles */
+        .certificate-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 2px solid var(--accent-warning);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .cert-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            color: var(--accent-warning);
+            margin-bottom: 5px;
+        }
+
+        .cert-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 10px 0;
+            border-bottom: 1px solid var(--accent-primary);
+            padding-bottom: 4px;
+            display: inline-block;
+        }
+
+        /* Mascot Speech Bubble */
+        .mascot-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+            z-index: 5;
+            max-width: 85%;
+        }
+
+        .mascot-svg {
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            animation: mascotFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes mascotFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .speech-bubble {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-glass);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            line-height: 1.3;
+            box-shadow: var(--shadow);
+            pointer-events: none;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        /* Large glowing Target Display */
+        .target-display {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent-success);
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.6);
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid var(--border-glass);
+            padding: 5px 12px;
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+            z-index: 5;
+            pointer-events: none;
+            font-family: var(--font-main);
+            letter-spacing: 0.5px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        body.light-mode .target-display {
+            background: rgba(255, 255, 255, 0.75);
+            color: #059669;
+            text-shadow: 0 0 8px rgba(5, 150, 105, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+        }
+
+        /* Tooltip for Explanations */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            border-bottom: 1px dotted var(--accent-primary);
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--bg-secondary);
+            color: var(--text-main);
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 900px) {
+            .workspace {
+                grid-template-columns: 1fr;
+                overflow-y: auto;
+            }
+            .simulation-container {
+                aspect-ratio: auto;
+                height: 98vh;
+            }
+        }
+
+        /* Print Stylesheet for Certificate */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+            }
+            .viewport-wrapper, .simulation-container, header, .workspace, .sim-panel, .right-panel, .tab-bar, .mascot-container {
+                display: none !important;
+            }
+            /* Show only the certificate card */
+            #tab-certificate {
+                display: block !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100% !important;
+                height: auto !important;
+                padding: 0 !important;
+                background: none !important;
+            }
+            .certificate-card {
+                border: 4px double #d97706 !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+                box-shadow: none !important;
+                width: 100% !important;
+                height: auto !important;
+                max-width: 600px;
+                margin: 40px auto !important;
+                padding: 40px !important;
+                border-radius: 12px;
+                page-break-inside: avoid;
+            }
+            .cert-title {
+                color: #d97706 !important;
+                font-size: 28px !important;
+                font-weight: 700 !important;
+            }
+            .cert-name {
+                color: #000000 !important;
+                border-bottom: 2px solid #0284c7 !important;
+                font-size: 24px !important;
+                margin: 20px 0 !important;
+            }
+            #printCertBtn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="viewport-wrapper">
+        <div class="simulation-container">
+            <!-- Header -->
+            <header>
+                <div class="title-group">
+                    <h1>Enhanced Decimal Zoom & Measurement</h1>
+                    <div class="author-badge">Designed by Gangalapudi Bhasker Reddy</div>
+                </div>
+                <div class="header-controls">
+                    <button class="icon-btn" id="audioToggle" aria-label="Toggle Audio" title="Mute/Unmute">🔊</button>
+                    <button class="icon-btn" id="themeToggle" aria-label="Toggle Theme" title="Light/Dark Mode">☀️</button>
+                    <button class="icon-btn" id="fullscreenBtn" aria-label="Fullscreen" title="Fullscreen">⛶</button>
+                </div>
+            </header>
+
+            <!-- Workspace -->
+            <div class="workspace">
+                <!-- Left Panel: Interactive Simulation -->
+                <div class="sim-panel">
+                    <div class="panel-header">
+                        <span class="panel-title">Interactive Simulation: Multi-Level Magnifying Number Lines</span>
+                        <span id="currentMeasurement" style="font-size: 12px; color: var(--accent-success); font-weight: 600;">Target: 4.185</span>
+                    </div>
+
+                    <div class="canvas-container">
+                        <canvas id="simCanvas" width="600" height="300"></canvas>
+                        <!-- Animated Mascot -->
+                        <div class="mascot-container">
+                            <svg class="mascot-svg" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" fill="#38bdf8" />
+                                <circle cx="35" cy="40" r="8" fill="#fff" />
+                                <circle cx="65" cy="40" r="8" fill="#fff" />
+                                <circle cx="35" cy="40" r="3" fill="#000" />
+                                <circle cx="65" cy="40" r="3" fill="#000" />
+                                <path d="M 35 65 Q 50 80 65 65" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <div class="speech-bubble" id="mascotMessage">
+                                Drag the red arrow, type your target number, or use levels to zoom in!
+                            </div>
+                        </div>
+                        <!-- Large Glowing Target Display -->
+                        <div class="target-display" id="largeTargetDisplay">Target: 4.185</div>
+                    </div>
+
+                    <div class="sim-controls">
+                        <span>Target Value:</span>
+                        <input type="number" id="targetInput" min="0" max="10" step="0.001" value="4.185">
+                        <span>Magnification Level:</span>
+                        <input type="range" id="precisionSlider" min="1" max="4" step="1" value="4">
+                        <span id="scaleLabel" style="font-weight: 600; min-width: 70px;">Level 4</span>
+                        <button class="primary-btn" id="pronounceBtn" style="padding: 4px 10px; font-size: 11px;">Pronounce</button>
+                        <span>Step Size:</span>
+                        <select id="stepSize" style="font-size: 11px;">
+                            <option value="0.1">0.1</option>
+                            <option value="0.01">0.01</option>
+                            <option value="0.001" selected>0.001</option>
+                        </select>
+                        <button class="primary-btn" id="snapToGridBtn" style="padding: 4px 10px; font-size: 11px;">Snap to Grid</button>
+                        <span class="tooltip">ℹ️
+                            <span class="tooltiptext">Snap the arrow to the nearest tick mark for precise alignment.</span>
+                        </span>
+                    </div>
+
+
+                </div>
+
+                <!-- Right Panel: Tabs -->
+                <div class="right-panel">
+                    <div class="tab-bar">
+                        <button class="tab-btn active" data-tab="textbook">Guide</button>
+                        <button class="tab-btn" data-tab="quiz">Quiz</button>
+                        <button class="tab-btn" data-tab="whiteboard">Practice Board</button>
+                        <button class="tab-btn" data-tab="certificate">Certificate</button>
+                        <button class="tab-btn" data-tab="lesson-plan">Lesson Plan</button>
+                    </div>
+
+                    <!-- Tab 1: Textbook Content -->
+                    <div class="tab-content active" id="tab-textbook">
+                        <div class="login-box">
+                            <label>Student Login for Certificate</label>
+                            <input type="text" id="studentNameInput" placeholder="Enter your full name...">
+                        </div>
+                        <div class="textbook-section">
+                            <h3>A Peek Beyond the Point</h3>
+                            <p>To locate precise decimal numbers like <strong>4.185</strong> on a number line, we use <strong>successive magnification</strong>. Each level magnifies the segment between two consecutive markings into 10 equal parts.</p>
+                            
+                            <div class="takeaways-card">
+                                <h4>Key Takeaways:</h4>
+                                <ul>
+                                    <li><strong>Level 1:</strong> Locates between integers 0 and 10.</li>
+                                    <li><strong>Level 2:</strong> Magnifies the unit interval (e.g., 4 to 5).</li>
+                                    <li><strong>Level 3:</strong> Magnifies hundredths (e.g., 4.1 to 4.2).</li>
+                                    <li><strong>Level 4:</strong> Locates thousandths precisely (e.g., 4.18 to 4.19).</li>
+                                </ul>
+                            </div>
+
+                            <div class="highlight-callout">
+                                <p><strong>Why It Matters:</strong> Understanding decimal place values is crucial for precise measurements in science, engineering, and everyday life!</p>
+                                <p style="margin-bottom: 0;">
+                                    <strong>Example:</strong> To measure <span class="tooltip">3.14159
+                                        <span class="tooltiptext">This is the value of Pi (π) to 5 decimal places!</span>
+                                    </span>, you'd use Level 5 magnification to see the exact position of the 5th decimal.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Quiz Engine -->
+                    <div class="tab-content" id="tab-quiz">
+                        <div class="quiz-container">
+                            <div id="quizWorkspace">
+                                <div class="quiz-header">
+                                    <span id="quizProgress">Question 1 of 5</span>
+                                    <span id="quizTimer">Time: 30s</span>
+                                </div>
+                                <div class="question-text" id="questionText">Loading question...</div>
+                                <div class="options-list" id="optionsList"></div>
+                            </div>
+                            <div class="quiz-footer">
+                                <span id="quizScore" style="font-weight: 600; font-size: 13px;">Score: 0</span>
+                                <button class="primary-btn" id="nextQuizBtn" style="display: none;">Next Question</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Practice Board (Whiteboard) -->
+                    <div class="tab-content" id="tab-whiteboard">
+                        <div class="whiteboard-toolbar">
+                            <button class="wb-tool active" data-tool="pen">✏️ Pen</button>
+                            <button class="wb-tool" data-tool="highlighter">🖍️ Highlighter</button>
+                            <button class="wb-tool" data-tool="eraser">🧹 Eraser</button>
+                            <input type="color" id="wbColor" class="color-picker" value="#38bdf8" title="Pen Color">
+                            <button class="wb-tool" id="clearWb">🗑️ Clear All</button>
+                            <button class="wb-tool" id="addTextBtn" data-tool="text">🔤 Add Text</button>
+                            <button class="wb-tool" id="drawLineBtn" data-tool="line">➖ Draw Line</button>
+                            <button class="wb-tool" id="drawCircleBtn" data-tool="circle">⭕ Draw Circle</button>
+                        </div>
+                        <div class="whiteboard-container">
+                            <canvas id="whiteboardCanvas" width="300" height="250"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Tab 4: Certificate Generation -->
+                    <div class="tab-content" id="tab-certificate">
+                        <div class="certificate-card">
+                            <div class="cert-title">Certificate of Achievement</div>
+                            <p style="font-size: 12px; color: var(--text-muted);">This is proudly presented to</p>
+                            <div class="cert-name" id="certStudentName">Student Name</div>
+                            <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">For successfully completing the interactive experiment and quiz on Decimal Place Values and Measurements.</p>
+                            <div style="margin-top: 15px; font-size: 11px; font-weight: 600; color: var(--accent-primary);" id="certScoreDisplay">Score: 0/5</div>
+                            <div style="margin-top: 10px; font-size: 10px; color: var(--text-muted);" id="certDate">Date: <span id="currentDate"></span></div>
+                            <button class="primary-btn" id="printCertBtn" style="margin-top: 15px;">Print / Save Certificate</button>
+                        </div>
+                    </div>
+
+                    <!-- Tab 5: Lesson Plan for Teachers -->
+                    <div class="tab-content" id="tab-lesson-plan">
+                        <div class="textbook-section">
+                            <h3>Lesson Plan: Decimal Place Values</h3>
+                            <p><strong>Objective:</strong> Students will understand and visualize decimal place values using successive magnification.</p>
+                            <p><strong>Materials Needed:</strong></p>
+                            <ul>
+                                <li>Computer/Tablet with internet access</li>
+                                <li>Projector (for classroom use)</li>
+                                <li>Printed worksheets (optional)</li>
+                            </ul>
+                            <p><strong>Lesson Duration:</strong> 45-60 minutes</p>
+                            <p><strong>Steps:</strong></p>
+                            <ol>
+                                <li><strong>Introduction (10 min):</strong> Explain the concept of decimal place values and their importance in measurements.</li>
+                                <li><strong>Demo (15 min):</strong> Use the simulation to demonstrate how to locate decimals like 3.14 or 0.75 on the number line.</li>
+                                <li><strong>Hands-On Practice (20 min):</strong> Let students explore the simulation in pairs. Ask them to locate specific decimals (e.g., 2.56, 7.891).</li>
+                                <li><strong>Quiz (10 min):</strong> Have students complete the quiz individually to assess understanding.</li>
+                                <li><strong>Wrap-Up (5 min):</strong> Discuss common challenges and review key takeaways. Award certificates to students who complete the quiz.</li>
+                            </ol>
+                            <p><strong>Assessment:</strong> Use the quiz scores and participation in the simulation to evaluate understanding.</p>
+                            <p><strong>Extension Activity:</strong> Ask students to create their own decimal number lines on paper for values like 0.123 or 5.6789.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Embedded Vanilla JS Simulation & Quiz Engine -->
+    <script>
+        // --- Web Audio API & Sound Synthesis ---
+        let audioCtx = null;
+        let isMuted = false;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playSound(type) {
+            if (isMuted) return;
+            initAudio();
+            if (!audioCtx) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.exponentialRampToValueAtTime(400, now + 0.05);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
+                osc.start(now);
+                osc.stop(now + 0.05);
+            } else if (type === 'cheer' || type === 'correct') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.2);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } else if (type === 'tick') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(300, now);
+                gain.gain.setValueAtTime(0.05, now);
+                gain.gain.linearRampToValueAtTime(0.001, now + 0.03);
+                osc.start(now);
+                osc.stop(now + 0.03);
+            } else if (type === 'trumpet') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(261.63, now); // C4
+                osc.frequency.setValueAtTime(329.63, now + 0.1); // E4
+                osc.frequency.setValueAtTime(392.00, now + 0.2); // G4
+                osc.frequency.setValueAtTime(523.25, now + 0.3); // C5
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.6);
+                osc.start(now);
+                osc.stop(now + 0.6);
+            }
+        }
+
+        // --- Text-to-Speech Pronunciation ---
+        function speakText(text) {
+            if (isMuted || !('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            
+            // Map character by character to speak precise digits (e.g. 4.185 -> "four point one eight five")
+            const digitWords = {
+                '0': 'zero', '1': 'one', '2': 'two', '3': 'three', '4': 'four',
+                '5': 'five', '6': 'six', '7': 'seven', '8': 'eight', '9': 'nine',
+                '.': 'point'
+            };
+            const spoken = text.split('').map(char => digitWords[char] || char).join(' ');
+            
+            const utterance = new SpeechSynthesisUtterance(spoken);
+            utterance.rate = 0.85;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // --- UI State & Controls ---
+        const themeToggle = document.getElementById('themeToggle');
+        const audioToggle = document.getElementById('audioToggle');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            themeToggle.textContent = document.body.classList.contains('light-mode') ? '🌙' : '☀️';
+            playSound('click');
+            drawSimulation();
+        });
+
+        audioToggle.addEventListener('click', () => {
+            isMuted = !isMuted;
+            audioToggle.textContent = isMuted ? '🔇' : '🔊';
+        });
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                fullscreenBtn.textContent = '⨯';
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    fullscreenBtn.textContent = '⛶';
+                }
+            }
+            playSound('click');
+        });
+
+        // Tab Switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                playSound('click');
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+
+                if (btn.dataset.tab === 'certificate') {
+                    updateCertificate();
+                } else if (btn.dataset.tab === 'whiteboard') {
+                    resizeWhiteboard();
+                }
+            });
+        });
+
+        // --- Canvas Simulation: Enhanced Multi-level Magnification ---
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        const precisionSlider = document.getElementById('precisionSlider');
+        const scaleLabel = document.getElementById('scaleLabel');
+        const currentMeasurement = document.getElementById('currentMeasurement');
+        const pronounceBtn = document.getElementById('pronounceBtn');
+        const mascotMessage = document.getElementById('mascotMessage');
+        const targetInput = document.getElementById('targetInput');
+        const stepSizeSelect = document.getElementById('stepSize');
+        const snapToGridBtn = document.getElementById('snapToGridBtn');
+
+        let zoomLevel = 4;
+        let targetValue = 4.185;
+        let isDraggingArrow = false;
+        let draggingLevel = null;
+        let snapToGrid = false;
+        let stepSize = 0.001;
+
+        precisionSlider.addEventListener('input', (e) => {
+            zoomLevel = parseInt(e.target.value);
+            scaleLabel.textContent = `Level ${zoomLevel}`;
+            playSound('tick');
+            mascotMessage.textContent = `Zoom level changed to Level ${zoomLevel}!`;
+            drawSimulation();
+        });
+
+        targetInput.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            if (!isNaN(val) && val >= 0 && val <= 10) {
+                targetValue = val;
+                drawSimulation();
+            }
+        });
+
+        stepSizeSelect.addEventListener('change', (e) => {
+            stepSize = parseFloat(e.target.value);
+            drawSimulation();
+        });
+
+        snapToGridBtn.addEventListener('click', () => {
+            snapToGrid = !snapToGrid;
+            snapToGridBtn.textContent = snapToGrid ? 'Snap: ON' : 'Snap to Grid';
+            playSound('click');
+            mascotMessage.textContent = `Snap to Grid is now ${snapToGrid ? 'enabled' : 'disabled'}.`;
+            drawSimulation();
+        });
+
+        // Determine coordinates and scale factor based on layout
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);
+            const mouseY = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+            const startX = 50;
+            const lineW = canvas.width - 100;
+            const rowH = canvas.height / (zoomLevel + 0.5);
+
+            // Find which magnification level is clicked
+            let clickedLevel = Math.round((mouseY + 10) / rowH);
+            clickedLevel = Math.max(1, Math.min(zoomLevel, clickedLevel));
+            const yPos = clickedLevel * rowH - 10;
+
+            if (Math.abs(mouseY - yPos) < 25) {
+                isDraggingArrow = true;
+                draggingLevel = clickedLevel;
+                updateTargetFromMouse(mouseX, startX, lineW);
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDraggingArrow || draggingLevel === null) return;
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);
+            const startX = 50;
+            const lineW = canvas.width - 100;
+            updateTargetFromMouse(mouseX, startX, lineW);
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDraggingArrow = false;
+            draggingLevel = null;
+        });
+
+        function updateTargetFromMouse(mouseX, startX, lineW) {
+            let ratio = (mouseX - startX) / lineW;
+            ratio = Math.max(0, Math.min(1, ratio));
+            
+            // Calculate boundaries for the clicked level
+            let minVal = 0, maxVal = 10;
+            if (draggingLevel === 1) {
+                minVal = 0; maxVal = 10;
+            } else if (draggingLevel === 2) {
+                minVal = Math.floor(targetValue);
+                maxVal = minVal + 1;
+            } else if (draggingLevel === 3) {
+                minVal = Math.floor(targetValue * 10) / 10;
+                maxVal = parseFloat((minVal + 0.1).toFixed(1));
+            } else if (draggingLevel === 4) {
+                minVal = Math.floor(targetValue * 100) / 100;
+                maxVal = parseFloat((minVal + 0.01).toFixed(2));
+            }
+
+            let newVal = minVal + ratio * (maxVal - minVal);
+            
+            if (snapToGrid) {
+                newVal = Math.round(newVal / stepSize) * stepSize;
+            }
+            newVal = parseFloat(newVal.toFixed(3));
+            
+            if (newVal >= 0 && newVal <= 10) {
+                targetValue = newVal;
+                targetInput.value = targetValue;
+                mascotMessage.textContent = `Current measurement is ${targetValue}.`;
+                drawSimulation();
+            }
+        }
+
+        pronounceBtn.addEventListener('click', () => {
+            playSound('click');
+            speakText(targetValue.toString());
+        });
+
+        function drawSimulation() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const isLight = document.body.classList.contains('light-mode');
+
+            // Background workbench
+            ctx.fillStyle = isLight ? '#f1f5f9' : '#1e293b';
+            ctx.fillRect(0, 0, width, height);
+
+            const startX = 50;
+            const lineW = width - 100;
+
+            const levels = zoomLevel;
+            const rowH = height / (levels + 0.5);
+
+            for (let l = 1; l <= levels; l++) {
+                const yPos = l * rowH - 10;
+                
+                let minVal = 0, maxVal = 10;
+                let boxStartVal = 4, boxEndVal = 5;
+
+                if (l === 1) {
+                    minVal = 0; maxVal = 10;
+                    boxStartVal = Math.floor(targetValue);
+                    boxEndVal = boxStartVal + 1;
+                } else if (l === 2) {
+                    const base1 = Math.floor(targetValue);
+                    minVal = base1; maxVal = base1 + 1;
+                    const tenth = Math.floor((targetValue * 10) % 10);
+                    boxStartVal = parseFloat((base1 + tenth * 0.1).toFixed(1));
+                    boxEndVal = parseFloat((boxStartVal + 0.1).toFixed(1));
+                } else if (l === 3) {
+                    const base2 = Math.floor(targetValue * 10) / 10;
+                    minVal = base2; maxVal = parseFloat((base2 + 0.1).toFixed(1));
+                    const hund = Math.floor((targetValue * 100) % 10);
+                    boxStartVal = parseFloat((base2 + hund * 0.01).toFixed(2));
+                    boxEndVal = parseFloat((boxStartVal + 0.01).toFixed(2));
+                } else if (l === 4) {
+                    const base3 = Math.floor(targetValue * 100) / 100;
+                    minVal = base3; maxVal = parseFloat((base3 + 0.01).toFixed(2));
+                }
+
+                // Draw horizontal axis line
+                ctx.strokeStyle = isLight ? '#475569' : '#f8fafc';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(startX, yPos);
+                ctx.lineTo(startX + lineW, yPos);
+                ctx.stroke();
+
+                // Draw 10 ticks
+                for (let i = 0; i <= 10; i++) {
+                    const val = minVal + i * ((maxVal - minVal) / 10);
+                    const xTick = startX + (i / 10) * lineW;
+                    ctx.beginPath();
+                    ctx.moveTo(xTick, yPos - 8);
+                    ctx.lineTo(xTick, yPos + 8);
+                    ctx.stroke();
+
+                    ctx.font = '500 11px Outfit, sans-serif';
+                    ctx.fillStyle = isLight ? '#0f172a' : '#f8fafc';
+                    ctx.textAlign = 'center';
+
+                    let labelStr = val.toFixed(l === 1 ? 0 : l === 2 ? 1 : l === 3 ? 2 : 3);
+                    if (l === 4 && (i === 0 || i === 10)) labelStr = val.toFixed(2);
+                    if (l === 4 && Math.abs(val - targetValue) < 0.0005) labelStr = targetValue.toString();
+                    ctx.fillText(labelStr, xTick, yPos + 22);
+                }
+
+                // Draw pointer / arrow for target on the active level
+                if (l === levels) {
+                    const targetX = startX + ((targetValue - minVal) / (maxVal - minVal)) * lineW;
+                    ctx.strokeStyle = '#f43f5e';
+                    ctx.fillStyle = '#f43f5e';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.moveTo(targetX, yPos - 22);
+                    ctx.lineTo(targetX, yPos - 5);
+                    ctx.stroke();
+                    // Arrowhead
+                    ctx.beginPath();
+                    ctx.moveTo(targetX, yPos - 5);
+                    ctx.lineTo(targetX - 5, yPos - 12);
+                    ctx.lineTo(targetX + 5, yPos - 12);
+                    ctx.fill();
+                }
+
+                // Draw connecting magnification trapezoid to next level if l < levels
+                if (l < levels) {
+                    const nextY = (l + 1) * rowH - 10;
+                    const boxX1 = startX + ((boxStartVal - minVal) / (maxVal - minVal)) * lineW;
+                    const boxX2 = startX + ((boxEndVal - minVal) / (maxVal - minVal)) * lineW;
+
+                    ctx.strokeStyle = '#38bdf8';
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeRect(boxX1, yPos - 10, boxX2 - boxX1, 20);
+
+                    ctx.strokeStyle = isLight ? 'rgba(2, 132, 199, 0.25)' : 'rgba(56, 189, 248, 0.3)';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(boxX1, yPos + 10);
+                    ctx.lineTo(startX, nextY - 10);
+                    ctx.moveTo(boxX2, yPos + 10);
+                    ctx.lineTo(startX + lineW, nextY - 10);
+                    ctx.stroke();
+                }
+            }
+
+            currentMeasurement.textContent = `Target Value: ${targetValue} (Level ${zoomLevel}, Step: ${stepSize})`;
+            const largeTargetDisplay = document.getElementById('largeTargetDisplay');
+            if (largeTargetDisplay) {
+                largeTargetDisplay.textContent = `Target: ${targetValue}`;
+            }
+        }
+
+        function varColor(variable) {
+            return getComputedStyle(document.body).getPropertyValue(variable).trim();
+        }
+
+        drawSimulation();
+
+        // --- Quiz Engine ---
+        const quizQuestions = [
+            {
+                q: "What is the place value of 5 in the decimal number 34.256?",
+                options: ["Tenths", "Hundredths", "Thousandths", "Units"],
+                answer: 1,
+                explanation: "In 34.256, the digit 5 is in the hundredths place, which is the second digit to the right of the decimal point."
+            },
+            {
+                q: "Which of the following decimals is equal to 4.5?",
+                options: ["4.05", "4.500", "0.45", "40.5"],
+                answer: 1,
+                explanation: "4.500 is equal to 4.5 because trailing zeros after the decimal point do not change the value."
+            },
+            {
+                q: "Convert 345 grams into kilograms in decimal form.",
+                options: ["3.45 kg", "0.345 kg", "34.5 kg", "0.0345 kg"],
+                answer: 1,
+                explanation: "Since 1 kilogram = 1000 grams, 345 grams = 345 / 1000 = 0.345 kg."
+            },
+            {
+                q: "What is the sum of 15.34 and 2.68?",
+                options: ["17.92", "18.02", "18.20", "17.02"],
+                answer: 1,
+                explanation: "15.34 + 2.68 = 18.02. Adding the hundredths (4 + 8 = 12) carries over to the tenths place."
+            },
+            {
+                q: "If 1 rupee = 100 paise, how is 75 paise written in rupees?",
+                options: ["7.5 rupees", "0.075 rupees", "0.75 rupees", "75.0 rupees"],
+                answer: 2,
+                explanation: "75 paise = 75 / 100 = 0.75 rupees."
+            },
+            {
+                q: "Which decimal is greater: 0.75 or 0.750?",
+                options: ["0.75", "0.750", "They are equal", "Cannot be determined"],
+                answer: 2,
+                explanation: "0.75 and 0.750 are equal because trailing zeros do not affect the value of a decimal."
+            },
+            {
+                q: "What is the value of 0.1 + 0.2 in decimal form?",
+                options: ["0.3", "0.12", "0.30", "0.03"],
+                answer: 0,
+                explanation: "0.1 + 0.2 = 0.3. This is a common floating-point arithmetic example."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let quizTimerVal = 30;
+        let quizTimerInterval = null;
+
+        const quizProgress = document.getElementById('quizProgress');
+        const quizTimer = document.getElementById('quizTimer');
+        const questionText = document.getElementById('questionText');
+        const optionsList = document.getElementById('optionsList');
+        const nextQuizBtn = document.getElementById('nextQuizBtn');
+        const quizScoreDisplay = document.getElementById('quizScore');
+
+        function startQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            quizScoreDisplay.textContent = `Score: ${quizScore}`;
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            const totalQuestions = quizQuestions.length;
+            if (currentQuizIndex >= totalQuestions) {
+                // Show completion summary
+                document.getElementById('quizWorkspace').innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <h3 style="color: var(--accent-success); font-size: 18px; margin-bottom: 10px;">🎉 Quiz Completed!</h3>
+                        <p style="margin-bottom: 8px;">Your final score is: <strong>${quizScore} / ${totalQuestions}</strong></p>
+                        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 20px;">Claim your certificate from the Certificate tab.</p>
+                        <button class="primary-btn" id="restartQuizBtn">Restart Quiz</button>
+                    </div>
+                `;
+                document.getElementById('restartQuizBtn').addEventListener('click', () => {
+                    // Restore original innerHTML to workspace and restart
+                    document.getElementById('quizWorkspace').innerHTML = `
+                        <div class="quiz-header">
+                            <span id="quizProgress">Question 1 of 5</span>
+                            <span id="quizTimer">Time: 30s</span>
+                        </div>
+                        <div class="question-text" id="questionText">Loading question...</div>
+                        <div class="options-list" id="optionsList"></div>
+                    `;
+                    // Re-bind elements
+                    reloadQuizElements();
+                    startQuiz();
+                });
+                quizTimer.textContent = "Finished";
+                nextQuizBtn.style.display = 'none';
+                playSound('trumpet');
+                updateCertificate();
+                return;
+            }
+
+            const currentQ = quizQuestions[currentQuizIndex];
+            quizProgress.textContent = `Question ${currentQuizIndex + 1} of ${totalQuestions}`;
+            questionText.textContent = currentQ.q;
+            optionsList.innerHTML = "";
+            nextQuizBtn.style.display = 'none';
+
+            currentQ.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.addEventListener('click', () => selectOption(idx, currentQ.answer, btn, currentQ.explanation));
+                optionsList.appendChild(btn);
+            });
+
+            quizTimerVal = 30;
+            quizTimer.textContent = `Time: ${quizTimerVal}s`;
+            clearInterval(quizTimerInterval);
+            quizTimerInterval = setInterval(() => {
+                quizTimerVal--;
+                quizTimer.textContent = `Time: ${quizTimerVal}s`;
+                if (quizTimerVal <= 0) {
+                    clearInterval(quizTimerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function reloadQuizElements() {
+            // Function to re-bind selectors if outer DOM is replaced
+            globalThis.quizProgress = document.getElementById('quizProgress');
+            globalThis.quizTimer = document.getElementById('quizTimer');
+            globalThis.questionText = document.getElementById('questionText');
+            globalThis.optionsList = document.getElementById('optionsList');
+        }
+
+        function handleTimeOut() {
+            const currentQ = quizQuestions[currentQuizIndex];
+            const allBtns = optionsList.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+            
+            // Mark correct answer
+            allBtns[currentQ.answer].classList.add('correct');
+            playSound('click');
+            mascotMessage.textContent = "Time's up! Let's examine the place value rule.";
+
+            appendExplanation(currentQ.explanation);
+            
+            nextQuizBtn.textContent = currentQuizIndex === quizQuestions.length - 1 ? "Finish Quiz" : "Next Question";
+            nextQuizBtn.style.display = 'inline-block';
+        }
+
+        function selectOption(selectedIdx, correctIdx, btn, explanation) {
+            clearInterval(quizTimerInterval);
+            const allBtns = optionsList.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selectedIdx === correctIdx) {
+                btn.classList.add('correct');
+                quizScore++;
+                playSound('correct');
+                mascotMessage.textContent = "Spot on! Great math skills!";
+            } else {
+                btn.classList.add('incorrect');
+                allBtns[correctIdx].classList.add('correct');
+                playSound('click');
+                mascotMessage.textContent = "Oops! Review the place value rules in the guide tab.";
+            }
+
+            quizScoreDisplay.textContent = `Score: ${quizScore}`;
+            appendExplanation(explanation);
+
+            nextQuizBtn.textContent = currentQuizIndex === quizQuestions.length - 1 ? "Finish Quiz" : "Next Question";
+            nextQuizBtn.style.display = 'inline-block';
+        }
+
+        function appendExplanation(explanation) {
+            if (explanation) {
+                const explanationElement = document.createElement('div');
+                explanationElement.style.marginTop = '12px';
+                explanationElement.style.fontSize = '12px';
+                explanationElement.style.color = 'var(--text-muted)';
+                explanationElement.style.padding = '10px';
+                explanationElement.style.background = 'rgba(0,0,0,0.15)';
+                explanationElement.style.borderRadius = '6px';
+                explanationElement.style.borderLeft = '3px solid var(--accent-primary)';
+                explanationElement.textContent = `Explanation: ${explanation}`;
+                optionsList.appendChild(explanationElement);
+            }
+        }
+
+        nextQuizBtn.addEventListener('click', () => {
+            playSound('click');
+            currentQuizIndex++;
+            loadQuizQuestion();
+        });
+
+        startQuiz();
+
+        // --- Practice Board / Whiteboard Functionality ---
+        const wbCanvas = document.getElementById('whiteboardCanvas');
+        const wbCtx = wbCanvas.getContext('2d');
+        const wbColorInput = document.getElementById('wbColor');
+        const wbTools = document.querySelectorAll('.wb-tool');
+        
+        let activeTool = 'pen';
+        let isDrawing = false;
+        let startX = 0;
+        let startY = 0;
+        let savedSnapshot = null;
+
+        // Initialize Whiteboard dimensions to match CSS parent
+        function resizeWhiteboard() {
+            // Return early if the whiteboard canvas is currently hidden (e.g. inactive tab)
+            if (wbCanvas.offsetParent === null) return;
+
+            const rect = wbCanvas.parentElement.getBoundingClientRect();
+            
+            // Only capture snapshot if the canvas currently has non-zero size
+            let tempSnapshot = null;
+            if (wbCanvas.width > 0 && wbCanvas.height > 0) {
+                try {
+                    tempSnapshot = wbCtx.getImageData(0, 0, wbCanvas.width, wbCanvas.height);
+                } catch (e) {
+                    console.warn("Failed to capture whiteboard snapshot:", e);
+                }
+            }
+
+            // Set new dimensions (avoid setting to 0)
+            const newWidth = Math.max(10, rect.width);
+            const newHeight = Math.max(10, rect.height || 250);
+            
+            wbCanvas.width = newWidth;
+            wbCanvas.height = newHeight;
+
+            // Restore snapshot if available
+            if (tempSnapshot) {
+                try {
+                    wbCtx.putImageData(tempSnapshot, 0, 0);
+                } catch (e) {
+                    console.warn("Failed to restore whiteboard snapshot:", e);
+                }
+            }
+        }
+        
+        // Wait a small moment to ensure bounding box layout has computed
+        setTimeout(resizeWhiteboard, 200);
+        window.addEventListener('resize', resizeWhiteboard);
+
+        // Map mouse coordinates to Canvas local grid
+        function getWbCoordinates(e) {
+            const rect = wbCanvas.getBoundingClientRect();
+            return {
+                x: (e.clientX - rect.left) * (wbCanvas.width / rect.width),
+                y: (e.clientY - rect.top) * (wbCanvas.height / rect.height)
+            };
+        }
+
+        wbCanvas.addEventListener('mousedown', (e) => {
+            const coords = getWbCoordinates(e);
+            isDrawing = true;
+            startX = coords.x;
+            startY = coords.y;
+
+            wbCtx.beginPath();
+            wbCtx.moveTo(startX, startY);
+
+            // Configure drawing state
+            wbCtx.lineCap = 'round';
+            wbCtx.lineJoin = 'round';
+
+            if (activeTool === 'pen') {
+                wbCtx.globalCompositeOperation = 'source-over';
+                wbCtx.strokeStyle = wbColorInput.value;
+                wbCtx.lineWidth = 3;
+            } else if (activeTool === 'highlighter') {
+                wbCtx.globalCompositeOperation = 'source-over';
+                const hex = wbColorInput.value;
+                const r = parseInt(hex.slice(1,3), 16);
+                const g = parseInt(hex.slice(3,5), 16);
+                const b = parseInt(hex.slice(5,7), 16);
+                wbCtx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.3)`;
+                wbCtx.lineWidth = 12;
+            } else if (activeTool === 'eraser') {
+                wbCtx.globalCompositeOperation = 'destination-out';
+                wbCtx.lineWidth = 20;
+            } else if (activeTool === 'line' || activeTool === 'circle') {
+                wbCtx.globalCompositeOperation = 'source-over';
+                wbCtx.strokeStyle = wbColorInput.value;
+                wbCtx.lineWidth = 3;
+                savedSnapshot = wbCtx.getImageData(0, 0, wbCanvas.width, wbCanvas.height);
+            } else if (activeTool === 'text') {
+                isDrawing = false;
+                const text = prompt("Enter text to write:");
+                if (text) {
+                    wbCtx.globalCompositeOperation = 'source-over';
+                    wbCtx.fillStyle = wbColorInput.value;
+                    wbCtx.font = '600 14px Outfit, sans-serif';
+                    wbCtx.fillText(text, coords.x, coords.y);
+                }
+            }
+        });
+
+        wbCanvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            const coords = getWbCoordinates(e);
+
+            if (activeTool === 'pen' || activeTool === 'highlighter' || activeTool === 'eraser') {
+                wbCtx.lineTo(coords.x, coords.y);
+                wbCtx.stroke();
+            } else if (activeTool === 'line') {
+                wbCtx.putImageData(savedSnapshot, 0, 0);
+                wbCtx.beginPath();
+                wbCtx.moveTo(startX, startY);
+                wbCtx.lineTo(coords.x, coords.y);
+                wbCtx.stroke();
+            } else if (activeTool === 'circle') {
+                wbCtx.putImageData(savedSnapshot, 0, 0);
+                wbCtx.beginPath();
+                const radius = Math.sqrt(Math.pow(coords.x - startX, 2) + Math.pow(coords.y - startY, 2));
+                wbCtx.arc(startX, startY, radius, 0, 2 * Math.PI);
+                wbCtx.stroke();
+            }
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isDrawing) {
+                isDrawing = false;
+                savedSnapshot = null;
+            }
+        });
+
+        // Toolbar Interaction
+        wbTools.forEach(btn => {
+            btn.addEventListener('click', () => {
+                playSound('click');
+                
+                if (btn.id === 'clearWb') {
+                    wbCtx.clearRect(0, 0, wbCanvas.width, wbCanvas.height);
+                    return;
+                }
+
+                wbTools.forEach(t => {
+                    if (t.id !== 'clearWb') t.classList.remove('active');
+                });
+                
+                btn.classList.add('active');
+                activeTool = btn.dataset.tool;
+            });
+        });
+
+        // --- Certificate Generation ---
+        const studentNameInput = document.getElementById('studentNameInput');
+        const printCertBtn = document.getElementById('printCertBtn');
+
+        studentNameInput.addEventListener('input', updateCertificate);
+
+        function updateCertificate() {
+            const studentName = studentNameInput.value.trim() || "Explorer";
+            document.getElementById('certStudentName').textContent = studentName;
+            document.getElementById('certScoreDisplay').textContent = `Score: ${quizScore} / ${quizQuestions.length}`;
+            
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString(undefined, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        printCertBtn.addEventListener('click', () => {
+            playSound('trumpet');
+            window.print();
+        });
+
+        updateCertificate();
+    </script>
+</body>
+</html>

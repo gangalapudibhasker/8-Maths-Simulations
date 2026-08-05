@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Power Play • Ganita Prakash Grade 8</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100vw;height:100vh;background:#0b0f19;color:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow:hidden;display:flex;justify-content:center;align-items:center;touch-action:manipulation}
+.viewport-wrapper{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 30% 15%,#1e293b 0%,#0f172a 65%)}
+.simulation-container{width:100vw;height:56.25vw;max-height:100vh;max-width:177.78vh;position:relative;box-shadow:0 25px 50px -12px rgba(0,0,0,.75);display:flex;flex-direction:column;overflow:hidden;background:#0f172a;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+.simulation-container:fullscreen,.simulation-container:-webkit-full-screen{width:100vw;height:100vh;max-width:none;max-height:none;border-radius:0;border:none}
+.glass{background:rgba(30,41,59,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.14)}
+::-webkit-scrollbar{width:7px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(249,115,22,.6);border-radius:4px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.fade{animation:fadeIn .25s ease-out forwards}
+.flex{display:flex}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.7rem}
+.w-full{width:100%}.h-full{height:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}
+.overflow-y-auto{overflow-y:auto}.overflow-hidden{overflow:hidden}
+h2{font-size:1.5rem;font-weight:800;color:#fb923c;margin-bottom:.12rem;letter-spacing:-.02em}
+.sub{font-size:1.1rem;color:#94a3b8;margin-bottom:.45rem;line-height:1.4}
+label{font-size:.98rem;font-weight:700;color:#e2e8f0;display:block;margin-bottom:.15rem}
+.text-lg{font-size:1.18rem}.text-base{font-size:1.1rem}.text-sm{font-size:1rem}.text-xs{font-size:.88rem}
+.font-mono{font-family:ui-monospace,Menlo,Consolas,monospace}.font-bold{font-weight:700}.font-black{font-weight:900}
+.orange{color:#fb923c}.amber{color:#fbbf24}.green{color:#4ade80}.red{color:#f87171}.blue{color:#60a5fa}.slate{color:#94a3b8}.white{color:#f8fafc}.emerald{color:#34d399}
+.input{background:#0f172a;border:2px solid #475569;color:#fff;border-radius:.5rem;padding:.5rem .65rem;font-size:1.12rem;font-weight:700;outline:none;width:100px;text-align:center}
+.input:focus{border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,.3)}
+.input-wide{width:140px}
+.btn{cursor:pointer;border:none;border-radius:.5rem;font-weight:700;font-size:.98rem;padding:.5rem 1rem;transition:all .12s;touch-action:manipulation}
+.btn-orange{background:#ea580c;color:#fff}.btn-orange:hover,.btn-orange:active{background:#f97316}
+.btn-dark{background:#1e293b;color:#e2e8f0;border:1px solid #475569}.btn-dark:hover{background:#334155}
+.btn-emerald{background:#059669;color:#fff}
+.btn-sm{padding:.38rem .75rem;font-size:.9rem}
+.tab-bar{display:flex;overflow-x:auto;gap:.3rem;padding:.4rem .6rem;background:#0f172a;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0}
+.tab{display:flex;align-items:center;gap:.28rem;padding:.5rem .8rem;border-radius:.5rem;font-size:.88rem;font-weight:700;cursor:pointer;border:none;white-space:nowrap;transition:all .12s;background:transparent;color:#94a3b8;touch-action:manipulation}
+.tab:hover{background:#1e293b;color:#e2e8f0}
+.tab.on{background:#ea580c;color:#fff;box-shadow:0 3px 12px rgba(234,88,12,.45)}
+.card{background:rgba(30,41,59,.97);border:1px solid rgba(255,255,255,.14);border-radius:.85rem;padding:.75rem .95rem;display:flex;flex-direction:column}
+.scene-caption{font-size:1rem;font-weight:700;color:#fbbf24;text-align:center;margin:.35rem 0 .15rem}
+.scene-legend{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin:.3rem 0}
+.legend-item{display:flex;align-items:center;gap:.3rem;background:#0f172a;border:1px solid #475569;border-radius:.45rem;padding:.3rem .55rem;font-size:.92rem;font-weight:600;color:#e2e8f0}
+.annot{position:absolute;font-size:.78rem;font-weight:800;color:#fef9c3;text-shadow:0 1px 3px #000;background:rgba(15,23,42,.75);padding:2px 6px;border-radius:4px;border:1px solid rgba(251,191,36,.4)}
+
+.row{display:flex;flex-wrap:wrap;gap:.55rem;align-items:flex-end;margin-bottom:.4rem}
+.result-box{background:#0f172a;border:1px solid #475569;border-radius:.65rem;padding:.7rem .9rem;font-size:1.1rem;line-height:1.45}
+.tip{margin-top:.35rem;padding:.65rem .9rem;background:rgba(251,191,36,.16);border-left:5px solid #fbbf24;border-radius:0 .5rem .5rem 0;font-size:1.05rem;color:#f1f5f9;line-height:1.4}
+.tip-blue{margin-top:.35rem;padding:.65rem .9rem;background:rgba(96,165,250,.16);border-left:5px solid #60a5fa;border-radius:0 .5rem .5rem 0;font-size:1.05rem;color:#f1f5f9;line-height:1.4}
+.tip-green{margin-top:.35rem;padding:.65rem .9rem;background:rgba(52,211,153,.16);border-left:5px solid #34d399;border-radius:0 .5rem .5rem 0;font-size:1.05rem;color:#f1f5f9;line-height:1.4}
+.badge{display:inline-block;background:rgba(249,115,22,.3);color:#fb923c;padding:.2rem .65rem;border-radius:999px;font-size:.92rem;font-weight:800}
+.step-box{background:#0f172a;border:1px solid #475569;border-radius:.5rem;padding:.5rem .8rem;margin:.25rem 0;font-family:ui-monospace,monospace;font-size:1.05rem;font-weight:600}
+.identity-card{background:linear-gradient(135deg,rgba(234,88,12,.22),rgba(251,191,36,.12));border:1px solid rgba(249,115,22,.45);border-radius:.7rem;padding:.75rem .95rem;margin:.3rem 0}
+.def-card{background:rgba(15,23,42,.9);border:1px solid #334155;border-radius:.6rem;padding:.55rem .8rem;margin:.25rem 0}
+.def-card .title{font-size:.95rem;font-weight:800;color:#fbbf24;margin-bottom:.12rem}
+.def-card .body{font-size:1rem;color:#e2e8f0;line-height:1.4}
+.math{font-family:Georgia,'Times New Roman',serif;font-size:1.25rem;font-weight:600;color:#fbbf24}
+.formula-grid{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+.formula-item{background:#0f172a;border:1px solid #334155;border-radius:.5rem;padding:.5rem .7rem}
+.formula-item .name{font-size:.85rem;font-weight:700;color:#fb923c;margin-bottom:.08rem}
+.formula-item .eq{font-family:Georgia,serif;font-size:1.08rem;color:#fbbf24;font-weight:600}
+.quiz-opt{width:100%;text-align:left;padding:.65rem .9rem;border-radius:.6rem;border:2px solid #334155;background:#1e293b;color:#f1f5f9;font-size:1.05rem;font-weight:600;cursor:pointer;margin-bottom:.35rem;display:flex;align-items:center;gap:.6rem;touch-action:manipulation}
+.quiz-opt:hover{border-color:#f97316;background:rgba(249,115,22,.15)}
+.quiz-opt.correct{background:rgba(16,185,129,.28);border-color:#34d399;color:#d1fae5}
+.quiz-opt.wrong{background:rgba(239,68,68,.22);border-color:#f87171;color:#fecaca}
+.quiz-opt.disabled{pointer-events:none;opacity:.65}
+.space-y-2>*+*{margin-top:.45rem}
+.fold-bar{height:18px;border-radius:4px;background:linear-gradient(90deg,#f97316,#fbbf24);transition:width .3s}
+.power-line{display:flex;flex-direction:column;gap:2px;font-family:ui-monospace,monospace;font-size:.92rem}
+.power-line div{display:flex;justify-content:space-between;padding:3px 8px;border-radius:4px;background:#0f172a}
+.logo-wrap{width:48px;height:48px;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent}
+.logo-wrap img{width:100%;height:100%;object-fit:contain;mix-blend-mode:normal}
+.pond-scene{position:relative;width:100%;min-height:200px;height:220px;border-radius:1rem;overflow:hidden;background:linear-gradient(180deg,#38bdf8 0%,#0ea5e9 35%,#0284c7 65%,#0c4a6e 100%);border:2px solid #7dd3fc;margin:.4rem 0}
+.pond-water{position:absolute;bottom:0;left:0;right:0;min-height:45%;height:55%;background:linear-gradient(180deg,rgba(125,211,252,.55),rgba(14,116,144,.95));}
+.pond-ripple{position:absolute;border:2px solid rgba(255,255,255,.35);border-radius:50%;animation:ripple 3s ease-out infinite}
+@keyframes ripple{0%{transform:scale(.3);opacity:.8}100%{transform:scale(2.2);opacity:0}}
+.lotus{position:absolute;font-size:1.6rem;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));transition:all .4s ease;cursor:default;user-select:none}
+.lotus.bloom{animation:bloom .5s ease}
+@keyframes bloom{0%{transform:scale(.2)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.paper-stack{display:flex;flex-direction:column;align-items:center;gap:0;margin:.5rem auto}
+.paper-sheet{background:linear-gradient(135deg,#fef9c3,#fde047);border:1px solid #fbbf24;box-shadow:0 1px 4px rgba(251,191,36,.4);border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:all .25s}
+.fold-scene{position:relative;width:100%;height:160px;border-radius:.85rem;overflow:hidden;background:linear-gradient(180deg,#1e3a5f 0%,#0f172a 55%,#1a2332 100%);border:1px solid #475569;display:flex;align-items:center;justify-content:center}
+.moon{position:absolute;top:12px;right:20px;width:36px;height:36px;border-radius:50%;background:#fef9c3;box-shadow:0 0 20px #fde047}
+.building{position:absolute;bottom:0;width:18px;background:linear-gradient(180deg,#64748b,#334155);border-radius:2px 2px 0 0}
+.plane-icon{position:absolute;font-size:1.4rem;animation:fly 4s linear infinite}
+@keyframes fly{0%{left:5%;top:40%}50%{left:70%;top:25%}100%{left:5%;top:40%}}
+.thickness-viz{display:flex;align-items:flex-end;justify-content:center;gap:3px;height:100px;padding:8px}
+.thickness-bar{background:linear-gradient(180deg,#fbbf24,#f97316);border-radius:3px 3px 0 0;min-width:8px;transition:height .3s}
+
+</style>
+</head>
+<body>
+<div id="root" class="viewport-wrapper"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useMemo, useEffect, useRef, useCallback } = React;
+
+class SoundEngine {
+  constructor(){ this.ctx=null; this.muted=false; }
+  init(){ if(!this.ctx) this.ctx=new (window.AudioContext||window.webkitAudioContext)(); if(this.ctx.state==='suspended') this.ctx.resume(); }
+  setMuted(v){ this.muted=v; }
+  playClick(){ if(this.muted)return; this.init(); try{ const o=this.ctx.createOscillator(),g=this.ctx.createGain(); o.type='sine'; o.frequency.setValueAtTime(620,this.ctx.currentTime); o.frequency.exponentialRampToValueAtTime(400,this.ctx.currentTime+.05); g.gain.setValueAtTime(.12,this.ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,this.ctx.currentTime+.05); o.connect(g); g.connect(this.ctx.destination); o.start(); o.stop(this.ctx.currentTime+.05);}catch(e){} }
+  playSuccess(){ if(this.muted)return; this.init(); try{ const now=this.ctx.currentTime; [523.25,659.25,783.99].forEach((f,i)=>{ const o=this.ctx.createOscillator(),g=this.ctx.createGain(); o.type='sine'; o.frequency.setValueAtTime(f,now+i*.1); g.gain.setValueAtTime(.15,now+i*.1); g.gain.exponentialRampToValueAtTime(.001,now+i*.1+.25); o.connect(g); g.connect(this.ctx.destination); o.start(now+i*.1); o.stop(now+i*.1+.25); }); }catch(e){} }
+}
+const sound = new SoundEngine();
+
+const LOGO_SRC = "data:image/png;base64,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";
+
+
+const LOGO = document.getElementById('logo-data') ? '' : '';
+
+function formatThickness(cm) {
+  if (cm < 0.01) return cm.toFixed(4) + ' cm';
+  if (cm < 100) return cm.toFixed(3) + ' cm';
+  if (cm < 100000) return (cm/100).toFixed(2) + ' m';
+  if (cm < 1e7) return (cm/100000).toFixed(2) + ' km';
+  return (cm/100000).toExponential(2) + ' km';
+}
+
+function OverviewTab() {
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>2. Power Play</h2>
+      <p className="sub">Explore <strong className="orange">exponential growth</strong>, exponential notation, and the laws of exponents through paper folding, ponds, and passwords.</p>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'.5rem'}}>
+        <div className="result-box">
+          <div className="text-base font-bold orange mb-1">Core Idea</div>
+          <div className="math">n<sup>a</sup> = n × n × … × n (a times)</div>
+          <p className="text-sm slate mt-1">Base n raised to exponent a. Growth that doubles or multiplies is exponential.</p>
+        </div>
+        <div className="result-box">
+          <div className="text-base font-bold amber mb-1">What You Will Master</div>
+          <ul className="text-sm" style={{paddingLeft:'1.15rem',lineHeight:1.5}}>
+            <li>Paper-fold thickness & exponential growth</li>
+            <li>Base, exponent, and exponential form</li>
+            <li>Laws: product, power, quotient</li>
+            <li>Zero & negative exponents</li>
+            <li>Powers of 10 and combinations</li>
+          </ul>
+        </div>
+      </div>
+      <div className="identity-card">
+        <div className="text-base font-bold white mb-1 text-center">The Three Main Laws</div>
+        <div className="formula-grid">
+          <div className="formula-item"><div className="name">Product</div><div className="eq">n<sup>a</sup> × n<sup>b</sup> = n<sup>a+b</sup></div></div>
+          <div className="formula-item"><div className="name">Power of a power</div><div className="eq">(n<sup>a</sup>)<sup>b</sup> = n<sup>ab</sup></div></div>
+          <div className="formula-item"><div className="name">Quotient</div><div className="eq">n<sup>a</sup> ÷ n<sup>b</sup> = n<sup>a−b</sup></div></div>
+          <div className="formula-item"><div className="name">Same exponent</div><div className="eq">m<sup>a</sup> × n<sup>a</sup> = (mn)<sup>a</sup></div></div>
+        </div>
+      </div>
+      <div className="def-card">
+        <div className="title">Definition — Exponential growth</div>
+        <div className="body">Growth where a quantity multiplies by a fixed factor in each step (e.g. doubles every fold). Also called multiplicative growth. After 46 folds of 0.001 cm paper, thickness exceeds 7,00,000 km!</div>
+      </div>
+      <div className="def-card">
+        <div className="title">Definition — Base and exponent</div>
+        <div className="body">In 5<sup>4</sup> = 625, the <strong>base</strong> is 5 and the <strong>exponent (power)</strong> is 4. Read as “5 raised to the power 4” or “4th power of 5”.</div>
+      </div>
+      <div className="tip-blue"><strong className="blue">How to use:</strong> Fold the paper, explore laws with live calculators, try the magical pond and password combinatorics. Whiteboard works on touch / IFP.</div>
+    </div>
+  );
+}
+
+function FoldTab() {
+  const [folds, setFolds] = useState(10);
+  const thickness0 = 0.001;
+  const thickness = thickness0 * Math.pow(2, folds);
+  const landmarks = [
+    {f:7, label:'Practical limit (~7 folds)', icon:'📄', why:'Paper gets too thick to fold by hand'},
+    {f:10, label:'~1.02 cm', icon:'📏', why:'Just above 1 cm thickness'},
+    {f:17, label:'~1.31 m', icon:'🧍', why:'About 4 feet tall'},
+    {f:26, label:'~670 m', icon:'🏙️', why:'Near Burj Khalifa height (830 m)'},
+    {f:30, label:'~10.7 km', icon:'✈️', why:'Typical plane cruising height'},
+    {f:46, label:'>7,00,000 km', icon:'🌙', why:'More than Earth–Moon distance scale'},
+  ];
+  const sheetH = Math.min(14, 2.5 + folds * 0.4);
+  const showSheets = Math.min(folds + 1, 16);
+  const active = landmarks.find(l => l.f === folds) || null;
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>1. Paper Folding — Exponential Growth</h2>
+      <p className="sub">Each fold <strong className="orange">doubles</strong> the thickness. Formula: thickness = 0.001 × 2<sup>n</sup> cm.</p>
+
+      <div className="scene-caption">What this picture shows</div>
+      <div className="fold-scene" style={{height:180}}>
+        <div className="moon" title="Moon appears at very high folds"></div>
+        {folds >= 26 && (
+          <>
+            <div className="building" style={{left:'12%',height:50}}></div>
+            <div className="building" style={{left:'19%',height:95}}></div>
+            <div className="building" style={{left:'26%',height:65}}></div>
+            <div className="annot" style={{left:'12%',bottom:98}}>Burj Khalifa scale</div>
+          </>
+        )}
+        {folds >= 30 && (
+          <>
+            <div className="plane-icon" title="Plane height ~10–12 km">✈️</div>
+            <div className="annot" style={{left:'40%',top:20}}>Plane altitude ~10.7 km</div>
+          </>
+        )}
+        {folds >= 40 && (
+          <div className="annot" style={{right:50,top:50}}>Toward Moon!</div>
+        )}
+        <div className="paper-stack">
+          {Array.from({length: showSheets}).map((_,i)=>(
+            <div key={i} className="paper-sheet" style={{
+              width: 100 - i * 2.2,
+              height: sheetH,
+              marginTop: i === 0 ? 0 : -1,
+              opacity: 0.88 + (i / showSheets) * 0.12,
+            }}></div>
+          ))}
+          <div style={{fontSize:13,color:'#fbbf24',marginTop:8,fontWeight:800}}>
+            Stack after {folds} fold{folds!==1?'s':''}
+          </div>
+          <div style={{fontSize:12,color:'#94a3b8',fontWeight:600}}>
+            {formatThickness(thickness)}
+          </div>
+        </div>
+        {folds < 7 && (
+          <div className="annot" style={{left:12,bottom:12}}>Real paper ≈ max 7 folds</div>
+        )}
+      </div>
+
+      <div className="scene-legend">
+        <div className="legend-item"><span>📄</span> Paper stack (doubles each fold)</div>
+        <div className="legend-item"><span>🏙️</span> Buildings (from ~26 folds)</div>
+        <div className="legend-item"><span>✈️</span> Plane (from ~30 folds)</div>
+        <div className="legend-item"><span>🌙</span> Moon scale (very high folds)</div>
+      </div>
+
+      {active && (
+        <div className="tip-green">
+          <strong className="emerald">{active.icon} At {active.f} folds:</strong> {active.label} — {active.why}
+        </div>
+      )}
+
+      <div className="row">
+        <div><label>Number of folds (n)</label>
+          <input type="range" min="0" max="50" value={folds} onChange={e=>{sound.playClick();setFolds(+e.target.value)}} style={{width:240,accentColor:'#f97316'}} />
+          <span className="orange font-black text-lg" style={{marginLeft:8}}>{folds}</span>
+        </div>
+        {[0,7,10,17,26,30,46].map(f=>(
+          <button key={f} className={`btn btn-sm ${folds===f?'btn-orange':'btn-dark'}`} onClick={()=>{sound.playClick();setFolds(f)}}>{f}</button>
+        ))}
+      </div>
+
+      <div className="result-box text-center">
+        <div className="text-sm slate">Thickness after {folds} folds</div>
+        <div className="math" style={{fontSize:'1.5rem'}}>0.001 × 2<sup>{folds}</sup> = {formatThickness(thickness)}</div>
+        <div className="text-sm slate mt-1">Exact: {thickness.toExponential(4)} cm &nbsp;|&nbsp; Multiplier from start: 2<sup>{folds}</sup> = {folds<=20?Math.pow(2,folds).toLocaleString():Math.pow(2,folds).toExponential(3)}</div>
+      </div>
+
+      {folds <= 16 && (
+        <div className="result-box">
+          <div className="text-sm font-bold amber mb-1">Bar chart — thickness grows by ×2 each step</div>
+          <div className="thickness-viz">
+            {Array.from({length: folds+1}).map((_,i)=>{
+              const h = Math.max(5, Math.pow(2, i) / Math.pow(2, folds) * 92);
+              return <div key={i} title={`Fold ${i}: ${formatThickness(0.001*Math.pow(2,i))}`} className="thickness-bar" style={{height:h, width: Math.max(10, 200/(folds+1))}}></div>;
+            })}
+          </div>
+          <div className="text-xs slate text-center mt-1">Each bar is twice as tall as the one before (exponential growth)</div>
+        </div>
+      )}
+
+      <div className="formula-grid">
+        {landmarks.map(l=>(
+          <div key={l.f} className="formula-item" style={{cursor:'pointer',borderColor:folds===l.f?'#f97316':'#334155'}} onClick={()=>{sound.playClick();setFolds(l.f)}}>
+            <div className="name">{l.icon} {l.f} folds</div>
+            <div className="eq" style={{fontSize:'.95rem'}}>{l.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="def-card">
+        <div className="title">Definition — Exponential (multiplicative) growth</div>
+        <div className="body">A quantity multiplies by a fixed factor each step. Here the factor is 2 (doubling). After n folds: thickness = v × 2<sup>n</sup>. Every 10 folds multiplies thickness by 1024.</div>
+      </div>
+      <div className="tip"><strong className="amber">Compare:</strong> Additive growth would add the same amount each time. Exponential growth becomes huge very fast — that is the “power play”.</div>
+    </div>
+  );
+}
+
+function NotationTab() {
+  const [base, setBase] = useState(5);
+  const [exp, setExp] = useState(4);
+  const val = Math.pow(base, exp);
+  const expanded = Array(Math.min(exp,12)).fill(String(base)).join(' × ') + (exp>12?' × …':'');
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>2. Exponential Notation</h2>
+      <p className="sub">Write repeated multiplication in compact form: base<sup>exponent</sup>.</p>
+      <div className="row">
+        <div><label>Base</label><input type="number" value={base} onChange={e=>{sound.playClick();setBase(+e.target.value)}} className="input" /></div>
+        <div><label>Exponent</label><input type="number" min="0" max="20" value={exp} onChange={e=>{sound.playClick();setExp(Math.max(0,+e.target.value))}} className="input" /></div>
+      </div>
+      <div className="result-box text-center">
+        <div className="math" style={{fontSize:'1.6rem'}}>{base}<sup>{exp}</sup> = {Number.isFinite(val) ? val : '…'}</div>
+        <div className="text-sm slate mt-1">{exp>0 ? expanded + ' = ' + (Number.isFinite(val)?val:'…') : 'Any non-zero number to power 0 is 1'}</div>
+      </div>
+      <div className="def-card">
+        <div className="title">Reading aloud</div>
+        <div className="body">5<sup>4</sup> is “5 raised to the power 4”, “5 to the power 4”, “5 power 4”, or “4th power of 5”. Square = power 2; cube = power 3.</div>
+      </div>
+      <div className="formula-grid">
+        <div className="formula-item"><div className="name">Square</div><div className="eq">n² = n × n</div></div>
+        <div className="formula-item"><div className="name">Cube</div><div className="eq">n³ = n × n × n</div></div>
+        <div className="formula-item"><div className="name">Prime factors</div><div className="eq">32400 = 2⁴ × 5² × 3⁴</div></div>
+        <div className="formula-item"><div className="name">Mixed letters</div><div className="eq">a³b² = a×a×a×b×b</div></div>
+      </div>
+      <div className="tip-green"><strong className="emerald">Remember:</strong> 4+4+4 = 3×4 = 12, but 4×4×4 = 4³ = 64. Addition and multiplication are different!</div>
+      <div className="tip"><strong className="amber">Negative base:</strong> (−4)³ = −64; (−2)⁴ = +16. Odd exponent keeps the minus sign.</div>
+    </div>
+  );
+}
+
+function LawsTab() {
+  const [n, setN] = useState(2);
+  const [a, setA] = useState(5);
+  const [b, setB] = useState(3);
+  const prod = Math.pow(n,a) * Math.pow(n,b);
+  const pow = Math.pow(Math.pow(n,a), b);
+  const quot = a>=b ? Math.pow(n, a-b) : 1/Math.pow(n, b-a);
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>3. Laws of Exponents</h2>
+      <p className="sub">Live calculator for the three core laws. Change base and exponents.</p>
+      <div className="row">
+        <div><label>Base n</label><input type="number" value={n} onChange={e=>{sound.playClick();setN(+e.target.value||1)}} className="input" /></div>
+        <div><label>a</label><input type="number" value={a} onChange={e=>{sound.playClick();setA(+e.target.value)}} className="input" /></div>
+        <div><label>b</label><input type="number" value={b} onChange={e=>{sound.playClick();setB(+e.target.value)}} className="input" /></div>
+      </div>
+      <div className="identity-card">
+        <div className="math text-center">{n}<sup>{a}</sup> × {n}<sup>{b}</sup> = {n}<sup>{a+b}</sup> = {prod}</div>
+        <div className="text-sm slate text-center">Product law: n<sup>a</sup> × n<sup>b</sup> = n<sup>a+b</sup></div>
+      </div>
+      <div className="identity-card">
+        <div className="math text-center">({n}<sup>{a}</sup>)<sup>{b}</sup> = {n}<sup>{a*b}</sup> = {pow}</div>
+        <div className="text-sm slate text-center">Power law: (n<sup>a</sup>)<sup>b</sup> = n<sup>ab</sup></div>
+      </div>
+      <div className="identity-card">
+        <div className="math text-center">{n}<sup>{a}</sup> ÷ {n}<sup>{b}</sup> = {n}<sup>{a-b}</sup> = {Number.isFinite(quot)?quot.toPrecision(6):'…'}</div>
+        <div className="text-sm slate text-center">Quotient law: n<sup>a</sup> ÷ n<sup>b</sup> = n<sup>a−b</sup> (n ≠ 0)</div>
+      </div>
+      <div className="def-card">
+        <div className="title">Same exponent on different bases</div>
+        <div className="body math" style={{fontSize:'1.1rem'}}>m<sup>a</sup> × n<sup>a</sup> = (mn)<sup>a</sup> &nbsp;&nbsp;|&nbsp;&nbsp; m<sup>a</sup> / n<sup>a</sup> = (m/n)<sup>a</sup></div>
+      </div>
+      <div className="tip"><strong className="amber">Worked example:</strong> 3⁷ = 3⁴ × 3³ = 81 × 27 = 2187. Also 3⁷ = 3² × 3⁵.</div>
+      <div className="tip-green"><strong className="emerald">Also:</strong> 2¹⁰ = (2²)⁵ = (2⁵)². Same exponent product can be regrouped many ways.</div>
+    </div>
+  );
+}
+
+function ZeroNegTab() {
+  const [n, setN] = useState(2);
+  const [a, setA] = useState(3);
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>4. Zero & Negative Exponents</h2>
+      <p className="sub">Any non-zero number to the power 0 is 1. Negative exponents mean reciprocals.</p>
+      <div className="row">
+        <div><label>Base n (≠0)</label><input type="number" value={n} onChange={e=>{sound.playClick();setN(+e.target.value||1)}} className="input" /></div>
+        <div><label>Positive a</label><input type="number" min="1" value={a} onChange={e=>{sound.playClick();setA(Math.max(1,+e.target.value))}} className="input" /></div>
+      </div>
+      <div className="result-box text-center">
+        <div className="math">{n}<sup>0</sup> = 1</div>
+        <div className="math mt-1">{n}<sup>−{a}</sup> = 1/{n}<sup>{a}</sup> = {n!==0?(1/Math.pow(n,a)).toPrecision(6):'undefined'}</div>
+      </div>
+      <div className="def-card">
+        <div className="title">Why n⁰ = 1?</div>
+        <div className="body">From the quotient law: n<sup>a</sup> ÷ n<sup>a</sup> = n<sup>a−a</sup> = n<sup>0</sup>, but any number divided by itself is 1. So n<sup>0</sup> = 1 (n ≠ 0).</div>
+      </div>
+      <div className="def-card">
+        <div className="title">Negative exponent</div>
+        <div className="body">n<sup>−a</sup> = 1/n<sup>a</sup> and n<sup>a</sup> = 1/n<sup>−a</sup>. Example: 2<sup>−1</sup> = 1/2, 10<sup>−3</sup> = 1/1000.</div>
+      </div>
+      <div className="formula-grid">
+        <div className="formula-item"><div className="name">2⁴ ÷ 2⁵</div><div className="eq">2<sup>−1</sup> = 1/2</div></div>
+        <div className="formula-item"><div className="name">10³</div><div className="eq">1 / 10<sup>−3</sup></div></div>
+        <div className="formula-item"><div className="name">Laws still hold</div><div className="eq">For any integers a, b</div></div>
+        <div className="formula-item"><div className="name">0⁰</div><div className="eq">Undefined</div></div>
+      </div>
+      <div className="tip-blue"><strong className="blue">Power line:</strong> … 4², 4¹, 4⁰=1, 4<sup>−1</sup>=1/4, 4<sup>−2</sup>=1/16 … Each step multiplies or divides by 4.</div>
+    </div>
+  );
+}
+
+function PondTab() {
+  const [day, setDay] = useState(15);
+  const maxDays = 30;
+  const lotusCount = Math.min(Math.pow(2, Math.min(day, 8)), 64);
+  const coverage = Math.min(100, (Math.pow(2, day) / Math.pow(2, maxDays)) * 100);
+  const isHalf = day === maxDays - 1;
+  const isFull = day >= maxDays;
+
+  const lotuses = useMemo(() => {
+    const arr = [];
+    const n = Math.min(lotusCount, 48);
+    for (let i = 0; i < n; i++) {
+      const seed = (i * 17 + 31) % 100;
+      arr.push({
+        left: 5 + (seed * 0.85) % 88,
+        bottom: 8 + ((i * 13) % 42),
+        size: 1.15 + (i % 5) * 0.15,
+        delay: (i % 8) * 0.08,
+      });
+    }
+    return arr;
+  }, [lotusCount]);
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>5. Magical Pond & Combinations</h2>
+      <p className="sub">Lotuses <strong className="blue">double every day</strong>. Full on day 30 → half full on day 29. Same idea as paper folding!</p>
+
+      <div className="scene-caption">What this picture shows</div>
+      <div className="pond-scene" style={{height:210}}>
+        <div style={{position:'absolute',top:8,left:12,fontSize:28}} title="Sun">☀️</div>
+        <div style={{position:'absolute',top:16,right:28,fontSize:20,opacity:.75}} title="Cloud">☁️</div>
+        {isHalf && <div className="annot" style={{top:8,left:'35%'}}>HALF FULL — Day 29</div>}
+        {isFull && <div className="annot" style={{top:8,left:'38%',borderColor:'#34d399',color:'#bbf7d0'}}>POND FULL — Day 30</div>}
+        <div className="pond-water" style={{height: isFull ? '75%' : Math.max(48, 40 + coverage * 0.35) + '%'}}>
+          <div className="pond-ripple" style={{width:40,height:20,left:'18%',top:'28%',animationDelay:'0s'}}></div>
+          <div className="pond-ripple" style={{width:50,height:24,left:'58%',top:'48%',animationDelay:'1.2s'}}></div>
+          {lotuses.map((L, i) => (
+            <div key={i} className="lotus bloom" style={{
+              left: L.left + '%',
+              bottom: L.bottom + '%',
+              fontSize: L.size + 'rem',
+              animationDelay: L.delay + 's',
+            }}>🪷</div>
+          ))}
+        </div>
+        <div style={{position:'absolute',bottom:6,left:0,right:0,textAlign:'center',fontSize:14,fontWeight:800,color:'#f0f9ff',textShadow:'0 1px 3px #000'}}>
+          Day {day} · Coverage ≈ {coverage < 0.01 ? coverage.toExponential(1) : coverage.toFixed(2)}%
+          {isHalf ? ' · HALF FULL!' : ''}
+          {isFull ? ' · FULL!' : ''}
+        </div>
+      </div>
+
+      <div className="scene-legend">
+        <div className="legend-item"><span>🪷</span> Each lotus = one unit (doubles daily)</div>
+        <div className="legend-item"><span>💧</span> Water = the pond surface</div>
+        <div className="legend-item"><span>📊</span> Coverage % = 2<sup>day</sup> / 2<sup>30</sup></div>
+      </div>
+
+      <div className="row">
+        <div><label>Day number</label>
+          <input type="range" min="0" max={maxDays} value={day} onChange={e=>{sound.playClick();setDay(+e.target.value)}} style={{width:240,accentColor:'#0ea5e9'}} />
+          <span className="blue font-black text-lg" style={{marginLeft:8}}>{day}</span>
+        </div>
+        <button className="btn btn-dark btn-sm" onClick={()=>{sound.playClick();setDay(29)}}>Half (29)</button>
+        <button className="btn btn-orange btn-sm" onClick={()=>{sound.playClick();setDay(30)}}>Full (30)</button>
+        <button className="btn btn-dark btn-sm" onClick={()=>{sound.playClick();setDay(0)}}>Start</button>
+        <button className="btn btn-dark btn-sm" onClick={()=>{sound.playClick();setDay(Math.min(30, day+1))}}>Day +1</button>
+      </div>
+
+      <div className="result-box text-center">
+        <div className="math">Lotuses on day {day}: 2<sup>{day}</sup> = {day <= 20 ? Math.pow(2,day).toLocaleString() : Math.pow(2,day).toExponential(3)}</div>
+        <div className="text-sm slate mt-1">
+          {isHalf ? '✅ Pond is half covered — because the next day doubles the lotuses and fills it completely.' :
+           isFull ? '✅ Pond completely covered. Yesterday (day 29) was exactly half full.' :
+           day === 0 ? 'One lotus placed. Move the slider to watch doubling growth.' :
+           'Coverage doubles every day — same exponential growth as paper folding.'}
+        </div>
+      </div>
+
+      <div className="identity-card">
+        <div className="text-base font-bold white mb-1">Why is day 29 half full?</div>
+        <div className="step-box">Day 30 full = 2<sup>30</sup> lotuses</div>
+        <div className="step-box">Day 29 = 2<sup>29</sup> = 2<sup>30</sup> ÷ 2 = half of day 30</div>
+        <div className="step-box">In general: if full on day n, half full on day n − 1</div>
+      </div>
+
+      <div className="def-card">
+        <div className="title">Damayanti’s two ponds</div>
+        <div className="body">4 days doubling → 2⁴, then 4 days tripling → 2⁴ × 3⁴ = (2×3)⁴ = 6⁴. Same result if order is reversed: m<sup>a</sup> × n<sup>a</sup> = (mn)<sup>a</sup>.</div>
+      </div>
+
+      <div className="formula-grid">
+        <div className="formula-item"><div className="name">Full pond</div><div className="eq">2<sup>30</sup> lotuses</div></div>
+        <div className="formula-item"><div className="name">Half pond</div><div className="eq">2<sup>29</sup> lotuses</div></div>
+        <div className="formula-item"><div className="name">Same exponent</div><div className="eq">m<sup>a</sup> × n<sup>a</sup> = (mn)<sup>a</sup></div></div>
+        <div className="formula-item"><div className="name">5-digit lock</div><div className="eq">10<sup>5</sup> = 1,00,000</div></div>
+      </div>
+
+      <div className="result-box text-center">
+        <div className="text-sm slate">Password idea: each digit has 10 choices → combinations grow like powers of 10</div>
+        <div className="math">10<sup>{Math.min(day, 8)}</sup> = {Math.pow(10, Math.min(day, 8)).toLocaleString()} passwords (if {Math.min(day,8)} digits)</div>
+      </div>
+      <div className="tip"><strong className="amber">Estu’s outfits:</strong> 4 dresses × 3 caps = 12. Roxie: 7 × 2 × 3 = 42. Multiplication principle = same idea as exponents when factors repeat.</div>
+    </div>
+  );
+}
+
+function Powers10Tab() {
+  const [numStr, setNumStr] = useState('561.903');
+  const expanded = useMemo(() => {
+    const raw = numStr.trim();
+    if (!raw || isNaN(Number(raw))) return { parts: [], error: 'Enter a valid number' };
+    const neg = raw.startsWith('-');
+    const s = neg ? raw.slice(1) : raw;
+    const [whole, frac = ''] = s.split('.');
+    const parts = [];
+    for (let i = 0; i < whole.length; i++) {
+      const d = whole[i];
+      if (d === '0') continue;
+      const p = whole.length - 1 - i;
+      parts.push({ d, p, term: `${d} × 10${p === 0 ? '⁰' : p === 1 ? '¹' : p === 2 ? '²' : p === 3 ? '³' : p === 4 ? '⁴' : '⁺' + p}` });
+    }
+    for (let i = 0; i < frac.length; i++) {
+      const d = frac[i];
+      if (d === '0') continue;
+      const p = -(i + 1);
+      parts.push({ d, p, term: `${d} × 10⁻${i + 1}` });
+    }
+    return { parts, neg, error: null };
+  }, [numStr]);
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>6. Powers of 10</h2>
+      <p className="sub">Place value is powers of 10. Positive for whole places, negative for decimals.</p>
+
+      <div className="result-box">
+        <div className="text-sm font-bold amber mb-1">Textbook example</div>
+        <div className="math" style={{fontSize:'1.08rem'}}>
+          47561 = (4×10⁴) + (7×10³) + (5×10²) + (6×10¹) + (1×10⁰)
+        </div>
+      </div>
+      <div className="result-box">
+        <div className="math" style={{fontSize:'1.08rem'}}>
+          561.903 = (5×10²)+(6×10¹)+(1×10⁰)+(9×10⁻¹)+(0×10⁻²)+(3×10⁻³)
+        </div>
+      </div>
+
+      <div className="row">
+        <div><label>Try your number</label>
+          <input type="text" value={numStr} onChange={e=>{sound.playClick();setNumStr(e.target.value)}} className="input input-wide" style={{width:160}} />
+        </div>
+        {['172','5642','6374','561.903','0.025','1000'].map(v=>(
+          <button key={v} className="btn btn-dark btn-sm" onClick={()=>{sound.playClick();setNumStr(v)}}>{v}</button>
+        ))}
+      </div>
+
+      <div className="result-box">
+        <div className="text-sm font-bold amber mb-1">Expanded form of {numStr}</div>
+        {expanded.error ? <div className="red">{expanded.error}</div> : (
+          <div className="math" style={{fontSize:'1.1rem'}}>
+            {expanded.neg ? '−(' : ''}{expanded.parts.map(p => p.term).join(' + ') || '0'}{expanded.neg ? ')' : ''}
+          </div>
+        )}
+      </div>
+
+      <div className="def-card">
+        <div className="title">Place-value chart</div>
+        <div className="body" style={{fontFamily:'ui-monospace',fontSize:'1rem',lineHeight:1.6}}>
+          … | 10³ | 10² | 10¹ | 10⁰ . 10⁻¹ | 10⁻² | 10⁻³ | …<br/>
+          … | 1000 | 100 | 10 | 1 . 1/10 | 1/100 | 1/1000 | …
+        </div>
+      </div>
+
+      <div className="formula-grid">
+        <div className="formula-item"><div className="name">10⁰</div><div className="eq">1</div></div>
+        <div className="formula-item"><div className="name">10¹</div><div className="eq">10</div></div>
+        <div className="formula-item"><div className="name">10²</div><div className="eq">100</div></div>
+        <div className="formula-item"><div className="name">10³</div><div className="eq">1000</div></div>
+        <div className="formula-item"><div className="name">10⁻¹</div><div className="eq">0.1 = 1/10</div></div>
+        <div className="formula-item"><div className="name">10⁻²</div><div className="eq">0.01 = 1/100</div></div>
+        <div className="formula-item"><div className="name">10⁻³</div><div className="eq">0.001 = 1/1000</div></div>
+        <div className="formula-item"><div className="name">10ⁿ × 10ᵐ</div><div className="eq">10ⁿ⁺ᵐ</div></div>
+      </div>
+
+      <div className="def-card">
+        <div className="title">Definition — Powers of 10</div>
+        <div className="body">10<sup>n</sup> means 1 followed by n zeros (for n ≥ 0). 10<sup>−n</sup> means 1 divided by 10<sup>n</sup> (decimal point moves left n places).</div>
+      </div>
+      <div className="tip-green"><strong className="emerald">Link to chapter:</strong> Writing numbers with powers of 10 is the same exponential notation used for paper folds and laws of exponents.</div>
+      <div className="tip"><strong className="amber">Scientific notation idea:</strong> Large numbers like 7,00,000 km can be written as 7 × 10⁵ km — compact and clear.</div>
+    </div>
+  );
+}
+
+function PracticeTab() {
+  const problems = [
+    {q:'Express 6×6×6×6 in exponential form', a:'6⁴', steps:['Count factors: 6 appears 4 times','Write base 6 with exponent 4 → 6⁴']},
+    {q:'32400 as product of prime powers', a:'2⁴ × 5² × 3⁴', steps:['Factor: 32400 = 2×2×2×2×5×5×3×3×3×3','Group: 2⁴ × 5² × 3⁴']},
+    {q:'Simplify 2⁹ using product law (e.g. 2⁵×2⁴)', a:'2⁵×2⁴ = 2⁹ = 512', steps:['2⁵=32, 2⁴=16','32×16=512']},
+    {q:'(4³)² in two ways', a:'4⁶ = 4096', steps:['(4³)² = 4⁶','Or 4³×4³ = 64×64 = 4096']},
+    {q:'2⁴ ÷ 2⁵', a:'2⁻¹ = 1/2', steps:['Quotient law: 2⁴⁻⁵ = 2⁻¹','Negative exponent → reciprocal 1/2']},
+    {q:'Pond half full if full on day 30', a:'Day 29', steps:['Doubling: full = 2 × half','So half occurs one day before full']},
+    {q:'5-digit lock passwords (0–9)', a:'10⁵ = 100000', steps:['10 choices per digit','5 independent digits → 10⁵']},
+    {q:'m⁴ × n⁴', a:'(mn)⁴', steps:['Same exponent law: mᵃ × nᵃ = (mn)ᵃ']},
+    {q:'Express 5×5×7×7×7 in exponential form', a:'5² × 7³', steps:['5 appears twice → 5²','7 appears three times → 7³']},
+    {q:'What is (−1)⁵? Positive or negative?', a:'−1 (negative)', steps:['Odd exponent keeps the minus','(−1)×(−1)×(−1)×(−1)×(−1) = −1']},
+    {q:'Is (−2)⁴ = 16?', a:'Yes, 16', steps:['Even power: negative base becomes positive','(−2)×(−2)×(−2)×(−2) = 16']},
+    {q:'Simplify 3² × 3⁻⁵ × 3⁶', a:'3³ = 27', steps:['Add exponents: 2 + (−5) + 6 = 3','3³ = 27']},
+  ];
+  const [idx, setIdx] = useState(0);
+  const [show, setShow] = useState(false);
+  const p = problems[idx];
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>7. Practice — Figure It Out</h2>
+      <p className="sub">Textbook-style questions with step-by-step solutions. {problems.length} questions.</p>
+
+      <div className="result-box">
+        <div className="text-sm slate">Question {idx+1} of {problems.length}</div>
+        <div className="text-lg font-bold white mb-2">{p.q}</div>
+        {show ? (
+          <div>
+            <div className="step-box green">Answer: {p.a}</div>
+            <div className="text-sm font-bold amber mt-2 mb-1">Steps</div>
+            {p.steps.map((s,i)=><div key={i} className="step-box">Step {i+1}: {s}</div>)}
+          </div>
+        ) : (
+          <button className="btn btn-orange" onClick={()=>{sound.playClick();setShow(true)}}>Show Answer</button>
+        )}
+      </div>
+
+      <div className="flex gap-2 flex-wrap">
+        <button className="btn btn-dark btn-sm" disabled={idx===0} onClick={()=>{sound.playClick();setIdx(idx-1);setShow(false)}}>← Prev</button>
+        <button className="btn btn-dark btn-sm" disabled={idx===problems.length-1} onClick={()=>{sound.playClick();setIdx(idx+1);setShow(false)}}>Next →</button>
+        <button className="btn btn-emerald btn-sm" onClick={()=>{sound.playClick();setIdx(Math.floor(Math.random()*problems.length));setShow(false)}}>Random</button>
+      </div>
+
+      <div className="identity-card">
+        <div className="text-base font-bold white mb-1">Quick formula reminders</div>
+        <div className="formula-grid">
+          <div className="formula-item"><div className="name">Product</div><div className="eq">nᵃ × nᵇ = nᵃ⁺ᵇ</div></div>
+          <div className="formula-item"><div className="name">Power</div><div className="eq">(nᵃ)ᵇ = nᵃᵇ</div></div>
+          <div className="formula-item"><div className="name">Quotient</div><div className="eq">nᵃ ÷ nᵇ = nᵃ⁻ᵇ</div></div>
+          <div className="formula-item"><div className="name">Negative</div><div className="eq">n⁻ᵃ = 1/nᵃ</div></div>
+        </div>
+      </div>
+
+      <div className="def-card">
+        <div className="title">How to factor into prime powers</div>
+        <div className="body">Divide by smallest primes repeatedly. Count how many times each prime appears → write as p₁<sup>e₁</sup> × p₂<sup>e₂</sup> × …</div>
+      </div>
+      <div className="def-card">
+        <div className="title">Even vs odd exponents (negative base)</div>
+        <div className="body">(−a)<sup>even</sup> is positive; (−a)<sup>odd</sup> is negative. Example: (−2)⁴ = 16, (−2)⁵ = −32.</div>
+      </div>
+      <div className="tip-blue"><strong className="blue">Tip:</strong> If stuck, write the expanded product first, then group identical factors into exponents.</div>
+    </div>
+  );
+}
+
+function FormulasTab() {
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>8. Formula Sheet</h2>
+      <p className="sub">All key definitions and laws for quick revision.</p>
+      <div className="def-card"><div className="title">Exponential form</div><div className="body">n<sup>a</sup> means n multiplied by itself a times. Base = n, exponent/power = a.</div></div>
+      <div className="formula-grid">
+        <div className="formula-item"><div className="name">Product</div><div className="eq">n<sup>a</sup> × n<sup>b</sup> = n<sup>a+b</sup></div></div>
+        <div className="formula-item"><div className="name">Power</div><div className="eq">(n<sup>a</sup>)<sup>b</sup> = n<sup>ab</sup></div></div>
+        <div className="formula-item"><div className="name">Quotient</div><div className="eq">n<sup>a</sup> ÷ n<sup>b</sup> = n<sup>a−b</sup></div></div>
+        <div className="formula-item"><div className="name">Same exponent</div><div className="eq">m<sup>a</sup> × n<sup>a</sup> = (mn)<sup>a</sup></div></div>
+        <div className="formula-item"><div className="name">Zero power</div><div className="eq">n<sup>0</sup> = 1 (n≠0)</div></div>
+        <div className="formula-item"><div className="name">Negative</div><div className="eq">n<sup>−a</sup> = 1/n<sup>a</sup></div></div>
+        <div className="formula-item"><div className="name">Quotient same exp</div><div className="eq">m<sup>a</sup>/n<sup>a</sup> = (m/n)<sup>a</sup></div></div>
+        <div className="formula-item"><div className="name">Paper fold</div><div className="eq">thickness = v × 2<sup>n</sup></div></div>
+      </div>
+      <div className="tip"><strong className="amber">Stones that Shine:</strong> 3 daughters × 3 baskets × 3 keys × 3 rooms = 3⁴ rooms; diamonds = 3⁷.</div>
+    </div>
+  );
+}
+
+function QuizTab() {
+  const qs = [
+    {q:'Thickness after n folds (initial v) is…', options:['v+n','v×n','v×2ⁿ','2ⁿ'], correct:2, exp:'Each fold doubles → multiply by 2, n times → v×2ⁿ.'},
+    {q:'2¹⁰ equals…', options:['20','1024','100','512'], correct:1, exp:'2¹⁰ = 1024. After every 10 folds thickness multiplies by 1024.'},
+    {q:'nᵃ × nᵇ equals…', options:['nᵃᵇ','nᵃ⁺ᵇ','nᵃ⁻ᵇ','(nᵃ)ᵇ'], correct:1, exp:'Product law: add the exponents.'},
+    {q:'(nᵃ)ᵇ equals…', options:['nᵃ⁺ᵇ','nᵃᵇ','nᵃ⁻ᵇ','aⁿᵇ'], correct:1, exp:'Power of a power: multiply exponents.'},
+    {q:'n⁰ (n≠0) equals…', options:['0','n','1','undefined'], correct:2, exp:'From nᵃ÷nᵃ = n⁰ = 1.'},
+    {q:'2⁻³ equals…', options:['−8','1/8','−1/8','8'], correct:1, exp:'n⁻ᵃ = 1/nᵃ → 1/2³ = 1/8.'},
+    {q:'Pond full on day 30 is half full on…', options:['Day 15','Day 29','Day 28','Day 1'], correct:1, exp:'Doubling means half one day before full.'},
+    {q:'5-digit numeric lock has how many passwords?', options:['5×10','10⁵','5¹⁰','50'], correct:1, exp:'10 choices per digit, 5 digits → 10⁵ = 100000.'},
+  ];
+  const [idx,setIdx]=useState(0),[sel,setSel]=useState(null),[score,setScore]=useState(0),[done,setDone]=useState(false),[show,setShow]=useState(false);
+  const submit=i=>{if(show)return;sound.playClick();setSel(i);setShow(true);if(i===qs[idx].correct){setScore(s=>s+1);sound.playSuccess();}};
+  const next=()=>{sound.playClick();if(idx+1>=qs.length)setDone(true);else{setIdx(idx+1);setSel(null);setShow(false);}};
+  if(done) return (
+    <div className="card h-full flex items-center justify-center">
+      <div className="text-center space-y-3" style={{maxWidth:400}}>
+        <div style={{fontSize:48}}>{score>=qs.length*0.7?'🎉':'📚'}</div>
+        <h2>Quiz Complete</h2>
+        <div className="text-3xl font-black orange">{score} / {qs.length}</div>
+        <button className="btn btn-orange" onClick={()=>{setIdx(0);setSel(null);setScore(0);setDone(false);setShow(false);sound.playClick();}}>Try Again</button>
+      </div>
+    </div>
+  );
+  const q=qs[idx];
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <div className="flex justify-between"><span className="text-sm slate font-bold">Q {idx+1}/{qs.length}</span><span className="badge">Score {score}</span></div>
+      <h2 style={{fontSize:'1.2rem'}}>{q.q}</h2>
+      {q.options.map((o,i)=>{
+        let cls='quiz-opt';
+        if(show){if(i===q.correct)cls+=' correct';else if(i===sel)cls+=' wrong';else cls+=' disabled';}
+        return <button key={i} className={cls} onClick={()=>submit(i)} disabled={show}>
+          <span style={{width:30,height:30,borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center',fontWeight:900,background:show&&i===q.correct?'#10b981':show&&i===sel?'#ef4444':'#ea580c',color:'#fff'}}>{String.fromCharCode(65+i)}</span>
+          <span>{o}</span>
+        </button>;
+      })}
+      {show && <div className={sel===q.correct?'tip-green':'tip'}><strong>{sel===q.correct?'✅ Correct!':'❌ Not quite.'}</strong> {q.exp}
+        <div className="mt-2"><button className="btn btn-orange" onClick={next}>{idx+1<qs.length?'Next →':'Results'}</button></div>
+      </div>}
+    </div>
+  );
+}
+
+function WhiteboardTab() {
+  const canvasRef = useRef(null);
+  const drawing = useRef(false);
+  const last = useRef({x:0,y:0});
+  const [color, setColor] = useState('#f97316');
+  const [size, setSize] = useState(5);
+  const colorRef = useRef(color); const sizeRef = useRef(size);
+  colorRef.current=color; sizeRef.current=size;
+  const getPos = useCallback(e=>{
+    const c=canvasRef.current; if(!c)return{x:0,y:0};
+    const r=c.getBoundingClientRect();
+    const cx=e.touches?e.touches[0].clientX:e.clientX;
+    const cy=e.touches?e.touches[0].clientY:e.clientY;
+    return {x:(cx-r.left)*(c.width/r.width), y:(cy-r.top)*(c.height/r.height)};
+  },[]);
+  useEffect(()=>{
+    const c=canvasRef.current; if(!c)return;
+    const p=c.parentElement;
+    const resize=()=>{const d=window.devicePixelRatio||1;c.width=p.clientWidth*d;c.height=p.clientHeight*d;c.style.width=p.clientWidth+'px';c.style.height=p.clientHeight+'px';const ctx=c.getContext('2d');ctx.setTransform(d,0,0,d,0,0);ctx.fillStyle='#1e293b';ctx.fillRect(0,0,p.clientWidth,p.clientHeight);};
+    resize(); window.addEventListener('resize',resize);
+    const start=e=>{e.preventDefault();drawing.current=true;last.current=getPos(e);};
+    const stop=e=>{e.preventDefault();drawing.current=false;};
+    const move=e=>{if(!drawing.current)return;e.preventDefault();const pos=getPos(e);const ctx=c.getContext('2d');const d=window.devicePixelRatio||1;ctx.setTransform(d,0,0,d,0,0);ctx.lineWidth=sizeRef.current;ctx.lineCap='round';ctx.strokeStyle=colorRef.current;ctx.beginPath();ctx.moveTo(last.current.x/d,last.current.y/d);ctx.lineTo(pos.x/d,pos.y/d);ctx.stroke();last.current=pos;};
+    ['pointerdown','mousedown','touchstart'].forEach(ev=>c.addEventListener(ev,start,{passive:false}));
+    ['pointerup','mouseup','touchend','pointerleave','mouseleave'].forEach(ev=>c.addEventListener(ev,stop,{passive:false}));
+    ['pointermove','mousemove','touchmove'].forEach(ev=>c.addEventListener(ev,move,{passive:false}));
+    return()=>window.removeEventListener('resize',resize);
+  },[getPos]);
+  const clear=()=>{sound.playClick();const c=canvasRef.current;if(!c)return;const ctx=c.getContext('2d');ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#1e293b';ctx.fillRect(0,0,c.width,c.height);};
+  return (
+    <div className="card h-full flex flex-col space-y-2 overflow-hidden">
+      <div className="flex flex-wrap gap-2 items-center">
+        {['#f97316','#3b82f6','#10b981','#eab308','#ec4899','#fff'].map(col=>(
+          <button key={col} onClick={()=>{sound.playClick();setColor(col)}} style={{width:28,height:28,borderRadius:'50%',background:col,border:color===col?'3px solid #fff':'2px solid transparent'}} />
+        ))}
+        {[3,5,8,14].map(s=><button key={s} className={`btn btn-sm ${size===s?'btn-orange':'btn-dark'}`} onClick={()=>{sound.playClick();setSize(s)}}>{s}px</button>)}
+        <button className="btn btn-sm" style={{background:'#dc2626',color:'#fff'}} onClick={clear}>Clear</button>
+      </div>
+      <div className="flex-1 rounded-xl overflow-hidden border border-slate-600" style={{minHeight:0,touchAction:'none'}}>
+        <canvas ref={canvasRef} style={{width:'100%',height:'100%',display:'block',touchAction:'none',cursor:'crosshair'}} />
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [tab, setTab] = useState('overview');
+  const [muted, setMuted] = useState(false);
+  const [isFs, setIsFs] = useState(false);
+  useEffect(()=>{sound.setMuted(muted);},[muted]);
+  useEffect(()=>{const h=()=>setIsFs(!!document.fullscreenElement);document.addEventListener('fullscreenchange',h);return()=>document.removeEventListener('fullscreenchange',h);},[]);
+  const toggleFs=()=>{sound.playClick();const el=document.querySelector('.simulation-container');if(!document.fullscreenElement)el?.requestFullscreen?.().catch(()=>{});else document.exitFullscreen?.().catch(()=>{});};
+  const tabs=[
+    {id:'overview',label:'0. Overview',icon:'📖'},
+    {id:'fold',label:'1. Folding',icon:'📄'},
+    {id:'notation',label:'2. Notation',icon:'ⁿ'},
+    {id:'laws',label:'3. Laws',icon:'⚖️'},
+    {id:'zeroneg',label:'4. Zero & −',icon:'⁰'},
+    {id:'pond',label:'5. Pond & Lock',icon:'🪷'},
+    {id:'pow10',label:'6. Powers of 10',icon:'🔟'},
+    {id:'practice',label:'7. Practice',icon:'📝'},
+    {id:'formulas',label:'8. Formulas',icon:'📋'},
+    {id:'quiz',label:'9. Quiz',icon:'✓'},
+    {id:'board',label:'10. Board',icon:'🖊️'},
+  ];
+  const content={
+    overview:<OverviewTab/>,fold:<FoldTab/>,notation:<NotationTab/>,laws:<LawsTab/>,
+    zeroneg:<ZeroNegTab/>,pond:<PondTab/>,pow10:<Powers10Tab/>,practice:<PracticeTab/>,
+    formulas:<FormulasTab/>,quiz:<QuizTab/>,board:<WhiteboardTab/>
+  };
+  const logoSrc = LOGO_SRC;
+  return (
+    <div className="simulation-container">
+      <header className="glass px-5 py-2.5 flex justify-between items-center z-30 flex-shrink-0 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="logo-wrap">
+            <img src={logoSrc} alt="APMF" style={{width:48,height:48,objectFit:'contain',borderRadius:10}} />
+          </div>
+          <div>
+            <div style={{fontSize:17,fontWeight:900,color:'#fff',letterSpacing:'-0.02em',lineHeight:1.15}}>Power Play</div>
+            <div style={{fontSize:12,color:'#94a3b8'}}>Complete Chapter Simulation • Ganita Prakash Grade 8</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <div style={{textAlign:'right',lineHeight:1.25}}>
+            <div style={{fontSize:12,fontWeight:700,color:'#fb923c'}}>Andhra Pradesh Mathematics Forum</div>
+            <div style={{fontSize:13,fontWeight:700,color:'#fff'}}>Gangalapudi Bhasker Reddy</div>
+          </div>
+          <div className="flex items-center gap-2" style={{background:'#1e293b',padding:6,borderRadius:12,border:'1px solid #334155'}}>
+            <button className="btn btn-dark btn-sm" onClick={()=>{sound.playClick();setMuted(!muted)}}>{muted?'🔇':'🔊'}</button>
+            <button className="btn btn-dark btn-sm" onClick={toggleFs}>{isFs?'🗗':'⛶'}</button>
+          </div>
+        </div>
+      </header>
+      <div className="tab-bar">
+        {tabs.map(t=>(
+          <button key={t.id} className={`tab ${tab===t.id?'on':''}`} onClick={()=>{sound.playClick();setTab(t.id)}}>
+            <span>{t.icon}</span><span>{t.label}</span>
+          </button>
+        ))}
+      </div>
+      <main className="flex-1 overflow-hidden p-2"><div className="h-full fade">{content[tab]}</div></main>
+      <footer className="glass px-6 py-2 flex justify-between items-center flex-shrink-0 border-t border-white/10 z-30" style={{fontSize:12,color:'#94a3b8'}}>
+        <span>NCERT Ganita Prakash • Chapter 2 • Power Play</span>
+        <span>Andhra Pradesh Mathematics Forum • Author: <strong style={{color:'#e2e8f0'}}>Gangalapudi Bhasker Reddy</strong></span>
+      </footer>
+    </div>
+  );
+}
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
