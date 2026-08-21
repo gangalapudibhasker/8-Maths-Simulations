@@ -1,0 +1,495 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 8 · Ganita Prakash · Chapter 4: Quadrilaterals</title>
+
+    <!-- KaTeX for Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" 
+            onload="renderMathInElement(document.body, { delimiters: [{left: '\\(', right: '\\)', display: false}, {left: '\\[', right: '\\]', display: true}] });"></script>
+    
+    <style>
+        :root {
+            --purple-dark: #5b2a86;
+            --purple: #7b3fb5;
+            --purple-light: #f2e8fb;
+            --lavender: #efe3fb;
+            --gold: #f5a623;
+            --gold-light: #fff3d6;
+            --red: #c62828;
+            --red-light: #fdecea;
+            --blue: #1565c0;
+            --blue-light: #e8f1fc;
+            --green: #2e7d32;
+            --green-light: #e8f8ec;
+            --ink: #2b2438;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #faf6ff 0%, #f4ecff 100%);
+            color: var(--ink);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Hero / Header Section */
+        .hero {
+            background: radial-gradient(circle at top right, var(--purple-light) 0%, var(--purple) 40%, var(--purple-dark) 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .chip {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--ink);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 2.5em;
+            letter-spacing: 1px;
+        }
+
+        .hero h2 {
+            margin: 10px 0 0 0;
+            font-weight: 300;
+            font-size: 1.3em;
+            color: var(--lavender);
+        }
+
+        /* Navigation */
+        .nav-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: white;
+            color: var(--purple-dark);
+            border: 2px solid transparent;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover { border: 2px solid var(--gold); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        button.active { background: var(--gold); color: var(--ink); }
+        button.tool-btn { background: var(--ink); color: white; }
+
+        /* Container & Pagination */
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+        .part-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .part-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Content Blocks */
+        h3.section-title {
+            background: var(--purple);
+            color: white;
+            padding: 10px 15px;
+            border-left: 6px solid var(--gold);
+            border-radius: 4px;
+            margin-top: 40px;
+        }
+
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .formula-box { background: linear-gradient(135deg, var(--gold-light), #fffdf8); border: 2px dashed var(--gold); padding: 15px; border-radius: 8px; text-align: center; font-size: 1.2em; font-weight: bold; color: var(--ink); margin: 20px 0; }
+        .mistake-box { background: var(--red-light); border: 2px solid var(--red); padding: 15px; border-radius: 8px; margin: 20px 0; color: var(--ink); }
+        .mistake-box strong { color: var(--red); }
+        .note { background: #fffde7; border-left: 6px solid var(--gold); padding: 15px; margin: 20px 0; font-style: italic; }
+
+        /* Interactive Q&A */
+        details.qcard {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        details.qcard summary {
+            background: var(--red-light);
+            padding: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            list-style-type: none;
+            position: relative;
+            color: var(--ink);
+        }
+
+        details.qcard summary::after {
+            content: "▼";
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: var(--red);
+            transition: transform 0.3s;
+        }
+
+        details.qcard[open] summary::after { transform: rotate(180deg); }
+
+        .qbody { padding: 20px; border-top: 1px solid #ddd; }
+        .sol-label { font-weight: bold; color: var(--purple-dark); margin-bottom: 10px; display: block; }
+        .sol-step { background: var(--blue-light); padding: 10px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid var(--blue); }
+        .ans-box { background: var(--green-light); padding: 12px; border-radius: 4px; border-left: 4px solid var(--green); font-weight: bold; margin-top: 15px; color: var(--green); }
+
+        .svg-container { text-align: center; margin: 20px 0; }
+
+        /* Print Media Query */
+        @media print {
+            body { background: white; color: black; }
+            .hero { background: none; color: black; padding: 0; box-shadow: none; }
+            .nav-controls, .tool-btn { display: none; }
+            .part-section { display: block !important; page-break-after: always; }
+            details.qcard[open] summary::after { content: none; }
+            .card, .formula-box, .mistake-box { box-shadow: none; border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="hero">
+        <div class="chip">Class 8 · Ganita Prakash · Chapter 4</div>
+        <h1>Quadrilaterals</h1>
+        <h2>Complete Study Guide & Notes</h2>
+        
+        <div class="nav-controls">
+            <button onclick="showPart('part1')" id="btn-part1" class="active">Part 1 (Concepts 4.1 - 4.2)</button>
+            <button onclick="showPart('part2')" id="btn-part2">Part 2 (Concepts 4.3 - 4.4)</button>
+            <button onclick="showPart('part3')" id="btn-part3">Part 3 (Concepts 4.5 - 4.6 & Summary)</button>
+        </div>
+        <div class="nav-controls" style="margin-top:10px;">
+            <button onclick="toggleAllAnswers()" class="tool-btn">Toggle All Answers ⬍</button>
+            <button onclick="prepareAndPrint()" class="tool-btn" style="background-color: var(--gold); color: var(--ink);">Print Complete Guide</button>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <!-- PART 1 -->
+        <div id="part1" class="part-section active">
+            <h3 class="section-title">4.1 Rectangles and Squares</h3>
+            
+            <div class="card">
+                <p>A quadrilateral is a four-sided figure. The word 'quadrilateral' is derived from Latin words - quadri meaning four, and latus referring to sides.</p>
+                
+                <div class="formula-box">
+                    Rectangle Definition<br>
+                    A rectangle is a quadrilateral in which the angles are all right angles (\(90^\circ\)) and the opposite sides are of equal length.
+                </div>
+
+                <p><strong>Properties of a Rectangle:</strong></p>
+                <ul>
+                    <li>All the angles of a rectangle are \(90^\circ\).</li>
+                    <li>The opposite sides of a rectangle are equal.</li>
+                    <li>The opposite sides of a rectangle are parallel to each other.</li>
+                    <li>The diagonals of a rectangle are of equal length and they bisect each other.</li>
+                </ul>
+                
+                <div class="formula-box">
+                    Square Definition<br>
+                    A square is a quadrilateral in which all the angles are equal to \(90^\circ\), and all the sides are of equal length.
+                </div>
+
+                 <p><strong>Properties of a Square:</strong> Since a square is a special type of rectangle, all properties of a rectangle hold true. It also has these properties:</p>
+                <ul>
+                    <li>All the sides of a square are equal to each other.</li>
+                    <li>The opposite sides of a square are parallel to each other.</li>
+                    <li>The diagonals of a square are of equal length and they bisect each other at \(90^\circ\).</li>
+                    <li>The diagonals of a square bisect the angles of the square.</li>
+                </ul>
+
+                <div class="svg-container">
+                    <!-- Simple representation of a Rectangle -->
+                     <svg width="200" height="150" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="20" width="160" height="100" fill="var(--blue-light)" stroke="var(--blue)" stroke-width="2"/>
+                        <!-- Right angle markers -->
+                        <rect x="20" y="20" width="10" height="10" fill="none" stroke="var(--blue)" stroke-width="1"/>
+                        <rect x="170" y="20" width="10" height="10" fill="none" stroke="var(--blue)" stroke-width="1"/>
+                        <rect x="20" y="110" width="10" height="10" fill="none" stroke="var(--blue)" stroke-width="1"/>
+                        <rect x="170" y="110" width="10" height="10" fill="none" stroke="var(--blue)" stroke-width="1"/>
+                        <text x="100" y="140" font-size="14" fill="var(--ink)" text-anchor="middle">Rectangle</text>
+                    </svg>
+                    <!-- Simple representation of a Square -->
+                    <svg width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="25" y="20" width="100" height="100" fill="var(--gold-light)" stroke="var(--gold)" stroke-width="2"/>
+                        <!-- Right angle markers -->
+                         <rect x="25" y="20" width="10" height="10" fill="none" stroke="var(--gold)" stroke-width="1"/>
+                        <rect x="115" y="20" width="10" height="10" fill="none" stroke="var(--gold)" stroke-width="1"/>
+                        <rect x="25" y="110" width="10" height="10" fill="none" stroke="var(--gold)" stroke-width="1"/>
+                        <rect x="115" y="110" width="10" height="10" fill="none" stroke="var(--gold)" stroke-width="1"/>
+                        <text x="75" y="140" font-size="14" fill="var(--ink)" text-anchor="middle">Square</text>
+                    </svg>
+                </div>
+            </div>
+
+            <h3 class="section-title">4.2 Angles in a Quadrilateral</h3>
+            <div class="card">
+                <p>Is it possible to construct a quadrilateral with three angles equal to \(90^\circ\) and the fourth angle not equal to \(90^\circ\)?</p>
+                <div class="formula-box">
+                    Angle Sum Property<br>
+                    The sum of all angles in any quadrilateral is \(360^\circ\).
+                </div>
+                <p>Because the sum must be \(360^\circ\), if three angles are \(90^\circ\) (sum = \(270^\circ\)), the fourth must be \(90^\circ\). Therefore, a quadrilateral cannot have only three right angles.</p>
+            </div>
+
+            <h3 class="section-title">Figure it Out (Page 94)</h3>
+            
+            <details class="qcard">
+                <summary>Q1. Find all the other angles inside the given rectangles.</summary>
+                <div class="qbody">
+                    <span class="sol-label">Solution:</span>
+                    <p>Refer to the properties of a rectangle. Let's look at the first rectangle with a given angle of \(30^\circ\) between the diagonal and a side.</p>
+                    <div class="sol-step">Step 1: The corner angle of a rectangle is \(90^\circ\). If one part is \(30^\circ\), the other part is \(90^\circ - 30^\circ = 60^\circ\).</div>
+                    <div class="sol-step">Step 2: Opposite sides are parallel, so alternate interior angles are equal. If the angle at the bottom left is \(30^\circ\), the alternate angle at the top right is also \(30^\circ\).</div>
+                    <div class="sol-step">Step 3: Diagonals bisect each other and are equal, creating isosceles triangles. This means the base angles of these triangles are equal.</div>
+                    <div class="ans-box">Final Answer: The angles inside the triangles formed by the diagonals will be pairs of \(30^\circ, 30^\circ, 120^\circ\) and \(60^\circ, 60^\circ, 60^\circ\).</div>
+                </div>
+            </details>
+
+            <details class="qcard">
+                <summary>Q4. We have seen how to get \(90^\circ\) using paper folding. Now, suppose we do not have any paper but two sticks of equal length, and a thread. How do we make an exact \(90^\circ\) using these?</summary>
+                <div class="qbody">
+                    <span class="sol-label">Solution:</span>
+                    <div class="sol-step">Step 1: Let AB and CD be the equal sticks. Put them together such that their midpoints coincide at O.</div>
+                    <div class="sol-step">Step 2: Now fix one end of the thread at A, pass it through C, and extend it to B.</div>
+                    <div class="sol-step">Step 3: The figure ACBD formed is a rectangle because its diagonals are equal (the sticks) and bisect each other (at their midpoints).</div>
+                    <div class="ans-box">Final Answer: Because ACBD is a rectangle, the angle formed at the corner (e.g., \(\angle C\)) is exactly \(90^\circ\).</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- PART 2 -->
+        <div id="part2" class="part-section">
+            <h3 class="section-title">4.3 More Quadrilaterals with Parallel Opposite Sides</h3>
+            
+            <div class="card">
+                <p>Are there quadrilaterals that have parallel opposite sides that are not rectangles? Yes, they are called parallelograms.</p>
+                
+                <div class="formula-box">
+                    Parallelogram Definition<br>
+                    A parallelogram is a quadrilateral in which opposite sides are parallel.
+                </div>
+
+                 <p><strong>Properties of a Parallelogram:</strong></p>
+                <ul>
+                    <li>The opposite sides of a parallelogram are equal.</li>
+                    <li>The opposite sides of a parallelogram are parallel.</li>
+                    <li>In a parallelogram, the adjacent angles add up to \(180^\circ\), and the opposite angles are equal.</li>
+                    <li>The diagonals of a parallelogram bisect each other.</li>
+                </ul>
+            </div>
+
+            <h3 class="section-title">4.4 Quadrilaterals with Equal Sidelengths</h3>
+            
+            <div class="card">
+                <p>Are squares the only quadrilaterals that have equal sidelengths? No, a quadrilateral in which all the sides have the same length is a rhombus.</p>
+                
+                <div class="formula-box">
+                    Rhombus Definition<br>
+                    A rhombus is a quadrilateral in which all the sides have the same length.
+                </div>
+
+                <div class="note">
+                    <strong>Note:</strong> Every rhombus is a parallelogram, so all properties of a parallelogram apply.
+                </div>
+
+                 <p><strong>Properties of a Rhombus:</strong></p>
+                <ul>
+                    <li>All the sides of a rhombus are equal to each other.</li>
+                    <li>The opposite sides of a rhombus are parallel to each other.</li>
+                    <li>In a rhombus, the adjacent angles add up to \(180^\circ\), and the opposite angles are equal.</li>
+                    <li>The diagonals of a rhombus bisect each other at right angles.</li>
+                    <li>The diagonals of a rhombus bisect its angles.</li>
+                </ul>
+            </div>
+
+            <h3 class="section-title">Figure it Out (Page 102)</h3>
+            
+            <details class="qcard">
+                <summary>Q1. Find the remaining angles in the quadrilateral (i) PAR E, given it's a parallelogram and angle P is \(40^\circ\).</summary>
+                <div class="qbody">
+                    <span class="sol-label">Solution:</span>
+                    <div class="sol-step">Step 1: In a parallelogram, opposite angles are equal.</div>
+                    <div class="sol-step">Step 2: Therefore, \(\angle A = \angle P = 40^\circ\).</div>
+                    <div class="sol-step">Step 3: Adjacent angles add up to \(180^\circ\).</div>
+                    <div class="sol-step">Step 4: So, \(\angle E = 180^\circ - 40^\circ = 140^\circ\). And \(\angle R = \angle E = 140^\circ\).</div>
+                    <div class="ans-box">Final Answer: \(\angle E = 140^\circ\), \(\angle R = 140^\circ\), and \(\angle A = 40^\circ\).</div>
+                </div>
+            </details>
+             <details class="qcard">
+                <summary>Q1. Find the remaining angles in the quadrilateral (iii) X U V W, given it's a rhombus, and angle U V W is split by a diagonal, with one part being \(30^\circ\).</summary>
+                <div class="qbody">
+                    <span class="sol-label">Solution:</span>
+                    <div class="sol-step">Step 1: The diagonals of a rhombus bisect its angles. If half the angle is \(30^\circ\), the full angle \(\angle UVW = 60^\circ\).</div>
+                    <div class="sol-step">Step 2: Opposite angles are equal, so \(\angle WXU = \angle UVW = 60^\circ\).</div>
+                    <div class="sol-step">Step 3: Because the diagonal bisects the angle, \(\angle UXV = \angle WXV = 30^\circ\).</div>
+                    <div class="sol-step">Step 4: Adjacent angles sum to \(180^\circ\). So, \(\angle U = 180^\circ - 60^\circ = 120^\circ\).</div>
+                    <div class="sol-step">Step 5: Opposite angles are equal, so \(\angle W = \angle U = 120^\circ\).</div>
+                    <div class="ans-box">Final Answer: \(\angle WXU = 60^\circ\), \(\angle UXV = \angle WXV = 30^\circ\), \(\angle U = 120^\circ\), \(\angle W = 120^\circ\).</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- PART 3 -->
+        <div id="part3" class="part-section">
+            <h3 class="section-title">4.5 & 4.6 Kite, Trapezium & Summary</h3>
+            
+            <div class="card">
+                <div class="formula-box">
+                    Kite Definition<br>
+                    A kite is a quadrilateral with two non-overlapping adjacent pairs of sides having the same length.
+                </div>
+                 <div class="formula-box">
+                    Trapezium Definition<br>
+                    A trapezium is a quadrilateral having at least one pair of parallel opposite sides.
+                </div>
+                <p>When the non-parallel sides of a trapezium have the same lengths, the trapezium is called an isosceles trapezium. In an isosceles trapezium, the angles opposite to the equal sides are equal.</p>
+                
+                <div class="note">
+                    <strong>Summary of Quadrilateral Relationships:</strong><br>
+                    * Every square is a rectangle and a rhombus.<br>
+                    * Every rectangle and rhombus is a parallelogram.<br>
+                    * The sum of the angle measures in a quadrilateral is \(360^\circ\).
+                </div>
+            </div>
+
+            <h3 class="section-title">Final Exercises (Page 107 - 109)</h3>
+            
+            <details class="qcard">
+                <summary>Q4. Draw a Venn diagram showing the set of parallelograms, kites, rhombuses, rectangles, and squares. Then, answer: (i) What is the quadrilateral that is both a kite and a parallelogram?</summary>
+                <div class="qbody">
+                    <span class="sol-label">Solution:</span>
+                    <div class="sol-step">Step 1: A kite has equal adjacent sides. A parallelogram has equal opposite sides.</div>
+                    <div class="sol-step">Step 2: A figure that is both must have all sides equal.</div>
+                    <div class="ans-box">Final Answer: Rhombus and Square.</div>
+                </div>
+            </details>
+
+            <details class="qcard">
+                <summary>Q8. If a quadrilateral has four equal sides and one angle of \(90^\circ\), will it be a square?</summary>
+                <div class="qbody">
+                    <span class="sol-label">Solution:</span>
+                    <div class="sol-step">Step 1: A quadrilateral with four equal sides is a rhombus.</div>
+                    <div class="sol-step">Step 2: In a rhombus, opposite angles are equal and adjacent angles are supplementary (add up to \(180^\circ\)).</div>
+                    <div class="sol-step">Step 3: If one angle is \(90^\circ\), the adjacent angle must be \(180^\circ - 90^\circ = 90^\circ\). The opposite angle must also be \(90^\circ\).</div>
+                    <div class="sol-step">Step 4: All four angles are equal to \(90^\circ\).</div>
+                    <div class="ans-box">Final Answer: Yes, it will be a square.</div>
+                </div>
+            </details>
+            
+            <details class="qcard">
+                <summary>Q11. State whether the following statement is true or false. Justify your answer. (iii) A quadrilateral whose diagonals bisect each other must be a parallelogram.</summary>
+                <div class="qbody">
+                    <span class="sol-label">Solution:</span>
+                    <div class="sol-step">Step 1: Recall the properties of a parallelogram.</div>
+                    <div class="sol-step">Step 2: One of the defining properties (Deduction 8) is that the diagonals of a parallelogram bisect each other.</div>
+                    <div class="ans-box">Final Answer: True.</div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align:center;color:#8a6ab5;font-size:.85em;margin-top:40px;margin-bottom:20px;">
+            APMF · GSReddy · Class 8 Ganita Prakash — Quadrilaterals Notes (Complete, combined from Parts 1–3)
+        </div>
+    </div>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Pagination logic
+        function showPart(partId) {
+            // Hide all sections
+            document.querySelectorAll('.part-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Show targeted section
+            document.getElementById(partId).classList.add('active');
+            
+            // Update button styles
+            document.querySelectorAll('.nav-controls button[id^="btn-"]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('btn-' + partId).classList.add('active');
+        }
+
+        // Toggle all details tags
+        let allExpanded = false;
+        function toggleAllAnswers() {
+            const details = document.querySelectorAll('details.qcard');
+            allExpanded = !allExpanded;
+            details.forEach(detail => {
+                detail.open = allExpanded;
+            });
+        }
+
+        // Print functionality - expands everything before printing
+        function prepareAndPrint() {
+            // Show all parts for printing
+            document.querySelectorAll('.part-section').forEach(section => {
+                section.style.display = 'block';
+            });
+            
+            // Expand all answers
+            document.querySelectorAll('details.qcard').forEach(detail => {
+                detail.open = true;
+            });
+            
+            // Trigger print
+            window.print();
+            
+            // Reset to current active tab after print dialog closes
+            setTimeout(() => {
+                document.querySelectorAll('.part-section').forEach(section => {
+                    section.style.display = ''; // Reset inline style
+                });
+                
+                // Keep answers expanded or closed based on previous state
+                document.querySelectorAll('details.qcard').forEach(detail => {
+                    detail.open = allExpanded;
+                });
+            }, 500);
+        }
+
+        // Native print event listeners (Ctrl+P support)
+        window.onbeforeprint = function() {
+            document.querySelectorAll('.part-section').forEach(section => {
+                section.style.display = 'block';
+            });
+            document.querySelectorAll('details.qcard').forEach(detail => {
+                detail.open = true;
+            });
+        };
+        
+        window.onafterprint = function() {
+            document.querySelectorAll('.part-section').forEach(section => {
+                section.style.display = '';
+            });
+            document.querySelectorAll('details.qcard').forEach(detail => {
+                detail.open = allExpanded;
+            });
+        };
+    </script>
+</body>
+</html>
