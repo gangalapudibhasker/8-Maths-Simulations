@@ -1085,13 +1085,13 @@
       if (tab === 'notes') {
         notesBtn.classList.add('active');
         simBtn.classList.remove('active');
-        if (currentMode !== 'split') {
+        if (currentMode !== 'split' && currentMode !== 'notes') {
           setMode('notes');
         }
       } else {
         notesBtn.classList.remove('active');
         simBtn.classList.add('active');
-        if (currentMode !== 'split') {
+        if (currentMode !== 'split' && currentMode !== 'sim') {
           setMode('sim');
         }
       }
@@ -1128,7 +1128,9 @@
         paneSim.style.display = 'none';
         dragResizer.style.display = 'none';
         document.getElementById('tabSelector').style.display = 'flex';
-        setTab('notes');
+        if (activeTab !== 'notes') {
+          setTab('notes');
+        }
       } else if (mode === 'sim') {
         panesContainer.classList.add('focus-sim');
         document.getElementById('btnModeSim').classList.add('active');
@@ -1138,7 +1140,9 @@
         paneSim.style.display = 'block';
         dragResizer.style.display = 'none';
         document.getElementById('tabSelector').style.display = 'flex';
-        setTab('sim');
+        if (activeTab !== 'sim') {
+          setTab('sim');
+        }
       }
     }
 
