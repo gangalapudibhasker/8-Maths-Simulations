@@ -704,6 +704,530 @@
       display: none !important;
     }
 
+    .panes-container.focus-robo .pane-robo {
+      width: 100% !important;
+      display: flex !important;
+    }
+    .panes-container.focus-robo .pane-notes,
+    .panes-container.focus-robo .pane-sim,
+    .panes-container.focus-robo .resizer {
+      display: none !important;
+    }
+
+    /* Workspace Robo Pane */
+    .pane-robo {
+      height: 100%;
+      position: relative;
+      background: #090d16;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .workspace-robo-header {
+      height: 48px;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 0 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .workspace-robo-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .ws-robo-pill {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border);
+      color: var(--slate);
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 0.22rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .ws-robo-pill:hover {
+      background: #334155;
+      color: #fff;
+    }
+
+    .ws-robo-pill.active {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange-bright);
+      box-shadow: 0 2px 6px rgba(234, 88, 12, 0.35);
+    }
+
+    .workspace-robo-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Top Nav Main Tabs */
+    .main-nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(15, 23, 42, 0.75);
+      padding: 0.25rem 0.35rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .nav-tab {
+      background: transparent;
+      border: none;
+      color: var(--slate);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.42rem 0.9rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+    }
+
+    .nav-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-tab.active {
+      color: #fff;
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+    }
+
+    .badge-tab-count {
+      font-size: 0.68rem;
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      font-weight: 900;
+    }
+
+    /* RoboCompass View in Main Page */
+    .robocompass-view {
+      flex: 1;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .robo-studio-header {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .robo-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      color: var(--orange-bright);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .robo-studio-header h2 {
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .robo-studio-header p {
+      color: var(--slate);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      max-width: 750px;
+    }
+
+    .robo-tabs-bar {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.4rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(249, 115, 22, 0.5) rgba(15, 23, 42, 0.4);
+    }
+
+    .robo-select-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--panel-glass);
+      border: 1px solid var(--border);
+      color: var(--slate);
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      flex-shrink: 0;
+    }
+
+    .robo-select-tab:hover {
+      background: rgba(30, 41, 59, 0.95);
+      border-color: rgba(249, 115, 22, 0.35);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .robo-select-tab.active {
+      background: linear-gradient(135deg, rgba(234, 88, 12, 0.25), rgba(249, 115, 22, 0.15));
+      border-color: var(--orange);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(234, 88, 12, 0.25);
+    }
+
+    .robo-tab-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: var(--orange-bright);
+    }
+
+    .robo-select-tab.active .robo-tab-badge {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .robo-player-container {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .robo-player-top {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .robo-player-iframe-wrap {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      background: #000;
+    }
+
+    .robo-player-iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .robo-player-info {
+      background: rgba(15, 23, 42, 0.9);
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .robo-info-col h4 {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
+    }
+
+    .robo-info-col p {
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .robo-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .robo-model-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .robo-model-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-hover);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .robo-model-card.active {
+      border-color: var(--orange);
+      background: rgba(30, 41, 59, 0.95);
+      box-shadow: 0 0 0 1px var(--orange);
+    }
+
+    /* Basics View in Main Page */
+    .basics-view {
+      flex: 1;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .basics-studio-header {
+      background: linear-gradient(135deg, rgba(14, 34, 61, 0.85), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 18px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .basics-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .basics-studio-header h2 {
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .basics-studio-header p {
+      color: var(--slate);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      max-width: 750px;
+    }
+
+    .basics-tabs-bar {
+      display: flex;
+      gap: 0.6rem;
+      overflow-x: auto;
+      padding-bottom: 0.4rem;
+    }
+
+    .basics-select-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--panel-glass);
+      border: 1px solid var(--border);
+      color: var(--slate);
+      padding: 0.65rem 1.2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .basics-select-tab:hover {
+      background: rgba(30, 41, 59, 0.95);
+      border-color: rgba(56, 189, 248, 0.35);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .basics-select-tab.active {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(6, 182, 212, 0.15));
+      border-color: #0ea5e9;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.25);
+    }
+
+    .basics-tab-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #38bdf8;
+    }
+
+    .basics-select-tab.active .basics-tab-badge {
+      background: #0ea5e9;
+      color: #fff;
+    }
+
+    .basics-player-container {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .basics-player-top {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .basics-player-iframe-wrap {
+      position: relative;
+      width: 100%;
+      height: 640px;
+      background: #000;
+    }
+
+    .basics-player-iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .basics-player-info {
+      background: rgba(15, 23, 42, 0.9);
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .basics-info-col h4 {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
+    }
+
+    .basics-info-col p {
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .basics-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .basics-model-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .basics-model-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .basics-model-card.active {
+      border-color: #0ea5e9;
+      background: rgba(14, 34, 61, 0.7);
+      box-shadow: 0 0 0 1px #0ea5e9;
+    }
+
     /* Footer */
     footer {
       margin-top: auto;
@@ -764,6 +1288,258 @@
         padding: 0 1rem;
       }
     }
+
+    /* Textbooks Studio Styles */
+    .textbooks-view {
+      flex: 1;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .textbooks-studio-header {
+      background: linear-gradient(135deg, rgba(6, 78, 59, 0.45), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      border-radius: 18px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .textbooks-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(52, 211, 153, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      color: #34d399;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .textbooks-studio-header h2 {
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .textbooks-studio-header p {
+      color: var(--slate);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      max-width: 750px;
+    }
+
+    .textbooks-tabs-bar {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding-bottom: 0.4rem;
+    }
+
+    .textbook-select-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: var(--panel-glass);
+      border: 1px solid var(--border);
+      color: var(--slate);
+      padding: 0.75rem 1.25rem;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .textbook-select-tab:hover {
+      background: rgba(30, 41, 59, 0.95);
+      border-color: rgba(52, 211, 153, 0.4);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .textbook-select-tab.active {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.15));
+      border-color: #10b981;
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.25);
+    }
+
+    .textbook-tab-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #34d399;
+    }
+
+    .textbook-select-tab.active .textbook-tab-badge {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .textbooks-player-container {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .textbooks-player-top {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .textbooks-player-iframe-wrap {
+      position: relative;
+      width: 100%;
+      height: 760px;
+      background: #1e293b;
+    }
+
+    .textbooks-player-iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: #1e293b;
+    }
+
+    .textbooks-player-info {
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .textbooks-chapter-nav {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .textbooks-chapter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .chapter-jump-chip {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      color: #e2e8f0;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .chapter-jump-chip:hover {
+      background: rgba(16, 185, 129, 0.22);
+      border-color: #34d399;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .chapter-jump-chip .chip-num {
+      background: rgba(52, 211, 153, 0.2);
+      color: #34d399;
+      padding: 0.15rem 0.45rem;
+      border-radius: 5px;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .chapter-jump-chip .chip-page {
+      font-size: 0.7rem;
+      color: var(--slate);
+    }
+
+    .textbooks-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .textbook-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .textbook-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(52, 211, 153, 0.45);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .textbook-card.active {
+      border-color: #10b981;
+      background: rgba(6, 78, 59, 0.25);
+      box-shadow: 0 0 0 1px #10b981;
+    }
+
+    @media (max-width: 900px) {
+      .textbooks-player-iframe-wrap {
+        height: 540px;
+      }
+      .textbooks-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      #textbookInfoGrid {
+        grid-template-columns: 1fr !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -778,6 +1554,20 @@
           <h1>Ganita Prakash</h1>
           <p>Grade 8 • Digital Learning Center</p>
         </div>
+      </div>
+      <div class="main-nav-tabs" id="mainNavTabs">
+        <button class="nav-tab active" id="tabNavCurriculum" onclick="switchMainView('curriculum')">
+          📚 Curriculum
+        </button>
+        <button class="nav-tab" id="tabNavRobo" onclick="switchMainView('robo')">
+          📐 RoboCompass 3D <span class="badge-tab-count">6</span>
+        </button>
+        <button class="nav-tab" id="tabNavBasics" onclick="switchMainView('basics')">
+          🧮 Basics <span class="badge-tab-count">2</span>
+        </button>
+        <button class="nav-tab" id="tabNavTextbooks" onclick="switchMainView('textbooks')">
+          📖 Textbooks <span class="badge-tab-count">2</span>
+        </button>
       </div>
       <div class="nav-actions">
         <div class="author-badge">
@@ -801,6 +1591,15 @@
           <div class="stat"><strong>7</strong><span>Chapters</span></div>
           <div class="stat"><strong>7</strong><span>Study Notes</span></div>
           <div class="stat"><strong>70+</strong><span>Simulations</span></div>
+          <div class="stat" onclick="switchMainView('robo')" style="cursor: pointer; border-color: rgba(249,115,22,0.3);" title="Explore 6 RoboCompass 3D Constructions">
+            <strong style="color: var(--amber);">6</strong><span>RoboCompass 3D</span>
+          </div>
+          <div class="stat" onclick="switchMainView('basics')" style="cursor: pointer; border-color: rgba(56,189,248,0.3);" title="Explore 2 Basic Foundation Simulations">
+            <strong style="color: #38bdf8;">2</strong><span>Basics Sims</span>
+          </div>
+          <div class="stat" onclick="switchMainView('textbooks')" style="cursor: pointer; border-color: rgba(52,211,153,0.3);" title="Explore Class 8 Semester 2 Textbooks & Material">
+            <strong style="color: #34d399;">2</strong><span>Textbooks</span>
+          </div>
         </div>
       </section>
 
@@ -810,6 +1609,248 @@
 
       <div class="grid" id="chaptersGrid">
         <!-- Injected dynamically by JS -->
+      </div>
+    </main>
+
+    <!-- RoboCompass Dedicated Studio Tab View -->
+    <main class="robocompass-view" id="robocompassView" style="display: none;">
+      <!-- Studio Header -->
+      <section class="robo-studio-header">
+        <div>
+          <div class="robo-badge-pill">📐 Class 8 Geometry • Chapter 4 Quadrilaterals</div>
+          <h2>RoboCompass 3D Geometry Studio</h2>
+          <p>
+            Experience dynamic robotic compass & straightedge constructions. Watch automated 3D compass arcs, ruler measurements,
+            and precise geometric steps for NCERT Ganita Prakash Figure Out 4.1 and 4.2 problems.
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <a href="Robocompass.html" target="_blank" class="btn btn-glass" title="Open standalone page">
+            ↗ Standalone Page
+          </a>
+          <button class="btn btn-orange" onclick="switchMainView('curriculum')">
+            ← Back to Curriculum
+          </button>
+        </div>
+      </section>
+
+      <!-- Selection Tabs -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.6rem;">
+          ⚙️ Select Interactive Construction:
+        </div>
+        <div class="robo-tabs-bar" id="roboStudioTabs">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Active Player Container -->
+      <section class="robo-player-container" id="roboStudioPlayer">
+        <div class="robo-player-top">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span class="tag" id="studioExerciseTag" style="background: rgba(249,115,22,0.15); color: var(--orange-bright); border: 1px solid rgba(249,115,22,0.3);">FO-4.1 • Q2(i)</span>
+            <h3 style="font-size: 1rem; font-weight: 800; color: #fff;" id="studioPlayerTitle">Diagonals 8 cm Intersecting at 30°</h3>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button class="btn-control" onclick="reloadStudioIframe()" title="Replay Construction">🔄 Reload</button>
+            <button class="btn-control" onclick="toggleStudioFullscreen()" title="Fullscreen View">⛶ Fullscreen</button>
+            <button class="btn-control" onclick="openStudioOriginal()" title="Open directly in RoboCompass">↗ Open Original</button>
+          </div>
+        </div>
+
+        <div class="robo-player-iframe-wrap" id="studioIframeWrap">
+          <iframe id="iframeStudioRobo" src="about:blank" allowfullscreen></iframe>
+        </div>
+
+        <div class="robo-player-info">
+          <div class="robo-info-col">
+            <h4>📋 Construction Task / Problem</h4>
+            <p id="studioProblemDesc">Draw a quadrilateral whose diagonals have equal lengths of 8 cm that bisect each other and intersect at an angle of 30°.</p>
+          </div>
+          <div class="robo-info-col">
+            <h4>💡 Geometric Concept & Principle</h4>
+            <p id="studioConceptDesc">Diagonals bisecting each other form a parallelogram. Since diagonals are equal in length and bisect each other at given angles, they define symmetric quadrilateral configurations.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid of all 6 models -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.75rem;">
+          📚 All Figure Out 4.1 & 4.2 RoboCompass Models
+        </div>
+        <div class="robo-cards-grid" id="roboStudioCards">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Basics Dedicated Studio Tab View -->
+    <main class="basics-view" id="basicsView" style="display: none;">
+      <!-- Studio Header -->
+      <section class="basics-studio-header">
+        <div>
+          <div class="basics-badge-pill">🧮 Math Foundations • Interactive Tools</div>
+          <h2>Basic Mathematics Simulations</h2>
+          <p>
+            Master essential mathematical foundation skills with high-yield interactive models — dynamic 3D metric conversions across length, area, volume & mass, and intuitive equal-grouping visual division.
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <a href="Basics.html" target="_blank" class="btn btn-glass" title="Open standalone page">
+            ↗ Standalone Page
+          </a>
+          <button class="btn btn-orange" onclick="switchMainView('curriculum')">
+            ← Back to Curriculum
+          </button>
+        </div>
+      </section>
+
+      <!-- Selection Tabs -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.6rem; color: #38bdf8;">
+          ⚙️ Select Foundation Simulation:
+        </div>
+        <div class="basics-tabs-bar" id="basicsStudioTabs">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Active Player Container -->
+      <section class="basics-player-container" id="basicsStudioPlayer">
+        <div class="basics-player-top">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span class="tag" id="basicsSimTag" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">📏 Metric 3D</span>
+            <h3 style="font-size: 1rem; font-weight: 800; color: #fff;" id="basicsPlayerTitle">3D Metric Conversion Studio</h3>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button class="btn-control" onclick="reloadBasicsIframe()" title="Reload Simulation">🔄 Reload</button>
+            <button class="btn-control" onclick="toggleBasicsFullscreen()" title="Fullscreen View">⛶ Fullscreen</button>
+            <button class="btn-control" onclick="openBasicsStandalone()" title="Open in New Tab">↗ Open Full Tab</button>
+          </div>
+        </div>
+
+        <div class="basics-player-iframe-wrap" id="basicsIframeWrap">
+          <iframe id="iframeBasics" src="about:blank" allowfullscreen></iframe>
+        </div>
+
+        <div class="basics-player-info">
+          <div class="basics-info-col">
+            <h4>📋 Simulation Description</h4>
+            <p id="basicsProblemDesc">Explore dynamic 3D conversions for Length, Area, Volume, and Mass units with real-time scaling and 3D visual blocks.</p>
+          </div>
+          <div class="basics-info-col">
+            <h4>💡 Core Mathematics Concept</h4>
+            <p id="basicsConceptDesc">Understand the base-10 relationships between metric units and spatial dimensions (1D linear scale, 2D area scale factor 100, 3D volume scale factor 1,000).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid of both models -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.75rem; color: #38bdf8;">
+          📚 Basic Foundation Modules
+        </div>
+        <div class="basics-cards-grid" id="basicsStudioCards">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Textbooks Dedicated Studio Tab View -->
+    <main class="textbooks-view" id="textbooksView" style="display: none;">
+      <!-- Studio Header -->
+      <section class="textbooks-studio-header">
+        <div>
+          <div class="textbooks-badge-pill">📖 Class 8 Sem-2 Curriculum Books</div>
+          <h2>Class 8 Mathematics Textbooks & Learning Materials</h2>
+          <p>
+            Access the official AP SCERT bilingual textbook (English &amp; Telugu with integrated AI) and APMF comprehensive topic-wise study material with step-by-step exercise solutions for Semester 2.
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+          <button class="btn btn-glass" onclick="downloadTextbook()" title="Download current book as PDF">
+            ⬇ Download PDF
+          </button>
+          <button class="btn btn-orange" onclick="switchMainView('curriculum')">
+            ← Back to Curriculum
+          </button>
+        </div>
+      </section>
+
+      <!-- Selection Tabs -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.6rem; color: #34d399;">
+          📚 Select Textbook / Learning Material:
+        </div>
+        <div class="textbooks-tabs-bar" id="textbooksStudioTabs">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Active Player Container -->
+      <section class="textbooks-player-container" id="textbooksStudioPlayer">
+        <div class="textbooks-player-top" id="textbooksPlayerTop">
+          <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+            <span class="tag" id="textbookTag" style="background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3);">📘 APMF Material</span>
+            <span class="tag" id="textbookPagesBadge" style="background: rgba(255, 255, 255, 0.08); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.15);">37 Pages</span>
+            <h3 style="font-size: 1rem; font-weight: 800; color: #fff;" id="textbookPlayerTitle">APMF Class 8 Mathematics Sem-2 Study Material</h3>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn-control" onclick="reloadTextbookIframe()" title="Reload PDF Viewer">🔄 Reload</button>
+            <button class="btn-control" onclick="toggleTextbookFullscreen()" title="Fullscreen View">⛶ Fullscreen</button>
+            <button class="btn-control" onclick="openTextbookStandalone()" id="btnTextbookStandalone" title="Open in New Tab">↗ Open Full Tab</button>
+            <button class="btn-control" onclick="downloadTextbook()" id="btnTextbookDownload" style="background: rgba(52, 211, 153, 0.15); border-color: rgba(52, 211, 153, 0.4); color: #34d399;" title="Download PDF File">⬇ Download</button>
+          </div>
+        </div>
+
+        <div class="textbooks-player-iframe-wrap" id="textbooksIframeWrap">
+          <iframe id="iframeTextbook" src="about:blank" allowfullscreen></iframe>
+        </div>
+
+        <div class="textbooks-player-info">
+          <!-- Chapter Quick-Jump Navigation -->
+          <div class="textbooks-chapter-nav">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+              <span style="font-size: 0.8rem; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 0.04em;">
+                ⚡ Quick Jump to Chapter / Topic:
+              </span>
+              <span style="font-size: 0.74rem; color: var(--slate);" id="textbookNavHint">Click any chapter to jump directly to its starting page in the viewer</span>
+            </div>
+            <div class="textbooks-chapter-chips" id="textbooksChapterChips">
+              <!-- Injected dynamically by JS -->
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem;" id="textbookInfoGrid">
+            <div>
+              <h4 style="font-size: 0.8rem; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem;">
+                📋 Textbook Details &amp; Scope
+              </h4>
+              <p style="font-size: 0.86rem; color: #cbd5e1; line-height: 1.5;" id="textbookDesc">
+                Comprehensive topic-wise concepts, core mathematical formulas, key definitions, and step-by-step exercise solutions for Semester 2.
+              </p>
+            </div>
+            <div>
+              <h4 style="font-size: 0.8rem; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem;">
+                🏛️ Publisher &amp; Highlights
+              </h4>
+              <p style="font-size: 0.86rem; color: #cbd5e1; line-height: 1.5;" id="textbookPublisher">
+                Published by Andhra Pradesh Mathematics Forum · Author: Gangalapudi Bhaskar Reddy
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid of both textbooks -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.75rem; color: #34d399;">
+          📚 Available Class 8 Semester 2 Textbooks &amp; Material
+        </div>
+        <div class="textbooks-cards-grid" id="textbooksStudioCards">
+          <!-- Injected dynamically by JS -->
+        </div>
       </div>
     </main>
 
@@ -839,6 +1880,7 @@
           <div class="toolbar-tabs" id="tabSelector">
             <button class="toolbar-tab active" id="tabNotesBtn" onclick="setTab('notes')">Study Notes</button>
             <button class="toolbar-tab" id="tabSimBtn" onclick="setTab('sim')">Simulation</button>
+            <button class="toolbar-tab" id="tabRoboBtn" onclick="setTab('robo')">📐 RoboCompass</button>
           </div>
 
           <!-- View Controls (Shown on large screens) -->
@@ -851,6 +1893,9 @@
             </button>
             <button class="btn-control btn-view-mode" id="btnModeSim" onclick="setMode('sim')" title="Focus Simulation">
               🎮 Sim Only
+            </button>
+            <button class="btn-control btn-view-mode" id="btnModeRobo" onclick="setMode('robo')" title="Focus RoboCompass">
+              📐 RoboCompass
             </button>
             <button class="btn-control" onclick="openRawTab()" title="Open in full screen new tab">
               ↗ New Tab
@@ -874,6 +1919,21 @@
           <!-- Simulation Pane -->
           <div class="pane pane-sim" id="paneSim">
             <iframe id="iframeSim" src="about:blank" allowfullscreen></iframe>
+          </div>
+
+          <!-- RoboCompass Pane -->
+          <div class="pane pane-robo" id="paneRobo" style="display: none; width: 100%;">
+            <div class="workspace-robo-header">
+              <div class="workspace-robo-pills" id="wsRoboTabs">
+                <!-- Injected dynamically by JS -->
+              </div>
+              <div class="workspace-robo-tools">
+                <span class="tag" id="wsRoboTag" style="background: rgba(249,115,22,0.15); color: var(--orange-bright);">FO-4.1</span>
+                <button class="btn-control" onclick="reloadWsRobo()" title="Reload Construction">🔄</button>
+                <button class="btn-control" onclick="openWsRoboExternal()" title="Open Original">↗</button>
+              </div>
+            </div>
+            <iframe id="iframeRobo" src="about:blank" allowfullscreen style="flex: 1; width: 100%; height: 100%; border: none;"></iframe>
           </div>
         </div>
       </div>
@@ -926,7 +1986,8 @@
         desc: "Rectangles, squares, parallelograms, rhombus, kite, trapezium. Diagonals, angle sum, hierarchy and interactive construction.",
         tags: ["Geometry", "Properties", "Diagonals"],
         simFile: "Simulations/4.Quadrilaterals.html",
-        notesFile: "Notes/4 Quadrilaterals Notes.html"
+        notesFile: "Notes/4 Quadrilaterals Notes.html",
+        hasRobo: true
       },
       {
         id: 5,
@@ -957,13 +2018,167 @@
       }
     ];
 
+    const robocompassConstructions = [
+      {
+        id: "t4q7b4aqym2c",
+        num: "1",
+        tag: "FO-4.1 • Q2(i) [30°]",
+        title: "Diagonals 8 cm, Angle 30°",
+        exercise: "Figure Out 4.1 • Question 2(i)",
+        desc: "Draw a quadrilateral whose diagonals have equal lengths of 8 cm that bisect each other and intersect at an angle of 30°.",
+        geometryConcept: "Since diagonals bisect each other, the figure is a parallelogram. Equal diagonals make it an equi-diagonal parallelogram with opposite angles conforming to the 30° intersection.",
+        src: "https://www.robocompass.com/embed?id=t4q7b4aqym2c"
+      },
+      {
+        id: "uvbx3ustho3d",
+        num: "2",
+        tag: "FO-4.1 • Q2(i) [40°]",
+        title: "Diagonals 8 cm, Angle 40°",
+        exercise: "Figure Out 4.1 • Question 2(i)",
+        desc: "Draw a quadrilateral whose diagonals have equal lengths of 8 cm that bisect each other and intersect at an angle of 40°.",
+        geometryConcept: "Observe how increasing the diagonal intersection angle from 30° to 40° adjusts the outer vertex coordinates while maintaining diagonal bisector symmetry.",
+        src: "https://www.robocompass.com/embed?id=uvbx3ustho3d"
+      },
+      {
+        id: "qdw1h4y8qk39",
+        num: "3",
+        tag: "FO-4.1 • Q2(ii)",
+        title: "Quadrilateral Construction FO-4.1, 2(ii)",
+        exercise: "Figure Out 4.1 • Question 2(ii)",
+        desc: "Step-by-step compass and straightedge construction for quadrilateral specified in Figure Out 4.1, Question 2(ii).",
+        geometryConcept: "Triangulation and circular arc locus method for accurately determining unknown quadrilateral vertices using compass radius.",
+        src: "https://www.robocompass.com/embed?id=qdw1h4y8qk39"
+      },
+      {
+        id: "rl8dg6l6t6pi",
+        num: "4",
+        tag: "FO-4.1 • Q2(iv)",
+        title: "Quadrilateral Construction FO-4.1, 2(iv)",
+        exercise: "Figure Out 4.1 • Question 2(iv)",
+        desc: "Construction of a quadrilateral under angular and side conditions from Figure Out 4.1, Question 2(iv).",
+        geometryConcept: "Constructing specified angles at base line endpoints and intersecting line segments to fix quadrilateral boundary points.",
+        src: "https://www.robocompass.com/embed?id=rl8dg6l6t6pi"
+      },
+      {
+        id: "vbt0x7e3rn78",
+        num: "5",
+        tag: "FO-4.2 • Q.No. 2",
+        title: "Figure Out 4.2 — Question No. 2",
+        exercise: "Figure Out 4.2 • Question 2",
+        desc: "Robotic compass construction of quadrilateral according to conditions given in Ganita Prakash Figure Out 4.2, Question 2.",
+        geometryConcept: "Using diagonal and side dimensions to build adjacent triangles with a common boundary line.",
+        src: "https://www.robocompass.com/embed?id=vbt0x7e3rn78"
+      },
+      {
+        id: "1ibc14fj9da29",
+        num: "6",
+        tag: "FO-4.2 • Q.No. 3",
+        title: "Figure Out 4.2 — Question No. 3",
+        exercise: "Figure Out 4.2 • Question 3",
+        desc: "Complete 3D geometric construction of quadrilateral satisfying specifications from Figure Out 4.2, Question 3.",
+        geometryConcept: "Five independent elements (sides, diagonals, angles) uniquely determining the quadrilateral in planar Euclidean space.",
+        src: "https://www.robocompass.com/embed?id=1ibc14fj9da29"
+      }
+    ];
+
+    const basicsSimulations = [
+      {
+        id: "metric-3d",
+        num: "1",
+        tag: "📏 Measurement & 3D Units",
+        title: "3D Metric Conversion Studio",
+        category: "Metric System & Spatial Scaling",
+        desc: "Interactive 3D metric converter across Length (km, m, dm, cm, mm), Area, Volume, and Mass. Features interactive 3D blocks, spatial rotation, and scale multiplier steps.",
+        concept: "Visualizing metric powers of 10 in 1D, 2D (×100), and 3D (×1,000) space. Manipulate dimensions and observe real-time proportional geometry.",
+        file: "Basic Simulations/3D_Metric_Conversion_Studio_SINGLE_HTML.html"
+      },
+      {
+        id: "division-groups",
+        num: "2",
+        tag: "➗ Equal Sharing & Groups",
+        title: "Easy Way of Division (Group Simulator)",
+        category: "Arithmetic & Group Partitioning",
+        desc: "Visual, gamified equal-grouping simulation for division. Distribute items into baskets, animate group counters, and explore quotient and remainder mechanics.",
+        concept: "Division as repeated subtraction and equal-share partitioning. Understand dividends, divisors, quotients, and remainders through concrete physical models.",
+        file: "Basic Simulations/Simple Division(groups).html"
+      }
+    ];
+
+    const textbooks = [
+      {
+        id: "apmf-sem2",
+        num: "1",
+        tag: "📘 APMF Study Material",
+        badge: "Concepts & Solutions",
+        title: "APMF Class 8 Mathematics Sem-2 Study Material (2026–27)",
+        publisher: "Andhra Pradesh Mathematics Forum",
+        author: "Gangalapudi Bhaskar Reddy",
+        edition: "2026–27 Academic Year",
+        pages: "37 Pages",
+        file: "Textbooks/APMF_Class_8_Mathematics_2026-27_Sem2.pdf",
+        desc: "Comprehensive topic-wise concepts, core mathematical formulas, key definitions, and step-by-step exercise solutions for Figure It Out 8.1 through 14.5 across all Semester 2 chapters.",
+        highlights: [
+          "Targeted topic-wise formulas & definitions",
+          "Full step-by-step solutions for Figure It Out problems",
+          "Chapters 8 to 14 complete coverage",
+          "Prepared by Gangalapudi Bhaskar Reddy (APMF)"
+        ],
+        chapters: [
+          { num: "8", name: "Fractions in Disguise", page: 1 },
+          { num: "9", name: "Baudhayana-Pythagoras Theorem", page: 9 },
+          { num: "10", name: "Proportional Reasoning - 2", page: 14 },
+          { num: "11", name: "Exploring Geometric Themes", page: 18 },
+          { num: "12", name: "Tales by Dots and Lines", page: 23 },
+          { num: "13", name: "Algebra Play", page: 28 },
+          { num: "14", name: "Area", page: 33 }
+        ]
+      },
+      {
+        id: "scert-sem2",
+        num: "2",
+        tag: "📗 Official SCERT Textbook",
+        badge: "Bilingual (Eng / Tel) + AI",
+        title: "AP SCERT Class 8 Mathematics Semester 2 Textbook",
+        publisher: "Samagra Shiksha & SCERT, Govt. of Andhra Pradesh",
+        author: "AP SCERT Textbook Development Committee",
+        edition: "Semester 2 (Bilingual Edition)",
+        pages: "390 Pages",
+        file: "Textbooks/AP_SCERT_Class_8_Mathematics_Sem2.pdf",
+        desc: "Official government Class 8 bilingual textbook printed with English and Telugu side-by-side. Includes chapters 8 through 14, complete answer keys, glossary, and the special Integrated Artificial Intelligence module for Grade 8.",
+        highlights: [
+          "Complete 390-page bilingual textbook (English & Telugu)",
+          "All Figure It Out activities, theory, and worked examples",
+          "Special 'Integrated Artificial Intelligence: Grade 8' chapter",
+          "Comprehensive answer keys for all chapter exercises"
+        ],
+        chapters: [
+          { num: "8", name: "Fractions in Disguise (భిన్నాల బహురూపాలు)", page: 10 },
+          { num: "9", name: "Baudhayana-Pythagoras Theorem (బౌధాయన - పైథాగరస్ సిద్ధాంతం)", page: 76 },
+          { num: "10", name: "Proportional Reasoning - 2 (అనుపాత వివరణ - 2)", page: 118 },
+          { num: "11", name: "Exploring Geometric Themes (జ్యామితీయ అంశాల అన్వేషణ)", page: 148 },
+          { num: "12", name: "Tales by Dots and Lines (చుక్కలు, గీతల కథలు)", page: 204 },
+          { num: "13", name: "Algebra Play (బీజగణిత క్రీడ)", page: 268 },
+          { num: "14", name: "Area (వైశాల్యం)", page: 294 },
+          { num: "Ans", name: "Answers / సమాధానాలు", page: 340 },
+          { num: "AI", name: "Integrated Artificial Intelligence (కృత్రిమ మేధస్సు)", page: 364 }
+        ]
+      }
+    ];
+
     // State Variables
     let currentChapterId = 1;
-    let activeTab = 'notes'; // 'notes' | 'sim'
-    let currentMode = 'split'; // 'split' | 'notes' | 'sim'
+    let activeTab = 'notes'; // 'notes' | 'sim' | 'robo'
+    let currentMode = 'split'; // 'split' | 'notes' | 'sim' | 'robo'
+    let currentRoboIndex = 0;
+    let currentWsRoboIndex = 0;
+    let currentBasicsIndex = 0;
+    let currentTextbookIndex = 0;
 
     // DOM Elements
     const dashboardView = document.getElementById('dashboardView');
+    const robocompassView = document.getElementById('robocompassView');
+    const basicsView = document.getElementById('basicsView');
+    const textbooksView = document.getElementById('textbooksView');
     const workspaceView = document.getElementById('workspaceView');
     const globalFooter = document.getElementById('globalFooter');
     const btnNavHome = document.getElementById('btnNavHome');
@@ -972,11 +2187,15 @@
     const activeChapterTitle = document.getElementById('activeChapterTitle');
     const iframeNotes = document.getElementById('iframeNotes');
     const iframeSim = document.getElementById('iframeSim');
+    const iframeRobo = document.getElementById('iframeRobo');
+    const iframeBasics = document.getElementById('iframeBasics');
+    const iframeTextbook = document.getElementById('iframeTextbook');
     const panesContainer = document.getElementById('panesContainer');
     const sidebar = document.getElementById('workspaceSidebar');
     const dragResizer = document.getElementById('dragResizer');
     const paneNotes = document.getElementById('paneNotes');
     const paneSim = document.getElementById('paneSim');
+    const paneRobo = document.getElementById('paneRobo');
 
     // Initialize Dashboard Cards
     function initDashboard() {
@@ -998,6 +2217,7 @@
           <div class="card-actions">
             <button class="btn btn-glass" onclick="launchWorkspace(${ch.id}, 'notes')">📋 Read Notes</button>
             <button class="btn btn-orange" onclick="launchWorkspace(${ch.id}, 'sim')">▶ Run Sim</button>
+            ${ch.hasRobo ? `<button class="btn btn-glass" onclick="switchMainView('robo')" style="border-color: rgba(249,115,22,0.4); color: var(--orange-bright);">📐 RoboCompass</button>` : ''}
           </div>
         `;
         chaptersGrid.appendChild(card);
@@ -1015,9 +2235,462 @@
       });
     }
 
+    // Top Navigation between Main Curriculum, RoboCompass Studio, Basics, and Textbooks
+    function switchMainView(view) {
+      const tabCurriculum = document.getElementById('tabNavCurriculum');
+      const tabRobo = document.getElementById('tabNavRobo');
+      const tabBasics = document.getElementById('tabNavBasics');
+      const tabTextbooks = document.getElementById('tabNavTextbooks');
+
+      workspaceView.classList.remove('open');
+      globalFooter.style.display = 'block';
+      btnNavHome.style.display = 'none';
+
+      if (view === 'curriculum') {
+        if (tabCurriculum) tabCurriculum.classList.add('active');
+        if (tabRobo) tabRobo.classList.remove('active');
+        if (tabBasics) tabBasics.classList.remove('active');
+        if (tabTextbooks) tabTextbooks.classList.remove('active');
+        dashboardView.style.display = 'flex';
+        robocompassView.style.display = 'none';
+        if (basicsView) basicsView.style.display = 'none';
+        if (textbooksView) textbooksView.style.display = 'none';
+      } else if (view === 'robo') {
+        if (tabCurriculum) tabCurriculum.classList.remove('active');
+        if (tabRobo) tabRobo.classList.add('active');
+        if (tabBasics) tabBasics.classList.remove('active');
+        if (tabTextbooks) tabTextbooks.classList.remove('active');
+        dashboardView.style.display = 'none';
+        robocompassView.style.display = 'flex';
+        if (basicsView) basicsView.style.display = 'none';
+        if (textbooksView) textbooksView.style.display = 'none';
+        initRoboStudio();
+      } else if (view === 'basics') {
+        if (tabCurriculum) tabCurriculum.classList.remove('active');
+        if (tabRobo) tabRobo.classList.remove('active');
+        if (tabBasics) tabBasics.classList.add('active');
+        if (tabTextbooks) tabTextbooks.classList.remove('active');
+        dashboardView.style.display = 'none';
+        robocompassView.style.display = 'none';
+        if (basicsView) basicsView.style.display = 'flex';
+        if (textbooksView) textbooksView.style.display = 'none';
+        initBasicsStudio();
+      } else if (view === 'textbooks') {
+        if (tabCurriculum) tabCurriculum.classList.remove('active');
+        if (tabRobo) tabRobo.classList.remove('active');
+        if (tabBasics) tabBasics.classList.remove('active');
+        if (tabTextbooks) tabTextbooks.classList.add('active');
+        dashboardView.style.display = 'none';
+        robocompassView.style.display = 'none';
+        if (basicsView) basicsView.style.display = 'none';
+        if (textbooksView) textbooksView.style.display = 'flex';
+        initTextbooksStudio();
+      }
+    }
+
+    // Dedicated RoboCompass Studio
+    function initRoboStudio() {
+      const tabsWrap = document.getElementById('roboStudioTabs');
+      const cardsWrap = document.getElementById('roboStudioCards');
+      if (!tabsWrap || tabsWrap.children.length > 0) return;
+
+      tabsWrap.innerHTML = '';
+      cardsWrap.innerHTML = '';
+
+      robocompassConstructions.forEach((item, index) => {
+        // Tab button
+        const btn = document.createElement('button');
+        btn.className = `robo-select-tab ${index === 0 ? 'active' : ''}`;
+        btn.id = `studio-tab-${index}`;
+        btn.onclick = () => selectStudioRobo(index);
+        btn.innerHTML = `
+          <span class="robo-tab-badge">${item.num}</span>
+          <span>${item.tag}</span>
+        `;
+        tabsWrap.appendChild(btn);
+
+        // Card
+        const card = document.createElement('div');
+        card.className = `robo-model-card ${index === 0 ? 'active' : ''}`;
+        card.id = `studio-card-${index}`;
+        card.onclick = () => {
+          selectStudioRobo(index);
+          document.getElementById('roboStudioPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="tag" style="background: rgba(249,115,22,0.12); color: var(--orange-bright); border: 1px solid rgba(249,115,22,0.3); font-size: 0.7rem; font-weight: 800;">${item.tag}</span>
+            <span style="font-size: 0.72rem; color: var(--slate);">#${item.num}</span>
+          </div>
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: #fff;">${item.title}</h3>
+          <p style="font-size: 0.85rem; color: var(--slate); line-height: 1.45; flex: 1;">${item.desc}</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.6rem;">
+            <span style="font-size: 0.74rem; color: var(--amber); font-weight: 700;">📐 ${item.exercise}</span>
+            <button class="btn btn-orange" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;">▶ Load 3D</button>
+          </div>
+        `;
+        cardsWrap.appendChild(card);
+      });
+
+      selectStudioRobo(0);
+    }
+
+    function selectStudioRobo(index) {
+      currentRoboIndex = index;
+      const data = robocompassConstructions[index];
+      if (!data) return;
+
+      document.querySelectorAll('.robo-select-tab').forEach((tab, idx) => {
+        tab.classList.toggle('active', idx === index);
+      });
+      document.querySelectorAll('.robo-model-card').forEach((card, idx) => {
+        card.classList.toggle('active', idx === index);
+      });
+
+      const exerciseTag = document.getElementById('studioExerciseTag');
+      const title = document.getElementById('studioPlayerTitle');
+      const problemDesc = document.getElementById('studioProblemDesc');
+      const conceptDesc = document.getElementById('studioConceptDesc');
+      const iframe = document.getElementById('iframeStudioRobo');
+
+      if (exerciseTag) exerciseTag.textContent = data.tag;
+      if (title) title.textContent = data.title;
+      if (problemDesc) problemDesc.textContent = data.desc;
+      if (conceptDesc) conceptDesc.textContent = data.geometryConcept;
+
+      if (iframe && iframe.src !== data.src) {
+        iframe.src = data.src;
+      }
+    }
+
+    function reloadStudioIframe() {
+      const iframe = document.getElementById('iframeStudioRobo');
+      const data = robocompassConstructions[currentRoboIndex];
+      if (iframe && data) {
+        iframe.src = 'about:blank';
+        setTimeout(() => { iframe.src = data.src; }, 150);
+      }
+    }
+
+    function toggleStudioFullscreen() {
+      const wrap = document.getElementById('studioIframeWrap');
+      if (!document.fullscreenElement) {
+        if (wrap.requestFullscreen) wrap.requestFullscreen();
+        else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function openStudioOriginal() {
+      const data = robocompassConstructions[currentRoboIndex];
+      if (data) window.open(data.src, '_blank');
+    }
+
+    // Workspace Robo Functions
+    function initWorkspaceRobo() {
+      const tabsWrap = document.getElementById('wsRoboTabs');
+      if (!tabsWrap) return;
+      if (tabsWrap.children.length === 0) {
+        robocompassConstructions.forEach((item, index) => {
+          const pill = document.createElement('button');
+          pill.className = `ws-robo-pill ${index === 0 ? 'active' : ''}`;
+          pill.id = `ws-pill-${index}`;
+          pill.onclick = () => selectWsRobo(index);
+          pill.textContent = `${item.num}. ${item.tag}`;
+          tabsWrap.appendChild(pill);
+        });
+      }
+      selectWsRobo(currentWsRoboIndex);
+    }
+
+    function selectWsRobo(index) {
+      currentWsRoboIndex = index;
+      const data = robocompassConstructions[index];
+      if (!data) return;
+
+      document.querySelectorAll('.ws-robo-pill').forEach((pill, idx) => {
+        pill.classList.toggle('active', idx === index);
+      });
+
+      const tag = document.getElementById('wsRoboTag');
+      if (tag) tag.textContent = data.tag;
+
+      const iframe = document.getElementById('iframeRobo');
+      if (iframe && iframe.src !== data.src) {
+        iframe.src = data.src;
+      }
+    }
+
+    function reloadWsRobo() {
+      const iframe = document.getElementById('iframeRobo');
+      const data = robocompassConstructions[currentWsRoboIndex];
+      if (iframe && data) {
+        iframe.src = 'about:blank';
+        setTimeout(() => { iframe.src = data.src; }, 150);
+      }
+    }
+
+    function openWsRoboExternal() {
+      const data = robocompassConstructions[currentWsRoboIndex];
+      if (data) window.open(data.src, '_blank');
+    }
+
+    // Basics Studio Functions
+    function initBasicsStudio() {
+      const tabsWrap = document.getElementById('basicsStudioTabs');
+      const cardsWrap = document.getElementById('basicsStudioCards');
+      if (!tabsWrap || tabsWrap.children.length > 0) return;
+
+      tabsWrap.innerHTML = '';
+      cardsWrap.innerHTML = '';
+
+      basicsSimulations.forEach((item, index) => {
+        // Tab button
+        const btn = document.createElement('button');
+        btn.className = `basics-select-tab ${index === 0 ? 'active' : ''}`;
+        btn.id = `basics-tab-${index}`;
+        btn.onclick = () => selectBasicsSim(index);
+        btn.innerHTML = `
+          <span class="basics-tab-badge">${item.num}</span>
+          <span>${item.title}</span>
+        `;
+        tabsWrap.appendChild(btn);
+
+        // Card
+        const card = document.createElement('div');
+        card.className = `basics-model-card ${index === 0 ? 'active' : ''}`;
+        card.id = `basics-card-${index}`;
+        card.onclick = () => {
+          selectBasicsSim(index);
+          document.getElementById('basicsStudioPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="tag" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.7rem; font-weight: 800;">${item.tag}</span>
+            <span style="font-size: 0.72rem; color: var(--slate);">#${item.num}</span>
+          </div>
+          <h3 style="font-size: 1.1rem; font-weight: 800; color: #fff;">${item.title}</h3>
+          <p style="font-size: 0.85rem; color: var(--slate); line-height: 1.45; flex: 1;">${item.desc}</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.75rem;">
+            <span style="font-size: 0.75rem; color: #38bdf8; font-weight: 700;">📘 ${item.category}</span>
+            <button class="btn btn-orange" style="padding: 0.35rem 0.8rem; font-size: 0.76rem;">▶ Launch Sim</button>
+          </div>
+        `;
+        cardsWrap.appendChild(card);
+      });
+
+      selectBasicsSim(0);
+    }
+
+    function selectBasicsSim(index) {
+      currentBasicsIndex = index;
+      const data = basicsSimulations[index];
+      if (!data) return;
+
+      document.querySelectorAll('.basics-select-tab').forEach((tab, idx) => {
+        tab.classList.toggle('active', idx === index);
+      });
+      document.querySelectorAll('.basics-model-card').forEach((card, idx) => {
+        card.classList.toggle('active', idx === index);
+      });
+
+      const tag = document.getElementById('basicsSimTag');
+      const title = document.getElementById('basicsPlayerTitle');
+      const probDesc = document.getElementById('basicsProblemDesc');
+      const conceptDesc = document.getElementById('basicsConceptDesc');
+      const iframe = document.getElementById('iframeBasics');
+
+      if (tag) tag.textContent = data.tag;
+      if (title) title.textContent = data.title;
+      if (probDesc) probDesc.textContent = data.desc;
+      if (conceptDesc) conceptDesc.textContent = data.concept;
+
+      const filePath = encodeURI(data.file);
+      if (iframe && iframe.src.indexOf(filePath) === -1) {
+        iframe.src = filePath;
+      }
+    }
+
+    function reloadBasicsIframe() {
+      const iframe = document.getElementById('iframeBasics');
+      const data = basicsSimulations[currentBasicsIndex];
+      if (iframe && data) {
+        iframe.src = 'about:blank';
+        setTimeout(() => { iframe.src = encodeURI(data.file); }, 150);
+      }
+    }
+
+    function toggleBasicsFullscreen() {
+      const wrap = document.getElementById('basicsIframeWrap');
+      if (!document.fullscreenElement) {
+        if (wrap.requestFullscreen) wrap.requestFullscreen();
+        else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function openBasicsStandalone() {
+      const data = basicsSimulations[currentBasicsIndex];
+      if (data) window.open(encodeURI(data.file), '_blank');
+    }
+
+    // Textbooks Studio Functions
+    function initTextbooksStudio() {
+      const tabsWrap = document.getElementById('textbooksStudioTabs');
+      const cardsWrap = document.getElementById('textbooksStudioCards');
+      if (!tabsWrap || tabsWrap.children.length > 0) return;
+
+      tabsWrap.innerHTML = '';
+      cardsWrap.innerHTML = '';
+
+      textbooks.forEach((item, index) => {
+        // Tab button
+        const btn = document.createElement('button');
+        btn.className = `textbook-select-tab ${index === 0 ? 'active' : ''}`;
+        btn.id = `textbook-tab-${index}`;
+        btn.onclick = () => selectTextbook(index);
+        btn.innerHTML = `
+          <span class="textbook-tab-badge">${item.num}</span>
+          <span>${item.title.split('(')[0].trim()}</span>
+        `;
+        tabsWrap.appendChild(btn);
+
+        // Card
+        const card = document.createElement('div');
+        card.className = `textbook-card ${index === 0 ? 'active' : ''}`;
+        card.id = `textbook-card-${index}`;
+        card.onclick = () => {
+          selectTextbook(index);
+          document.getElementById('textbooksStudioPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="tag" style="background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); font-size: 0.72rem; font-weight: 800;">${item.tag}</span>
+            <span class="tag" style="background: rgba(255,255,255,0.06); color: #94a3b8; font-size: 0.72rem;">${item.pages}</span>
+          </div>
+          <h3 style="font-size: 1.12rem; font-weight: 800; color: #fff; line-height: 1.35;">${item.title}</h3>
+          <p style="font-size: 0.85rem; color: var(--slate); line-height: 1.45; flex: 1;">${item.desc}</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.2rem;">
+            ${item.highlights.map(h => `<span class="tag" style="font-size: 0.68rem; background: rgba(15, 23, 42, 0.6); color: #cbd5e1;">✓ ${h}</span>`).join('')}
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.75rem; margin-top: 0.25rem;">
+            <span style="font-size: 0.74rem; color: #34d399; font-weight: 700;">🏛️ ${item.publisher}</span>
+            <div style="display: flex; gap: 0.4rem;">
+              <button class="btn btn-orange" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;" onclick="event.stopPropagation(); selectTextbook(${index}); document.getElementById('textbooksStudioPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });">📖 Read Book</button>
+              <a href="${encodeURI(item.file)}" download class="btn btn-glass" style="padding: 0.35rem 0.65rem; font-size: 0.75rem; color: #34d399;" onclick="event.stopPropagation();" title="Download PDF file">⬇ PDF</a>
+            </div>
+          </div>
+        `;
+        cardsWrap.appendChild(card);
+      });
+
+      selectTextbook(0);
+    }
+
+    function selectTextbook(index, jumpPage = null) {
+      currentTextbookIndex = index;
+      const data = textbooks[index];
+      if (!data) return;
+
+      document.querySelectorAll('.textbook-select-tab').forEach((tab, idx) => {
+        tab.classList.toggle('active', idx === index);
+      });
+      document.querySelectorAll('.textbook-card').forEach((card, idx) => {
+        card.classList.toggle('active', idx === index);
+      });
+
+      const tag = document.getElementById('textbookTag');
+      const pagesBadge = document.getElementById('textbookPagesBadge');
+      const title = document.getElementById('textbookPlayerTitle');
+      const desc = document.getElementById('textbookDesc');
+      const publisher = document.getElementById('textbookPublisher');
+      const iframe = document.getElementById('iframeTextbook');
+      const chipsContainer = document.getElementById('textbooksChapterChips');
+
+      if (tag) tag.textContent = data.tag;
+      if (pagesBadge) pagesBadge.textContent = data.pages;
+      if (title) title.textContent = data.title;
+      if (desc) desc.textContent = data.desc;
+      if (publisher) publisher.innerHTML = `<strong>Publisher:</strong> ${data.publisher}<br><strong>Author / Committee:</strong> ${data.author}<br><strong>Edition:</strong> ${data.edition}`;
+
+      // Populate Quick Jump Chips
+      if (chipsContainer) {
+        chipsContainer.innerHTML = '';
+        data.chapters.forEach(ch => {
+          const chip = document.createElement('button');
+          chip.className = 'chapter-jump-chip';
+          chip.onclick = () => jumpTextbookPage(ch.page);
+          chip.title = `Jump to page ${ch.page}`;
+          chip.innerHTML = `
+            <span class="chip-num">Ch ${ch.num}</span>
+            <span>${ch.name}</span>
+            <span class="chip-page">p. ${ch.page}</span>
+          `;
+          chipsContainer.appendChild(chip);
+        });
+      }
+
+      const targetPage = jumpPage || 1;
+      const fileUrl = encodeURI(data.file) + '#page=' + targetPage;
+      if (iframe) {
+        iframe.src = fileUrl;
+      }
+    }
+
+    function jumpTextbookPage(pageNo) {
+      const data = textbooks[currentTextbookIndex];
+      const iframe = document.getElementById('iframeTextbook');
+      if (iframe && data) {
+        iframe.src = encodeURI(data.file) + '#page=' + pageNo;
+        const playerTop = document.getElementById('textbooksPlayerTop');
+        if (playerTop) playerTop.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function reloadTextbookIframe() {
+      const iframe = document.getElementById('iframeTextbook');
+      const data = textbooks[currentTextbookIndex];
+      if (iframe && data) {
+        const curSrc = iframe.src;
+        iframe.src = 'about:blank';
+        setTimeout(() => { iframe.src = curSrc; }, 150);
+      }
+    }
+
+    function toggleTextbookFullscreen() {
+      const wrap = document.getElementById('textbooksIframeWrap');
+      if (!document.fullscreenElement) {
+        if (wrap.requestFullscreen) wrap.requestFullscreen();
+        else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function openTextbookStandalone() {
+      const data = textbooks[currentTextbookIndex];
+      if (data) window.open(encodeURI(data.file), '_blank');
+    }
+
+    function downloadTextbook() {
+      const data = textbooks[currentTextbookIndex];
+      if (!data) return;
+      const a = document.createElement('a');
+      a.href = encodeURI(data.file);
+      a.download = data.file.split('/').pop();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
     // Navigation and Workspaces
     function launchWorkspace(chapterId, tab = 'notes') {
       dashboardView.style.display = 'none';
+      robocompassView.style.display = 'none';
+      if (basicsView) basicsView.style.display = 'none';
+      if (textbooksView) textbooksView.style.display = 'none';
       workspaceView.classList.add('open');
       globalFooter.style.display = 'none';
       btnNavHome.style.display = 'inline-flex';
@@ -1027,7 +2700,7 @@
       if (isMobile) {
         setMode(tab);
       } else {
-        setMode('split');
+        setMode(tab === 'robo' ? 'robo' : 'split');
       }
 
       selectChapter(chapterId, tab);
@@ -1037,11 +2710,11 @@
       // Clear iframes
       iframeNotes.src = 'about:blank';
       iframeSim.src = 'about:blank';
+      if (iframeRobo) iframeRobo.src = 'about:blank';
+      if (iframeBasics) iframeBasics.src = 'about:blank';
 
       workspaceView.classList.remove('open');
-      dashboardView.style.display = 'flex';
-      globalFooter.style.display = 'block';
-      btnNavHome.style.display = 'none';
+      switchMainView('curriculum');
     }
 
     function selectChapter(chapterId, defaultTab = null) {
@@ -1081,19 +2754,22 @@
       activeTab = tab;
       const notesBtn = document.getElementById('tabNotesBtn');
       const simBtn = document.getElementById('tabSimBtn');
+      const roboBtn = document.getElementById('tabRoboBtn');
+
+      if (notesBtn) notesBtn.classList.toggle('active', tab === 'notes');
+      if (simBtn) simBtn.classList.toggle('active', tab === 'sim');
+      if (roboBtn) roboBtn.classList.toggle('active', tab === 'robo');
 
       if (tab === 'notes') {
-        notesBtn.classList.add('active');
-        simBtn.classList.remove('active');
         if (currentMode !== 'split' && currentMode !== 'notes') {
           setMode('notes');
         }
-      } else {
-        notesBtn.classList.remove('active');
-        simBtn.classList.add('active');
+      } else if (tab === 'sim') {
         if (currentMode !== 'split' && currentMode !== 'sim') {
           setMode('sim');
         }
+      } else if (tab === 'robo') {
+        setMode('robo');
       }
     }
 
@@ -1101,12 +2777,14 @@
       currentMode = mode;
 
       // Reset CSS classes
-      panesContainer.classList.remove('focus-notes', 'focus-sim');
+      panesContainer.classList.remove('focus-notes', 'focus-sim', 'focus-robo');
 
       // Update control buttons active class
       document.getElementById('btnModeSplit').classList.remove('active');
       document.getElementById('btnModeNotes').classList.remove('active');
       document.getElementById('btnModeSim').classList.remove('active');
+      const btnModeRobo = document.getElementById('btnModeRobo');
+      if (btnModeRobo) btnModeRobo.classList.remove('active');
 
       const isMobile = window.innerWidth <= 900;
 
@@ -1117,6 +2795,7 @@
         paneSim.style.width = '50%';
         paneNotes.style.display = 'block';
         paneSim.style.display = 'block';
+        if (paneRobo) paneRobo.style.display = 'none';
         dragResizer.style.display = 'block';
         document.getElementById('tabSelector').style.display = 'none';
       } else if (mode === 'notes' || (mode === 'split' && isMobile)) {
@@ -1126,6 +2805,7 @@
         paneSim.style.width = '0%';
         paneNotes.style.display = 'block';
         paneSim.style.display = 'none';
+        if (paneRobo) paneRobo.style.display = 'none';
         dragResizer.style.display = 'none';
         document.getElementById('tabSelector').style.display = 'flex';
         if (activeTab !== 'notes') {
@@ -1138,11 +2818,27 @@
         paneSim.style.width = '100%';
         paneNotes.style.display = 'none';
         paneSim.style.display = 'block';
+        if (paneRobo) paneRobo.style.display = 'none';
         dragResizer.style.display = 'none';
         document.getElementById('tabSelector').style.display = 'flex';
         if (activeTab !== 'sim') {
           setTab('sim');
         }
+      } else if (mode === 'robo') {
+        panesContainer.classList.add('focus-robo');
+        if (btnModeRobo) btnModeRobo.classList.add('active');
+        paneNotes.style.display = 'none';
+        paneSim.style.display = 'none';
+        if (paneRobo) {
+          paneRobo.style.display = 'flex';
+          paneRobo.style.width = '100%';
+        }
+        dragResizer.style.display = 'none';
+        document.getElementById('tabSelector').style.display = 'flex';
+        if (activeTab !== 'robo') {
+          setTab('robo');
+        }
+        initWorkspaceRobo();
       }
     }
 
@@ -1156,6 +2852,10 @@
     }
 
     function openRawTab() {
+      if (activeTab === 'robo') {
+        window.open('Robocompass.html', '_blank');
+        return;
+      }
       const chapter = chapters.find(c => c.id === currentChapterId);
       if (!chapter) return;
 
@@ -1241,6 +2941,16 @@
     window.onload = () => {
       initDashboard();
       initResizer();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab') || window.location.hash.replace('#', '');
+      if (tabParam === 'textbooks') {
+        switchMainView('textbooks');
+      } else if (tabParam === 'robo') {
+        switchMainView('robo');
+      } else if (tabParam === 'basics') {
+        switchMainView('basics');
+      }
     };
   </script>
 </body>

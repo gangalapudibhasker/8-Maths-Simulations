@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>3D Metric Conversion Studio</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#020914;--panel:#061a2c;--line:#315979;--cyan:#19e8f5;
+  --green:#64ef39;--yellow:#ffd83d;--white:#f5fbff;
+}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--white);font-family:Segoe UI,Arial,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+#app{height:100vh;display:flex;flex-direction:column}
+header{
+  height:94px;flex:0 0 94px;display:flex;align-items:center;
+  padding:8px 20px;gap:18px;background:linear-gradient(#06182a,#03101e);
+  border-bottom:1px solid #294b68;z-index:20
+}
+.menu{width:58px;height:58px;border-radius:50%;font-size:27px;background:#07182a;border:1px solid #4d7898;color:white}
+.title{flex:1;text-align:center}.title h1{font-size:32px;line-height:1;margin:0;font-weight:900;letter-spacing:.5px;text-shadow:0 3px 5px #000}
+.title p{margin:7px 0 0;color:var(--cyan);font-size:16px;font-weight:700}
+.top{display:flex;gap:8px}.top button{padding:11px 14px;border-radius:11px;background:#0b2034;color:#fff;border:1px solid #3e6c8c;font-weight:800}
+#main{position:relative;flex:1;min-height:0;overflow:hidden}
+#stage{position:absolute;inset:0;overflow:hidden;background:
+ radial-gradient(circle at 50% 38%,#16496d 0,#0a243b 35%,#030b14 75%)}
+#grid{
+ position:absolute;left:-10%;top:57%;width:120%;height:80%;
+ transform:perspective(800px) rotateX(66deg);
+ background:linear-gradient(rgba(31,135,198,.25) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(31,135,198,.25) 1px,transparent 1px);
+ background-size:46px 46px;opacity:.9
+}
+.side{
+ position:absolute;z-index:15;top:22px;width:155px;padding:10px;
+ background:rgba(4,18,31,.94);border:1px solid #315a79;border-radius:18px;
+ box-shadow:0 12px 35px #0009
+}
+#left{left:8px}#right{right:8px}
+.side h3{text-align:center;color:var(--cyan);font-size:16px;margin:3px 0 10px;padding-bottom:8px;border-bottom:1px solid #294964}
+.side button{width:100%;margin:5px 0;padding:12px 6px;border-radius:11px;background:#0a2135;color:#fff;border:1px solid #426c89;font-weight:800;font-size:13px}
+.side button:hover{filter:brightness(1.25)}
+#scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;touch-action:none;cursor:grab}
+#scene.drag{cursor:grabbing}
+#world{
+ position:relative;width:min(1050px,76vw);height:500px;
+ transform-style:preserve-3d;perspective:1200px;
+ transform:rotateX(7deg) rotateY(-6deg) scale(.92);
+ transform-origin:center center
+}
+#platform{
+ position:absolute;left:0;right:0;top:326px;height:78px;border-radius:7px;
+ background:linear-gradient(#2b6488,#0b2d48);border:2px solid #5592b2;
+ box-shadow:0 24px 35px #000a
+}
+#platform:after{
+ content:"";position:absolute;left:0;right:0;bottom:-25px;height:25px;
+ background:#08243a;transform:skewX(-25deg);transform-origin:top
+}
+#beam{
+ position:absolute;left:5%;right:5%;top:60px;height:22px;border-radius:5px;
+ background:linear-gradient(90deg,#28607f,#67dcff,#28607f);
+ box-shadow:0 0 25px #59d8ff66;transform:translateZ(30px)
+}
+.unit{
+ position:absolute;top:101px;width:112px;height:260px;
+ transform-style:preserve-3d;cursor:pointer
+}
+.face{
+ position:absolute;left:8px;top:0;width:94px;height:240px;
+ border-radius:10px 10px 5px 5px;border:1px solid #a5e9ff88;
+ box-shadow:0 12px 25px #0009;transform:translateZ(32px);
+ transition:.22s
+}
+.side3d{position:absolute;left:102px;top:5px;width:22px;height:235px;transform:skewY(31deg);background:#0005;border-right:1px solid #fff3}
+.top3d{position:absolute;left:8px;top:-8px;width:94px;height:18px;transform:skewX(-35deg);background:#fff3}
+.base{position:absolute;left:0;top:238px;width:112px;height:30px;background:#173d58;border:1px solid #5689a2;transform:translateZ(15px)}
+.name{
+ position:absolute;top:20px;left:0;width:112px;text-align:center;z-index:5;
+ font-size:39px;font-weight:900;text-shadow:0 3px 6px #000;transform:translateZ(62px)
+}
+.full{
+ position:absolute;top:70px;left:0;width:112px;text-align:center;z-index:5;
+ font-size:18px;font-weight:800;text-shadow:0 2px 5px #000;transform:translateZ(62px)
+}
+.pic{
+ position:absolute;top:116px;left:0;width:112px;text-align:center;
+ font-size:57px;z-index:5;transform:translateZ(64px);
+ filter:drop-shadow(0 5px 4px #000)
+}
+.index{
+ position:absolute;top:279px;left:0;width:112px;text-align:center;
+ color:#18b7ff;font-size:16px;font-weight:900;transform:translateZ(30px)
+}
+.unit.selected .face{
+ box-shadow:0 0 35px #63ecff,0 15px 30px #000;
+ outline:3px solid #f4ff5b
+}
+.unit.selected .name{color:#fff45a}
+#ball{
+ position:absolute;width:38px;height:38px;border-radius:50%;
+ background:radial-gradient(circle at 30% 25%,#fff7a9,#ffd33c 30%,#ee940d 72%,#6e3900);
+ box-shadow:0 0 28px #ffd43e;
+ transform:translateZ(105px);z-index:12;left:10px;top:192px
+}
+#floating{
+ position:absolute;left:50%;top:4px;transform:translateX(-50%) translateZ(100px);
+ font-size:31px;font-weight:900;color:#ffd83d;text-shadow:0 3px 9px #000;
+ white-space:nowrap;z-index:20
+}
+#info{
+ position:absolute;left:50%;bottom:10px;transform:translateX(-50%);
+ z-index:18;width:min(760px,70vw);padding:12px 18px;text-align:center;
+ border:1px solid #426d8c;border-radius:13px;background:#06182add;font-size:16px
+}
+#info b{color:var(--yellow)}
+#credit{
+ position:absolute;left:50%;bottom:3px;transform:translateX(-50%);
+ z-index:30;color:#9fc7df;font-size:11px;font-weight:700;
+ letter-spacing:.2px;white-space:nowrap;text-align:center;
+}
+#bottom{
+ height:155px;flex:0 0 155px;display:grid;grid-template-columns:1fr 1fr 1fr;
+ gap:20px;padding:12px 28px;background:#041323;border-top:1px solid #294966;z-index:20
+}
+.panel{border-right:1px solid #35516a;padding:0 18px}.panel:last-child{border:0}
+.panel h3{margin:0 0 7px;text-align:center;color:var(--cyan);font-size:15px}
+.panel p{text-align:center;margin:5px 0;font-size:14px}
+.digits{display:flex;justify-content:center;gap:3px}.digit{padding:4px 9px;background:#196196;border-radius:5px;font-size:22px;font-weight:900}
+.action{display:block;margin:8px auto;padding:10px 22px;border:1px solid #4fd23b;border-radius:10px;background:#148c20;color:#fff;font-weight:900}
+.practice{display:flex;justify-content:center;gap:7px}.practice input{width:170px;padding:9px;background:#081827;color:#fff;border:1px solid #41647e;border-radius:8px}
+.practice button{padding:9px 13px;border-radius:8px;border:1px solid #58b5e8;background:#0c63a4;color:white;font-weight:900}
+#toast{position:fixed;z-index:100;top:105px;left:50%;transform:translateX(-50%);padding:10px 18px;background:#124161;border:1px solid #66c9ef;border-radius:10px;display:none}
+@media(max-width:900px){
+ #credit{font-size:9px;bottom:1px}
+ header{height:75px;flex-basis:75px;padding:5px 9px}.title h1{font-size:20px}.title p{font-size:10px}
+ .menu{width:45px;height:45px}.top button{padding:7px;font-size:10px}
+ .side{width:108px;top:8px}.side h3{font-size:11px}.side button{font-size:10px;padding:9px 3px}
+ #world{width:850px;transform:rotateX(7deg) rotateY(-6deg) scale(.65)}
+ #bottom{height:122px;flex-basis:122px;padding:7px;gap:5px}.panel{padding:0 4px}.panel p{font-size:10px}
+ .panel h3{font-size:11px}.digit{font-size:15px;padding:3px 5px}.practice input{width:90px}
+ #info{font-size:11px;width:62vw}
+}
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+ <button class="menu" id="menu">☰</button>
+ <div class="title"><h1>⭐ 3D METRIC CONVERSION STUDIO ⭐</h1><p>Explore • Visualize • Convert • Master</p></div>
+ <div class="top">
+  <button id="reset">⟳ Reset</button><button id="zoomIn">🔍 Zoom +</button><button id="zoomOut">🔎 Zoom −</button><button id="help">❓ Help</button>
+ </div>
+</header>
+<div id="main">
+ <aside class="side" id="left"><h3>CONTROLS</h3>
+  <button id="auto">⟳ Auto<br>Rotate</button>
+  <button id="gridBtn">▦ Toggle<br>Grid</button>
+  <button id="labelBtn">Aa Toggle<br>Labels</button>
+  <button id="animBtn">▶ Animation<br>On</button>
+  <button id="resetView">◉ Reset<br>View</button>
+ </aside>
+ <aside class="side" id="right"><h3>MODES</h3>
+  <button id="conversion">⇄ Conversion<br>Mode</button>
+  <button id="quiz">🏆 Quiz<br>Challenge</button>
+  <button id="place">▥ Place Value<br>Builder</button>
+ </aside>
+ <section id="stage">
+  <div id="grid"></div>
+  <div id="scene">
+   <div id="world">
+    <div id="platform"></div><div id="beam"></div>
+    <div id="floating">3.45 km → ? m</div><div id="ball"></div>
+   </div>
+  </div>
+  <div id="info">👆 Click any unit column to select and see examples. &nbsp; <b>Drag</b> to rotate &nbsp; • &nbsp; <b>Scroll</b> to zoom</div>
+ </section>
+</div>
+<div id="credit">Created by <b>Gangalapudi Bhaskar Reddy</b> • 📞 8555079452 • Andhra Pradesh</div><div id="bottom">
+ <div class="panel"><h3>EXAMPLE</h3><p><b>3.45 km = ? m</b></p><div class="digits"><span class="digit">3</span><span>.</span><span class="digit">4</span><span class="digit">5</span><span class="digit">0</span><span class="digit">0</span><span class="digit">0</span></div><p>Move <b style="color:#ffd83d">3 places RIGHT</b> → multiply by 10 three times</p></div>
+ <div class="panel"><h3>CONVERSION</h3><p><b id="fromText">3.45 km</b> <span style="color:#61ee3d;font-size:24px">→ → →</span> <b id="toText">3450 m</b></p><button class="action" id="animateConversion">▶ Animate Conversion</button></div>
+ <div class="panel"><h3>QUICK PRACTICE</h3>
+ <p>Convert: <b id="practiceQuestion" style="color:#ffd83d">7.8 m = ? cm</b></p>
+ <div class="practice">
+  <input id="answer" type="number" step="any" placeholder="Enter answer">
+  <button id="check">Check</button>
+ </div>
+ <button class="action" id="randomPractice" style="margin-top:7px;background:#8a4be8;border-color:#b98cff">🎲 Random Question</button>
+</div>
+</div>
+</div>
+<div id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+const units=[
+ {u:"km",f:"kilometre",icon:"🏔️",c:"#743db2"},
+ {u:"hm",f:"hectometre",icon:"🏢",c:"#1675b8"},
+ {u:"dam",f:"decametre",icon:"🏟️",c:"#009b91"},
+ {u:"m",f:"metre",icon:"🧍",c:"#39a92e"},
+ {u:"dm",f:"decimetre",icon:"🪑",c:"#e4a500"},
+ {u:"cm",f:"centimetre",icon:"📘",c:"#e96f18"},
+ {u:"mm",f:"millimetre",icon:"🔩",c:"#c72e43"}
+];
+const world=document.getElementById("world"),ball=document.getElementById("ball");
+const floating=document.getElementById("floating");
+const gap=13.9, start=1.5;
+const unitEls=[];
+units.forEach((x,i)=>{
+ const d=document.createElement("div");d.className="unit";d.style.left=(start+i*gap)+"%";d.dataset.i=i;
+ d.innerHTML='<div class="face" style="background:linear-gradient(135deg,'+x.c+',#12334e)"></div>'+
+ '<div class="top3d"></div><div class="side3d"></div><div class="base"></div>'+
+ '<div class="name">'+x.u+'</div><div class="full">'+x.f+'</div><div class="pic">'+x.icon+'</div><div class="index">'+i+'</div>';
+ d.addEventListener("click",e=>{e.stopPropagation();selectUnit(i)});
+ world.appendChild(d);unitEls.push(d);
+});
+let rx=7,ry=-6,rz=0,scale=.92,auto=false,gridOn=true,labels=true,animOn=true;
+let dragging=false,lx=0,ly=0,animationId=0;
+
+function render(){world.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${scale})`}
+
+function selectUnit(i){
+ unitEls.forEach((el,n)=>el.classList.toggle("selected",n===i));
+ floating.textContent="Selected: "+units[i].u;
+ toast("Selected "+units[i].u+" • 1 step = ×10");
+}
+
+function unitX(i){
+ // exact center of each visual column in world percentage coordinates
+ return start + i*gap + 5.8;
+}
+
+function animateBall(from,to,text,done){
+ if(!animOn){ball.style.left=unitX(to)+"%";ball.style.top="192px";if(done)done();return}
+ cancelAnimationFrame(animationId);
+ const x1=unitX(from),x2=unitX(to);
+ const startTime=performance.now(),duration=1300;
+ function frame(now){
+   const p=Math.min(1,(now-startTime)/duration);
+   const e=1-Math.pow(1-p,3);
+   const x=x1+(x2-x1)*e;
+   const y=192-Math.sin(Math.PI*p)*92;
+   ball.style.left=x+"%";ball.style.top=y+"px";
+   if(p<1) animationId=requestAnimationFrame(frame);
+   else{ball.style.left=x2+"%";ball.style.top="192px";if(done)done()}
+ }
+ animationId=requestAnimationFrame(frame);
+}
+
+function conversion(){
+ floating.textContent="3.45 km → 3450 m";
+ document.getElementById("fromText").textContent="3.45 km";
+ document.getElementById("toText").textContent="3450 m";
+ unitEls.forEach(x=>x.classList.remove("selected"));
+ animateBall(0,3,"",()=>{selectUnit(3);floating.textContent="3.45 km = 3450 m"});
+}
+
+function toast(s){const t=document.getElementById("toast");t.textContent=s;t.style.display="block";clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.style.display="none",1700)}
+
+document.getElementById("animateConversion").onclick=conversion;
+document.getElementById("conversion").onclick=conversion;
+
+document.getElementById("auto").onclick=()=>{auto=!auto;toast(auto?"Auto Rotate ON":"Auto Rotate OFF")};
+document.getElementById("gridBtn").onclick=()=>{gridOn=!gridOn;document.getElementById("grid").style.display=gridOn?"block":"none"};
+document.getElementById("labelBtn").onclick=()=>{
+ labels=!labels;
+ document.querySelectorAll(".name,.full").forEach(e=>e.style.visibility=labels?"visible":"hidden");
+ toast(labels?"Labels ON":"Labels OFF")
+};
+document.getElementById("animBtn").onclick=()=>{
+ animOn=!animOn;
+ document.getElementById("animBtn").innerHTML=animOn?"▶ Animation<br>On":"⏸ Animation<br>Off";
+ toast(animOn?"Animation ON":"Animation OFF")
+};
+function reset(){rx=7;ry=-6;rz=0;scale=.92;render()}
+document.getElementById("reset").onclick=reset;
+document.getElementById("resetView").onclick=reset;
+document.getElementById("zoomIn").onclick=()=>{scale=Math.min(1.32,scale+.09);render()};
+document.getElementById("zoomOut").onclick=()=>{scale=Math.max(.52,scale-.09);render()};
+document.getElementById("help").onclick=()=>toast("Drag = rotate • Wheel = zoom • Click a column = select • Animate = conversion");
+document.getElementById("menu").onclick=()=>{
+ const a=document.getElementById("left"),b=document.getElementById("right");
+ const visible=a.style.display!=="none";a.style.display=visible?"none":"block";b.style.display=visible?"none":"block";
+};
+
+document.getElementById("quiz").onclick=()=>{
+ const questions=[
+  ["7.8 m = ? cm",780],["2.5 km = ? m",2500],["450 cm = ? m",4.5],["6 dm = ? mm",600]
+ ];
+ const q=questions[Math.floor(Math.random()*questions.length)];
+ document.getElementById("info").innerHTML="🏆 <b>Quiz:</b> "+q[0]+" &nbsp; Enter your answer below.";
+ document.getElementById("answer").dataset.answer=q[1];
+ toast("New quiz question created")
+};
+const practiceQuestion=document.getElementById("practiceQuestion");
+const answerInput=document.getElementById("answer");
+
+function powerValue(value,fromIndex,toIndex){
+ const places=toIndex-fromIndex;
+ return value*Math.pow(10,places);
+}
+
+function formatNumber(n){
+ if(Number.isInteger(n)) return String(n);
+ return String(Number(n.toFixed(8)));
+}
+
+function setPracticeQuestion(){
+ const values=[0.5,0.8,1.2,2.5,3.4,4.5,5.6,6.25,7.8,9.2,12,25,40,75,125,250,450,750];
+ let fromIndex,toIndex;
+
+ // Prefer questions with at least one unit-step difference.
+ do{
+   fromIndex=Math.floor(Math.random()*units.length);
+   toIndex=Math.floor(Math.random()*units.length);
+ }while(fromIndex===toIndex);
+
+ const value=values[Math.floor(Math.random()*values.length)];
+ const answer=powerValue(value,fromIndex,toIndex);
+
+ practiceQuestion.textContent=formatNumber(value)+" "+units[fromIndex].u+" = ? "+units[toIndex].u;
+ answerInput.value="";
+ answerInput.dataset.answer=answer;
+ answerInput.dataset.from=fromIndex;
+ answerInput.dataset.to=toIndex;
+
+ document.getElementById("info").innerHTML=
+   "🎲 <b>New Practice Question:</b> "+formatNumber(value)+" "+units[fromIndex].u+
+   " = ? "+units[toIndex].u+" &nbsp; Enter your answer.";
+ floating.textContent=formatNumber(value)+" "+units[fromIndex].u+" → ? "+units[toIndex].u;
+ document.getElementById("fromText").textContent=formatNumber(value)+" "+units[fromIndex].u;
+ document.getElementById("toText").textContent="? "+units[toIndex].u;
+ unitEls.forEach(x=>x.classList.remove("selected"));
+ toast("🎲 Random question generated!");
+}
+
+document.getElementById("randomPractice").onclick=setPracticeQuestion;
+
+document.getElementById("check").onclick=()=>{
+ const a=parseFloat(answerInput.value);
+ const correct=Number(answerInput.dataset.answer);
+ const fromIndex=Number(answerInput.dataset.from);
+ const toIndex=Number(answerInput.dataset.to);
+
+ if(!Number.isFinite(a)){
+   toast("⚠️ Please enter an answer first.");
+   return;
+ }
+
+ const valueText=practiceQuestion.textContent.split(" = ? ")[0];
+ const correctAnswer=formatNumber(correct)+" "+units[toIndex].u;
+ const places=Math.abs(toIndex-fromIndex);
+ const direction=toIndex>fromIndex?"RIGHT":"LEFT";
+ const operation=toIndex>fromIndex?"×":"÷";
+
+ // Always animate the conversion after Check — whether the answer is
+ // correct or incorrect.
+ document.getElementById("fromText").textContent=valueText;
+ document.getElementById("toText").textContent=correctAnswer;
+ floating.textContent=valueText+" → "+units[toIndex].u;
+ unitEls.forEach(x=>x.classList.remove("selected"));
+
+ const isCorrect=Math.abs(a-correct)<1e-10;
+
+ if(isCorrect){
+   toast("✅ Correct! Watch the conversion.");
+   document.getElementById("info").innerHTML=
+     "✅ <b>Correct!</b> "+valueText+" = <span style='color:#64ef39;font-size:20px'>"+
+     correctAnswer+"</span> &nbsp; • &nbsp; <b>Animation running…</b>";
+ }else{
+   toast("❌ Correct answer: "+correctAnswer);
+   document.getElementById("info").innerHTML=
+     "❌ <b>Not quite.</b> Correct answer: <span style='color:#ffd83d;font-size:20px'>"+
+     correctAnswer+"</span> &nbsp; • &nbsp; <b>Watch the conversion.</b>";
+ }
+
+ animateBall(fromIndex,toIndex,"",()=>{
+   selectUnit(toIndex);
+   floating.textContent=valueText+" = "+correctAnswer;
+   document.getElementById("info").innerHTML=
+     (isCorrect
+       ? "✅ <b>Correct!</b> "
+       : "❌ <b>Not quite.</b> Correct answer: ") +
+     "<span style='color:#ffd83d;font-size:20px'>"+correctAnswer+
+     "</span> &nbsp; • &nbsp; <b>"+places+" place"+(places===1?"":"s")+" "+
+     direction+" → "+operation+"10"+(places>1?"<sup>"+places+"</sup>":"")+"</b>";
+ });
+};
+document.getElementById("place").onclick=()=>{
+ document.getElementById("info").innerHTML="▥ <b>Place Value Builder:</b> Move from km to mm and watch the decimal shift one place for every step.";
+ toast("Place Value Builder mode")
+};
+
+const scene=document.getElementById("scene");
+scene.addEventListener("pointerdown",e=>{dragging=true;lx=e.clientX;ly=e.clientY;scene.classList.add("drag")});
+window.addEventListener("pointerup",()=>{dragging=false;scene.classList.remove("drag")});
+window.addEventListener("pointermove",e=>{
+ if(!dragging)return;
+ ry+=(e.clientX-lx)*.28;
+ rx-=(e.clientY-ly)*.22;
+ rx=Math.max(-15,Math.min(35,rx));
+ lx=e.clientX;ly=e.clientY;render();
+});
+scene.addEventListener("wheel",e=>{
+ e.preventDefault();scale+=e.deltaY<0?.055:-.055;scale=Math.max(.52,Math.min(1.32,scale));render()
+},{passive:false});
+
+function loop(){if(auto){ry+=.12;render()}requestAnimationFrame(loop)}
+render();loop();
+})();
+</script>
+</body>
+</html>

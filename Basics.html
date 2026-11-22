@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Mathematics Foundation Studio • Ganita Prakash Grade 8</title>
+  <meta name="description" content="Interactive Foundation Math Simulations: 3D Metric Conversion Studio and Easy Division by Grouping for Grade 8.">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --bg2: #0f172a;
+      --panel: rgba(30, 41, 59, 0.75);
+      --panel-glass: rgba(15, 23, 42, 0.75);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(56, 189, 248, 0.45);
+      --orange: #f97316;
+      --orange-bright: #fb923c;
+      --amber: #fbbf24;
+      --cyan: #38bdf8;
+      --blue: #0ea5e9;
+      --slate: #94a3b8;
+      --text: #f1f5f9;
+      --emerald: #34d399;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glow */
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 65% 45% at 20% -10%, rgba(14, 165, 233, 0.18), transparent 50%),
+        radial-gradient(ellipse 55% 45% at 85% 15%, rgba(249, 115, 22, 0.12), transparent 50%),
+        radial-gradient(ellipse 60% 60% at 50% 100%, rgba(15, 23, 42, 0.95), transparent 60%);
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    .navbar {
+      height: 70px;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #fff;
+    }
+
+    .brand-text p {
+      font-size: 0.72rem;
+      color: var(--slate);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 0.55rem 0.95rem;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+    }
+
+    .btn-blue {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+    }
+
+    .btn-blue:hover {
+      background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+      transform: translateY(-1px);
+    }
+
+    .btn-glass {
+      background: rgba(30, 41, 59, 0.85);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-glass:hover {
+      background: #334155;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Main Container */
+    .main-content {
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      flex: 1;
+    }
+
+    /* Header Banner */
+    .studio-header {
+      background: linear-gradient(135deg, rgba(14, 34, 61, 0.85), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 18px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-info {
+      max-width: 750px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .studio-header h2 {
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .studio-header p {
+      color: var(--slate);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    /* Tabs Bar */
+    .basics-tabs-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .tabs-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .basics-tabs {
+      display: flex;
+      gap: 0.6rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .basics-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--panel-glass);
+      border: 1px solid var(--border);
+      color: var(--slate);
+      padding: 0.65rem 1.2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      flex-shrink: 0;
+    }
+
+    .basics-tab-btn:hover {
+      background: rgba(30, 41, 59, 0.95);
+      border-color: rgba(56, 189, 248, 0.35);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .basics-tab-btn.active {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(6, 182, 212, 0.15));
+      border-color: #0ea5e9;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(14, 165, 233, 0.25);
+    }
+
+    .basics-tab-btn .badge-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #38bdf8;
+    }
+
+    .basics-tab-btn.active .badge-num {
+      background: #0ea5e9;
+      color: #fff;
+    }
+
+    /* Active Player Area */
+    .player-card {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .player-toolbar {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
+    .player-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .category-tag {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .player-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .player-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-action {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border);
+      color: #cbd5e1;
+      height: 34px;
+      padding: 0 0.85rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s;
+    }
+
+    .btn-action:hover {
+      background: #334155;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Iframe Container */
+    .iframe-wrapper {
+      position: relative;
+      width: 100%;
+      height: 640px;
+      background: #000;
+    }
+
+    .iframe-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Details Drawer */
+    .player-details {
+      background: rgba(15, 23, 42, 0.9);
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .detail-box h4 {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    .detail-box p {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    /* Grid of 2 Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .basics-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .basics-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-hover);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .basics-card.active-card {
+      border-color: #0ea5e9;
+      background: rgba(14, 34, 61, 0.75);
+      box-shadow: 0 0 0 1px #0ea5e9;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .card-tag {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    .basics-card h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .basics-card p {
+      font-size: 0.85rem;
+      color: var(--slate);
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.35rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-play-card {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      color: #fff;
+      border: none;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.15s;
+    }
+
+    .btn-play-card:hover {
+      background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+    }
+
+    footer {
+      padding: 2rem 1.25rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--slate);
+      font-size: 0.82rem;
+      background: rgba(15, 23, 42, 0.6);
+      margin-top: auto;
+    }
+
+    footer strong {
+      color: #e2e8f0;
+    }
+
+    @media (max-width: 900px) {
+      .iframe-wrapper {
+        height: 480px;
+      }
+      .player-details {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .iframe-wrapper {
+        height: 400px;
+      }
+      .navbar {
+        padding: 0 1rem;
+      }
+      .studio-header {
+        padding: 1.2rem;
+      }
+      .player-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <div class="app-container">
+    <!-- Navbar -->
+    <header class="navbar">
+      <a href="index.html" class="brand">
+        <img class="logo-img" src="logo.png" alt="Ganita Prakash Logo" onerror="this.style.display='none'">
+        <div class="brand-text">
+          <h1>Ganita Prakash</h1>
+          <p>Grade 8 • Digital Learning Center</p>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-glass">📚 Curriculum Hub</a>
+        <a href="index.html#textbooks" class="btn btn-glass">📖 Textbooks</a>
+        <button class="btn btn-blue" onclick="toggleFullScreen()">⛶ Fullscreen</button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Studio Header -->
+      <section class="studio-header">
+        <div class="header-info">
+          <div class="badge-pill">🧮 Math Foundations • Interactive Tools</div>
+          <h2>Basic Mathematics Simulations Studio</h2>
+          <p>
+            Master essential mathematical foundation skills with high-yield interactive models — dynamic 3D metric conversions across length, area, volume & mass, and intuitive equal-grouping visual division.
+          </p>
+        </div>
+        <div>
+          <a href="index.html" class="btn btn-glass" style="padding: 0.75rem 1.25rem;">
+            ← Back to All Chapters
+          </a>
+        </div>
+      </section>
+
+      <!-- Tabs Bar for the Basic Simulations -->
+      <div class="basics-tabs-wrap">
+        <div class="tabs-label">
+          <span>⚙️ Select Foundation Simulation:</span>
+        </div>
+        <div class="basics-tabs" id="basicsTabs">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Active Player Card -->
+      <section class="player-card" id="playerCard">
+        <!-- Player Toolbar -->
+        <div class="player-toolbar">
+          <div class="player-meta">
+            <span class="category-tag" id="currentCategoryTag">📏 Metric 3D</span>
+            <h3 class="player-title" id="currentPlayerTitle">3D Metric Conversion Studio</h3>
+          </div>
+          <div class="player-actions">
+            <button class="btn-action" onclick="reloadCurrentIframe()" title="Reload Simulation">🔄 Reload</button>
+            <button class="btn-action" onclick="toggleFullScreen()" title="Fullscreen View">⛶ Fullscreen</button>
+            <button class="btn-action" onclick="openOriginalSimulation()" title="Open standalone in new tab">↗ Open Standalone</button>
+          </div>
+        </div>
+
+        <!-- Iframe Viewport -->
+        <div class="iframe-wrapper" id="iframeWrapper">
+          <iframe id="basicsIframe" src="about:blank" allowfullscreen></iframe>
+        </div>
+
+        <!-- Detail Description -->
+        <div class="player-details">
+          <div class="detail-box">
+            <h4>📋 Simulation Description</h4>
+            <p id="currentDesc">Explore dynamic 3D conversions for Length, Area, Volume, and Mass units with real-time scaling and 3D visual blocks.</p>
+          </div>
+          <div class="detail-box">
+            <h4>💡 Core Mathematics Concept</h4>
+            <p id="currentConcept">Understand the base-10 relationships between metric units and spatial dimensions (1D linear scale, 2D area scale factor 100, 3D volume scale factor 1,000).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Browse Both Modules -->
+      <div style="margin-top: 1rem;">
+        <div class="tabs-label" style="margin-bottom: 0.75rem;">
+          <span>📚 Basic Foundation Modules</span>
+        </div>
+        <div class="cards-grid" id="cardsGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>
+        Basic Mathematics Foundation Modules · <strong>Ganita Prakash Grade 8</strong> ·
+        <strong>Andhra Pradesh Mathematics Forum</strong>
+      </p>
+      <p style="margin-top: 0.4rem; opacity: 0.8;">Curated by: Gangalapudi Bhasker Reddy</p>
+    </footer>
+  </div>
+
+  <script>
+    const basicsSimulations = [
+      {
+        id: "metric-3d",
+        num: "1",
+        tag: "📏 Measurement & 3D Units",
+        title: "3D Metric Conversion Studio",
+        category: "Metric System & Spatial Scaling",
+        desc: "Interactive 3D metric converter across Length (km, m, dm, cm, mm), Area, Volume, and Mass. Features interactive 3D blocks, spatial rotation, and scale multiplier steps.",
+        concept: "Visualizing metric powers of 10 in 1D, 2D (×100), and 3D (×1,000) space. Manipulate dimensions and observe real-time proportional geometry.",
+        file: "Basic Simulations/3D_Metric_Conversion_Studio_SINGLE_HTML.html"
+      },
+      {
+        id: "division-groups",
+        num: "2",
+        tag: "➗ Equal Sharing & Groups",
+        title: "Easy Way of Division (Group Simulator)",
+        category: "Arithmetic & Group Partitioning",
+        desc: "Visual, gamified equal-grouping simulation for division. Distribute items into baskets, animate group counters, and explore quotient and remainder mechanics.",
+        concept: "Division as repeated subtraction and equal-share partitioning. Understand dividends, divisors, quotients, and remainders through concrete physical models.",
+        file: "Basic Simulations/Simple Division(groups).html"
+      }
+    ];
+
+    let currentIndex = 0;
+
+    const basicsTabs = document.getElementById('basicsTabs');
+    const cardsGrid = document.getElementById('cardsGrid');
+    const basicsIframe = document.getElementById('basicsIframe');
+    const currentCategoryTag = document.getElementById('currentCategoryTag');
+    const currentPlayerTitle = document.getElementById('currentPlayerTitle');
+    const currentDesc = document.getElementById('currentDesc');
+    const currentConcept = document.getElementById('currentConcept');
+    const iframeWrapper = document.getElementById('iframeWrapper');
+
+    function initStudio() {
+      basicsTabs.innerHTML = '';
+      cardsGrid.innerHTML = '';
+
+      basicsSimulations.forEach((item, index) => {
+        // Tab button
+        const btn = document.createElement('button');
+        btn.className = `basics-tab-btn ${index === 0 ? 'active' : ''}`;
+        btn.id = `tab-btn-${index}`;
+        btn.onclick = () => selectSimulation(index);
+        btn.innerHTML = `
+          <span class="badge-num">${item.num}</span>
+          <span>${item.title}</span>
+        `;
+        basicsTabs.appendChild(btn);
+
+        // Card
+        const card = document.createElement('div');
+        card.className = `basics-card ${index === 0 ? 'active-card' : ''}`;
+        card.id = `card-item-${index}`;
+        card.onclick = () => {
+          selectSimulation(index);
+          document.getElementById('playerCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        card.innerHTML = `
+          <div class="card-head">
+            <span class="card-tag">${item.tag}</span>
+            <span style="font-size: 0.72rem; color: var(--slate);">#${item.num}</span>
+          </div>
+          <h3>${item.title}</h3>
+          <p>${item.desc}</p>
+          <div class="card-footer">
+            <span style="font-size: 0.75rem; color: #38bdf8; font-weight: 700;">📘 ${item.category}</span>
+            <button class="btn-play-card">▶ Launch Sim</button>
+          </div>
+        `;
+        cardsGrid.appendChild(card);
+      });
+
+      selectSimulation(0);
+    }
+
+    function selectSimulation(index) {
+      currentIndex = index;
+      const data = basicsSimulations[index];
+      if (!data) return;
+
+      document.querySelectorAll('.basics-tab-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === index);
+      });
+      document.querySelectorAll('.basics-card').forEach((card, idx) => {
+        card.classList.toggle('active-card', idx === index);
+      });
+
+      currentCategoryTag.textContent = data.tag;
+      currentPlayerTitle.textContent = data.title;
+      currentDesc.textContent = data.desc;
+      currentConcept.textContent = data.concept;
+
+      const path = encodeURI(data.file);
+      if (basicsIframe.src.indexOf(path) === -1) {
+        basicsIframe.src = path;
+      }
+    }
+
+    function reloadCurrentIframe() {
+      const data = basicsSimulations[currentIndex];
+      if (data) {
+        basicsIframe.src = 'about:blank';
+        setTimeout(() => {
+          basicsIframe.src = encodeURI(data.file);
+        }, 150);
+      }
+    }
+
+    function openOriginalSimulation() {
+      const data = basicsSimulations[currentIndex];
+      if (data) {
+        window.open(encodeURI(data.file), '_blank');
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        if (iframeWrapper.requestFullscreen) {
+          iframeWrapper.requestFullscreen();
+        } else if (iframeWrapper.webkitRequestFullscreen) {
+          iframeWrapper.webkitRequestFullscreen();
+        } else if (iframeWrapper.msRequestFullscreen) {
+          iframeWrapper.msRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    window.onload = initStudio;
+  </script>
+</body>
+</html>
