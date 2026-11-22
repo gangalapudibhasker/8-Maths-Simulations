@@ -1289,6 +1289,111 @@
       }
     }
 
+    
+    /* Curriculum Medium & Filter Controls */
+    .curriculum-controls {
+      display: flex;
+      gap: 0.65rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .medium-toggle-switch {
+      display: inline-flex;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .btn-medium {
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .btn-medium:hover {
+      color: #fff;
+    }
+    .btn-medium.active {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+    }
+    .btn-medium.active.tm {
+      background: linear-gradient(135deg, #9333ea, #7c3aed);
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+    }
+    .curriculum-filter-tabs {
+      display: inline-flex;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+    .curr-filter-btn {
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .curr-filter-btn:hover {
+      color: #fff;
+    }
+    .curr-filter-btn.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    /* Notes Pane Custom Header */
+    .pane-notes {
+      display: flex !important;
+      flex-direction: column !important;
+      height: 100%;
+    }
+    .pane-notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.85rem;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
+      gap: 0.5rem;
+    }
+    .pane-notes-header .notes-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(192, 132, 252, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(192, 132, 252, 0.3);
+    }
+    .pane-notes-header .notes-pages {
+      font-size: 0.72rem;
+      color: var(--slate);
+      font-weight: 600;
+    }
+    .pane-notes-header .pane-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
     /* Textbooks Studio Styles */
     .textbooks-view {
       flex: 1;
@@ -1865,8 +1970,8 @@
           number systems, geometry, algebra, and proportional reasoning. Study concepts and interact with active simulations side-by-side.
         </p>
         <div class="stats">
-          <div class="stat"><strong>7</strong><span>Chapters</span></div>
-          <div class="stat"><strong>7</strong><span>Study Notes</span></div>
+          <div class="stat"><strong>14</strong><span>Chapters</span></div>
+          <div class="stat"><strong style="color: #c084fc;">28</strong><span>Full Solved (EM & TM)</span></div>
           <div class="stat"><strong>70+</strong><span>Simulations</span></div>
           <div class="stat" onclick="switchMainView('textbooks')" style="cursor: pointer; border-color: rgba(52,211,153,0.3);" title="Explore Class 8 SCERT Official Textbooks">
             <strong style="color: #34d399;">2</strong><span>Textbooks</span>
@@ -1883,8 +1988,19 @@
         </div>
       </section>
 
-      <div class="section-header">
-        <div class="section-title">📚 Course Curriculum</div>
+      <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.85rem; margin-bottom: 1.25rem;">
+        <div class="section-title" style="margin-bottom: 0;">📚 Class 8 Mathematics Curriculum & Complete Solutions</div>
+        <div class="curriculum-controls">
+          <div class="curriculum-filter-tabs" id="currSemTabs">
+            <button class="curr-filter-btn active" id="btnFilterAll" onclick="filterCurriculum('all', this)">All (14)</button>
+            <button class="curr-filter-btn" id="btnFilterSem1" onclick="filterCurriculum('sem1', this)">📘 Sem 1 (1–7)</button>
+            <button class="curr-filter-btn" id="btnFilterSem2" onclick="filterCurriculum('sem2', this)">📗 Sem 2 (8–14)</button>
+          </div>
+          <div class="medium-toggle-switch">
+            <button class="btn-medium active" id="globalBtnEM" onclick="setGlobalMedium('em', this)">🇬🇧 English</button>
+            <button class="btn-medium" id="globalBtnTM" onclick="setGlobalMedium('tm', this)">🇮🇳 తెలుగు</button>
+          </div>
+        </div>
       </div>
 
       <div class="grid" id="chaptersGrid">
@@ -2296,7 +2412,21 @@
         <div class="panes-container" id="panesContainer">
           <!-- Notes Pane -->
           <div class="pane pane-notes" id="paneNotes">
-            <iframe id="iframeNotes" src="about:blank"></iframe>
+            <div class="pane-notes-header" id="paneNotesHeader">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="notes-pill" id="wsNotesBadge">📝 APMF Complete Solutions</span>
+                <span class="notes-pages" id="wsNotesPages">8 Pages</span>
+              </div>
+              <div class="pane-actions">
+                <div class="medium-toggle-switch">
+                  <button class="btn-medium active" id="wsBtnEM" onclick="switchWorkspaceMedium('em')">🇬🇧 English</button>
+                  <button class="btn-medium" id="wsBtnTM" onclick="switchWorkspaceMedium('tm')">🇮🇳 తెలుగు</button>
+                </div>
+                <button class="btn-control" onclick="openNotesRawTab()" title="Open PDF in new window">↗ Full Tab</button>
+                <button class="btn-control" onclick="downloadCurrentNote()" title="Download Chapter PDF">⬇ PDF</button>
+              </div>
+            </div>
+            <iframe id="iframeNotes" src="about:blank" style="flex: 1; width: 100%; height: 100%; border: none;"></iframe>
           </div>
 
           <!-- Resizer Drag bar -->
@@ -2340,67 +2470,200 @@
     const chapters = [
       {
         id: 1,
+        sem: 1,
         title: "A Square and a Cube",
+        titleTel: "వర్గం మరియు ఘనం",
         icon: "▢",
-        desc: "Perfect squares & cubes, 100 lockers puzzle, prime-factor roots, patterns of units digits, Hardy–Ramanujan 1729 and more.",
+        desc: "Perfect squares & cubes, 100 lockers puzzle, prime-factor roots, patterns of units digits, Hardy–Ramanujan 1729, and complete step-by-step solutions for all Figure It Out problems.",
         tags: ["Squares", "Cubes", "Roots", "Patterns"],
         simFile: "Simulations/1. A_Square_and_a_Cube.html",
-        notesFile: "Notes/1 A Square and a Cube notes.html"
+        notesFileEM: "Notes/Ch1_A_Square_and_a_Cube_EM.pdf",
+        notesFileTM: "Notes/Ch1_A_Square_and_a_Cube_TM.pdf",
+        pagesEM: "8 Pages",
+        pagesTM: "7 Pages"
       },
       {
         id: 2,
+        sem: 1,
         title: "Power Play",
+        titleTel: "ఘాతాల ఆట",
         icon: "ⁿ",
-        desc: "Laws of exponents, zero & negative powers, paper folding, pond-doubling, powers of 10 and practice with identities.",
+        desc: "Laws of exponents, zero & negative powers, paper folding, pond-doubling, powers of 10, scientific notation, and full worked exercises.",
         tags: ["Exponents", "Laws", "Powers of 10"],
         simFile: "Simulations/2. Power_Play.html",
-        notesFile: "Notes/2 Power Play notes.html"
+        notesFileEM: "Notes/Ch2_Power_Play_EM.pdf",
+        notesFileTM: "Notes/Ch2_Power_Play_TM.pdf",
+        pagesEM: "8 Pages",
+        pagesTM: "8 Pages"
       },
       {
         id: 3,
+        sem: 1,
         title: "The Story of Numbers",
+        titleTel: "సంఖ్యల కథ",
         icon: "𓂀",
-        desc: "Roman, Egyptian, Mesopotamian, Mayan, Chinese & Hindu systems. Base-5 / base-4, abacus, place value and the invention of zero.",
+        desc: "Roman, Egyptian, Mesopotamian, Mayan, Chinese & Hindu systems. Base-5, abacus, place value, invention of zero, and comprehensive solutions.",
         tags: ["History", "Bases", "Place Value", "Zero"],
         simFile: "Simulations/3. The_Story_of_Numbers.html",
-        notesFile: "Notes/3 A Story of Numbers notes.html"
+        notesFileEM: "Notes/Ch3_The_Story_of_Numbers_EM.pdf",
+        notesFileTM: "Notes/Ch3_The_Story_of_Numbers_TM.pdf",
+        pagesEM: "7 Pages",
+        pagesTM: "7 Pages"
       },
       {
         id: 4,
+        sem: 1,
         title: "Quadrilaterals",
+        titleTel: "చతుర్భుజాలు",
         icon: "▱",
-        desc: "Rectangles, squares, parallelograms, rhombus, kite, trapezium. Diagonals, angle sum, hierarchy and interactive construction.",
-        tags: ["Geometry", "Properties", "Diagonals"],
+        desc: "Rectangles, squares, parallelograms, rhombus, kite, trapezium. Diagonals, angle sum, 3D RoboCompass geometric constructions, and full solutions.",
+        tags: ["Geometry", "Properties", "Diagonals", "RoboCompass"],
         simFile: "Simulations/4.Quadrilaterals.html",
-        notesFile: "Notes/4 Quadrilaterals Notes.html",
+        notesFileEM: "Notes/Ch4_Quadrilaterals_EM.pdf",
+        notesFileTM: "Notes/Ch4_Quadrilaterals_TM.pdf",
+        pagesEM: "9 Pages",
+        pagesTM: "9 Pages",
         hasRobo: true
       },
       {
         id: 5,
+        sem: 1,
         title: "Number Play",
+        titleTel: "సంఖ్యలతో ఆట",
         icon: "🔢",
-        desc: "Consecutive number sums, digital roots, divisibility, Kaprekar, curious number tricks and playful number patterns.",
-        tags: ["Number Theory", "Tricks", "Patterns"],
+        desc: "Consecutive number sums, digital roots, divisibility rules, cryptarithms, Kaprekar numbers, and complete worked solutions.",
+        tags: ["Number Theory", "Divisibility", "Cryptarithms"],
         simFile: "Simulations/5. Number_Play.html",
-        notesFile: "Notes/5 Number Play Notes.html"
+        notesFileEM: "Notes/Ch5_Number_Play_EM.pdf",
+        notesFileTM: "Notes/Ch5_Number_Play_TM.pdf",
+        pagesEM: "10 Pages",
+        pagesTM: "8 Pages"
       },
       {
         id: 6,
+        sem: 1,
         title: "We Distribute, Yet Things Multiply",
+        titleTel: "విభాగ న్యాయం – గుణకారాలు",
         icon: "▦",
-        desc: "Distributive property visualised, algebraic identities, expanding products and lightning-fast mental multiplication.",
+        desc: "Distributive property visualised, algebraic identities, expanding products, fast mental multiplication, and step-by-step problem solutions.",
         tags: ["Algebra", "Identities", "Mental Math"],
         simFile: "Simulations/6. We_Distribute_Yet_Things_Multiply.html",
-        notesFile: "Notes/6 We Distribute, Yet Things Multiply Notes.html"
+        notesFileEM: "Notes/Ch6_We_Distribute_Yet_Things_Multiply_EM.pdf",
+        notesFileTM: "Notes/Ch6_We_Distribute_Yet_Things_Multiply_TM.pdf",
+        pagesEM: "8 Pages",
+        pagesTM: "8 Pages"
       },
       {
         id: 7,
+        sem: 1,
         title: "Proportional Reasoning – 1",
+        titleTel: "అనుపాత తర్కం – 1",
         icon: "⚖️",
-        desc: "Ratios, proportions, Rule of Three, similar shapes, sharing problems and cross-multiplication made visual.",
+        desc: "Ratios, proportions, Trairasika (Rule of Three), similar shapes, unequal sharing, unit conversions, and complete figure-it-out answers.",
         tags: ["Ratio", "Proportion", "Rule of Three"],
         simFile: "Simulations/7. Proportional_Reasoning_1.html",
-        notesFile: "Notes/7 Proportional_Reasoning_notes.html"
+        notesFileEM: "Notes/Ch7_Proportional_Reasoning_1_EM.pdf",
+        notesFileTM: "Notes/Ch7_Proportional_Reasoning_1_TM.pdf",
+        pagesEM: "8 Pages",
+        pagesTM: "8 Pages"
+      },
+      {
+        id: 8,
+        sem: 2,
+        title: "Fractions in Disguise",
+        titleTel: "మారువేషంలో భిన్నాలు",
+        icon: "％",
+        desc: "Fractions as percentages, finding percentage of a quantity, profit & loss applications, simple and compound interest with complete solutions.",
+        tags: ["Percentages", "Profit & Loss", "Compound Interest"],
+        simFile: null,
+        notesFileEM: "Notes/Ch8_Fractions_in_Disguise_EM.pdf",
+        notesFileTM: "Notes/Ch8_Fractions_in_Disguise_TM.pdf",
+        pagesEM: "8 Pages",
+        pagesTM: "11 Pages"
+      },
+      {
+        id: 9,
+        sem: 2,
+        title: "Baudhayana–Pythagoras Theorem",
+        titleTel: "బౌధాయన–పైథాగరస్ సిద్ధాంతం",
+        icon: "📐",
+        desc: "Doubling and halving squares, hypotenuse of right isosceles triangles, Pythagorean triples, real-world applications, and full solutions.",
+        tags: ["Geometry", "Pythagoras", "Triples"],
+        simFile: null,
+        notesFileEM: "Notes/Ch9_Baudhayana_Pythagoras_Theorem_EM.pdf",
+        notesFileTM: "Notes/Ch9_Baudhayana_Pythagoras_Theorem_TM.pdf",
+        pagesEM: "5 Pages",
+        pagesTM: "7 Pages"
+      },
+      {
+        id: 10,
+        sem: 2,
+        title: "Proportional Reasoning – 2",
+        titleTel: "అనుపాత తర్కం – 2",
+        icon: "🗺️",
+        desc: "Recap of proportionality, scale ratios in maps, multi-term ratios, dividing a whole into given ratios, inverse proportions, and solved exercises.",
+        tags: ["Maps & Scale", "Inverse Proportion", "Ratio Division"],
+        simFile: null,
+        notesFileEM: "Notes/Ch10_Proportional_Reasoning_2_EM.pdf",
+        notesFileTM: "Notes/Ch10_Proportional_Reasoning_2_TM.pdf",
+        pagesEM: "4 Pages",
+        pagesTM: "4 Pages"
+      },
+      {
+        id: 11,
+        sem: 2,
+        title: "Exploring Geometric Themes",
+        titleTel: "కొన్ని జ్యామితీయ అంశాల అన్వేషణ",
+        icon: "❄️",
+        desc: "Self-similarity, fractals, Sierpinski triangle, visualising 3D solids, Euler's formula for polyhedra, nets, isometric views, and full solutions.",
+        tags: ["Fractals", "3D Solids", "Euler's Formula"],
+        simFile: null,
+        notesFileEM: "Notes/Ch11_Exploring_Geometric_Themes_EM.pdf",
+        notesFileTM: "Notes/Ch11_Exploring_Geometric_Themes_TM.pdf",
+        pagesEM: "5 Pages",
+        pagesTM: "7 Pages"
+      },
+      {
+        id: 12,
+        sem: 2,
+        title: "Tales by Dots and Lines",
+        titleTel: "చుక్కలు, రేఖలు చెప్పే కథలు",
+        icon: "📊",
+        desc: "Mean as balancing act, median, mode, visualising data distributions, misleading graphs, infographics, and step-by-step problem solutions.",
+        tags: ["Statistics", "Mean & Median", "Infographics"],
+        simFile: null,
+        notesFileEM: "Notes/Ch12_Tales_by_Dots_and_Lines_EM.pdf",
+        notesFileTM: "Notes/Ch12_Tales_by_Dots_and_Lines_TM.pdf",
+        pagesEM: "5 Pages",
+        pagesTM: "7 Pages"
+      },
+      {
+        id: 13,
+        sem: 2,
+        title: "Algebra Play",
+        titleTel: "బీజగణితంతో ఆట",
+        icon: "🪄",
+        desc: "Think of a number tricks, number pyramids, algebraic generalizations, calendar grid math, maximizing products, and complete question answers.",
+        tags: ["Algebraic Generalization", "Number Tricks", "Pyramids"],
+        simFile: null,
+        notesFileEM: "Notes/Ch13_Algebra_Play_EM.pdf",
+        notesFileTM: "Notes/Ch13_Algebra_Play_TM.pdf",
+        pagesEM: "3 Pages",
+        pagesTM: "4 Pages"
+      },
+      {
+        id: 14,
+        sem: 2,
+        title: "Area",
+        titleTel: "వైశాల్యం",
+        icon: "📏",
+        desc: "Areas of rectangles, triangles, parallelograms, rhombuses, trapeziums, irregular polygons, real-life land measurement, and full solved questions.",
+        tags: ["Area", "Polygons", "Trapezium & Rhombus"],
+        simFile: null,
+        notesFileEM: "Notes/Ch14_Area_EM.pdf",
+        notesFileTM: "Notes/Ch14_Area_TM.pdf",
+        pagesEM: "5 Pages",
+        pagesTM: "10 Pages"
       }
     ];
 
@@ -2685,6 +2948,8 @@
     let currentTextbookIndex = 0;
     let currentSolutionIndex = 0;
     let currentSolutionFilter = 'all';
+    let currentMedium = 'em'; // 'em' or 'tm'
+    let currentCurriculumFilter = 'all'; // 'all', 'sem1', 'sem2'
 
     // DOM Elements
     const dashboardView = document.getElementById('dashboardView');
@@ -2716,37 +2981,123 @@
       chaptersGrid.innerHTML = '';
       sidebarChapters.innerHTML = '';
 
-      chapters.forEach(ch => {
+      const filtered = chapters.filter(ch => {
+        if (currentCurriculumFilter === 'sem1') return ch.sem === 1;
+        if (currentCurriculumFilter === 'sem2') return ch.sem === 2;
+        return true;
+      });
+
+      filtered.forEach(ch => {
         // Build Card View
         const card = document.createElement('article');
         card.className = 'card';
         card.innerHTML = `
           <div class="card-top">
             <div class="card-icon">${ch.icon}</div>
-            <span class="ch-num">Chapter ${ch.id}</span>
+            <div style="display: flex; gap: 0.35rem; align-items: center;">
+              <span class="tag" style="background: rgba(59, 130, 246, 0.12); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.25);">Sem ${ch.sem}</span>
+              <span class="ch-num">Chapter ${ch.id}</span>
+            </div>
           </div>
-          <h3>${ch.title}</h3>
+          <h3 style="margin-bottom: 0.25rem;">${ch.title}</h3>
+          <h4 style="font-size: 0.88rem; color: #a78bfa; font-weight: 600; margin-top: 0; margin-bottom: 0.5rem;">${ch.titleTel}</h4>
           <p>${ch.desc}</p>
-          <div class="tags">${ch.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-          <div class="card-actions">
-            <button class="btn btn-glass" onclick="launchWorkspace(${ch.id}, 'notes')">📋 Read Notes</button>
-            <button class="btn btn-orange" onclick="launchWorkspace(${ch.id}, 'sim')">▶ Run Sim</button>
-            ${ch.hasRobo ? `<button class="btn btn-glass" onclick="switchMainView('robo')" style="border-color: rgba(249,115,22,0.4); color: var(--orange-bright);">📐 RoboCompass</button>` : ''}
+          <div class="tags" style="margin-bottom: 0.35rem;">
+            ${ch.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+            <span class="tag" style="background: rgba(192, 132, 252, 0.15); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3);">📝 Solved: ${currentMedium === 'tm' ? ch.pagesTM : ch.pagesEM}</span>
+          </div>
+          <div class="card-actions" style="flex-wrap: wrap; gap: 0.45rem;">
+            <button class="btn btn-glass" onclick="launchWorkspace(${ch.id}, 'notes', 'em')" title="Read English Medium Complete Solved Notes" style="${currentMedium === 'em' ? 'border-color: rgba(59, 130, 246, 0.6); background: rgba(59, 130, 246, 0.15); color: #93c5fd;' : ''}">
+              📘 English Notes
+            </button>
+            <button class="btn btn-glass" onclick="launchWorkspace(${ch.id}, 'notes', 'tm')" style="${currentMedium === 'tm' ? 'border-color: rgba(192, 132, 252, 0.6); background: rgba(192, 132, 252, 0.15); color: #d8b4fe;' : 'border-color: rgba(192, 132, 252, 0.3); color: #d8b4fe;'}" title="తెలుగు మీడియం నోట్స్ మరియు ప్రశ్నల సాధనలను చదవండి">
+              📗 తెలుగు నోట్స్
+            </button>
+            ${ch.simFile ? `<button class="btn btn-orange" onclick="launchWorkspace(${ch.id}, 'sim')">▶ Run Sim</button>` : `<button class="btn btn-glass" style="opacity: 0.6; cursor: default;" title="Simulation for Semester 2 in development">🎮 Sim Soon</button>`}
+            ${ch.hasRobo ? `<button class="btn btn-glass" onclick="switchMainView('robo')" style="border-color: rgba(249,115,22,0.4); color: var(--orange-bright);">📐 3D Robo</button>` : ''}
           </div>
         `;
         chaptersGrid.appendChild(card);
+      });
 
-        // Build Sidebar Items
+      // Always populate sidebar with all chapters
+      chapters.forEach(ch => {
         const sidebarItem = document.createElement('div');
         sidebarItem.className = 'sidebar-item';
         sidebarItem.id = `sidebar-ch-${ch.id}`;
         sidebarItem.onclick = () => selectChapter(ch.id);
         sidebarItem.innerHTML = `
-          <span class="num">Chapter ${ch.id}</span>
-          <span class="title">${ch.title}</span>
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div>
+              <span class="num">Ch ${ch.id}</span>
+              <span class="title">${ch.title}</span>
+            </div>
+            <span class="tag" style="font-size: 0.62rem; padding: 0.1rem 0.35rem; opacity: 0.7;">S${ch.sem}</span>
+          </div>
         `;
         sidebarChapters.appendChild(sidebarItem);
       });
+    }
+
+    function filterCurriculum(sem, btn) {
+      currentCurriculumFilter = sem;
+      document.querySelectorAll('.curr-filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      initDashboard();
+    }
+
+    function setGlobalMedium(med, btn) {
+      currentMedium = med;
+      const btnEM = document.getElementById('globalBtnEM');
+      const btnTM = document.getElementById('globalBtnTM');
+      if (btnEM) btnEM.classList.toggle('active', med === 'em');
+      if (btnTM) {
+        btnTM.classList.toggle('active', med === 'tm');
+        btnTM.classList.toggle('tm', med === 'tm');
+      }
+      initDashboard();
+    }
+
+    function switchWorkspaceMedium(med) {
+      currentMedium = med;
+      const btnEM = document.getElementById('wsBtnEM');
+      const btnTM = document.getElementById('wsBtnTM');
+      if (btnEM) btnEM.classList.toggle('active', med === 'em');
+      if (btnTM) {
+        btnTM.classList.toggle('active', med === 'tm');
+        btnTM.classList.toggle('tm', med === 'tm');
+      }
+
+      const chapter = chapters.find(c => c.id === currentChapterId);
+      if (!chapter) return;
+
+      const notePath = encodeURI(med === 'tm' ? chapter.notesFileTM : chapter.notesFileEM);
+      if (iframeNotes) {
+        iframeNotes.src = notePath;
+      }
+      const pagesBadge = document.getElementById('wsNotesPages');
+      if (pagesBadge) {
+        pagesBadge.textContent = med === 'tm' ? chapter.pagesTM : chapter.pagesEM;
+      }
+    }
+
+    function openNotesRawTab() {
+      const chapter = chapters.find(c => c.id === currentChapterId);
+      if (!chapter) return;
+      const notePath = currentMedium === 'tm' ? chapter.notesFileTM : chapter.notesFileEM;
+      window.open(encodeURI(notePath), '_blank');
+    }
+
+    function downloadCurrentNote() {
+      const chapter = chapters.find(c => c.id === currentChapterId);
+      if (!chapter) return;
+      const notePath = currentMedium === 'tm' ? chapter.notesFileTM : chapter.notesFileEM;
+      const a = document.createElement('a');
+      a.href = encodeURI(notePath);
+      a.download = notePath.split('/').pop();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
     // Top Navigation between Main Curriculum, RoboCompass Studio, Basics, Textbooks, and All Solutions
@@ -3410,7 +3761,8 @@
     }
 
     // Navigation and Workspaces
-    function launchWorkspace(chapterId, tab = 'notes') {
+    function launchWorkspace(chapterId, tab = 'notes', medium = null) {
+      if (medium) currentMedium = medium;
       dashboardView.style.display = 'none';
       robocompassView.style.display = 'none';
       if (basicsView) basicsView.style.display = 'none';
@@ -3420,9 +3772,10 @@
       globalFooter.style.display = 'none';
       btnNavHome.style.display = 'inline-flex';
 
-      // Detect mobile view size
+      const chapter = chapters.find(c => c.id === chapterId);
+      // Detect mobile view size or chapters without simulation
       const isMobile = window.innerWidth <= 900;
-      if (isMobile) {
+      if (isMobile || (chapter && !chapter.simFile)) {
         setMode(tab);
       } else {
         setMode(tab === 'robo' ? 'robo' : 'split');
@@ -3447,7 +3800,7 @@
       const chapter = chapters.find(c => c.id === chapterId);
       if (!chapter) return;
 
-      activeChapterTitle.textContent = `Chapter ${chapter.id}: ${chapter.title}`;
+      activeChapterTitle.innerHTML = `Chapter ${chapter.id}: ${chapter.title} <span style="font-size: 0.82rem; color: #a78bfa; font-weight: normal; margin-left: 6px;">(${chapter.titleTel})</span>`;
 
       // Update sidebar active class
       document.querySelectorAll('.sidebar-item').forEach(item => {
@@ -3456,15 +3809,33 @@
       const activeItem = document.getElementById(`sidebar-ch-${chapterId}`);
       if (activeItem) activeItem.classList.add('active');
 
-      // Set Iframes Source
-      const notePath = encodeURI(chapter.notesFile);
-      const simPath = encodeURI(chapter.simFile);
+      // Update workspace medium switcher buttons
+      const btnEM = document.getElementById('wsBtnEM');
+      const btnTM = document.getElementById('wsBtnTM');
+      if (btnEM) btnEM.classList.toggle('active', currentMedium === 'em');
+      if (btnTM) {
+        btnTM.classList.toggle('active', currentMedium === 'tm');
+        btnTM.classList.toggle('tm', currentMedium === 'tm');
+      }
 
+      const pagesBadge = document.getElementById('wsNotesPages');
+      if (pagesBadge) {
+        pagesBadge.textContent = currentMedium === 'tm' ? chapter.pagesTM : chapter.pagesEM;
+      }
+
+      // Set Iframes Source
+      const notePath = encodeURI(currentMedium === 'tm' ? chapter.notesFileTM : chapter.notesFileEM);
       if (iframeNotes.src.indexOf(notePath) === -1) {
         iframeNotes.src = notePath;
       }
-      if (iframeSim.src.indexOf(simPath) === -1) {
-        iframeSim.src = simPath;
+
+      if (chapter.simFile) {
+        const simPath = encodeURI(chapter.simFile);
+        if (iframeSim.src.indexOf(simPath) === -1) {
+          iframeSim.src = simPath;
+        }
+      } else {
+        iframeSim.src = 'about:blank';
       }
 
       if (defaultTab) {
@@ -3584,8 +3955,14 @@
       const chapter = chapters.find(c => c.id === currentChapterId);
       if (!chapter) return;
 
-      const path = activeTab === 'notes' ? chapter.notesFile : chapter.simFile;
-      window.open(encodeURI(path), '_blank');
+      if (activeTab === 'notes') {
+        const path = currentMedium === 'tm' ? chapter.notesFileTM : chapter.notesFileEM;
+        window.open(encodeURI(path), '_blank');
+      } else {
+        if (chapter.simFile) {
+          window.open(encodeURI(chapter.simFile), '_blank');
+        }
+      }
     }
 
     // Interactive Resizer for split pane
