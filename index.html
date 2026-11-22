@@ -1530,15 +1530,289 @@
     }
 
     @media (max-width: 900px) {
-      .textbooks-player-iframe-wrap {
+      .textbooks-player-iframe-wrap,
+      .solutions-player-iframe-wrap {
         height: 540px;
       }
-      .textbooks-cards-grid {
+      .textbooks-cards-grid,
+      .solutions-cards-grid {
         grid-template-columns: 1fr;
       }
-      #textbookInfoGrid {
+      #textbookInfoGrid,
+      #solutionInfoGrid {
         grid-template-columns: 1fr !important;
       }
+    }
+
+    /* Solutions Studio Styles */
+    .solutions-view {
+      flex: 1;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .solutions-studio-header {
+      background: linear-gradient(135deg, rgba(88, 28, 135, 0.4), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(192, 132, 252, 0.25);
+      border-radius: 18px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .solutions-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #c084fc;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .solutions-studio-header h2 {
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .solutions-studio-header p {
+      color: var(--slate);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      max-width: 750px;
+    }
+
+    .solutions-filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+
+    .solutions-filter-btn {
+      background: var(--panel-glass);
+      border: 1px solid var(--border);
+      color: var(--slate);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .solutions-filter-btn:hover {
+      border-color: rgba(192, 132, 252, 0.4);
+      color: #fff;
+    }
+
+    .solutions-filter-btn.active {
+      background: rgba(168, 85, 247, 0.2);
+      border-color: #a855f7;
+      color: #e9d5ff;
+    }
+
+    .solutions-tabs-bar {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding-bottom: 0.4rem;
+    }
+
+    .solution-select-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: var(--panel-glass);
+      border: 1px solid var(--border);
+      color: var(--slate);
+      padding: 0.75rem 1.25rem;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .solution-select-tab:hover {
+      background: rgba(30, 41, 59, 0.95);
+      border-color: rgba(192, 132, 252, 0.4);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .solution-select-tab.active {
+      background: linear-gradient(135deg, rgba(147, 51, 234, 0.25), rgba(126, 34, 206, 0.15));
+      border-color: #a855f7;
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(168, 85, 247, 0.25);
+    }
+
+    .solution-tab-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #c084fc;
+    }
+
+    .solution-select-tab.active .solution-tab-badge {
+      background: #a855f7;
+      color: #fff;
+    }
+
+    .solutions-player-container {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .solutions-player-top {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .solutions-player-iframe-wrap {
+      position: relative;
+      width: 100%;
+      height: 760px;
+      background: #1e293b;
+    }
+
+    .solutions-player-iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: #1e293b;
+    }
+
+    .solutions-player-info {
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .solutions-chapter-nav {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .solutions-chapter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .solution-jump-chip {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      color: #e2e8f0;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .solution-jump-chip:hover {
+      background: rgba(147, 51, 234, 0.22);
+      border-color: #c084fc;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .solution-jump-chip .chip-num {
+      background: rgba(168, 85, 247, 0.2);
+      color: #c084fc;
+      padding: 0.15rem 0.45rem;
+      border-radius: 5px;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .solution-jump-chip .chip-page {
+      font-size: 0.7rem;
+      color: var(--slate);
+    }
+
+    .solutions-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .solution-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .solution-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(192, 132, 252, 0.45);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .solution-card.active {
+      border-color: #a855f7;
+      background: rgba(88, 28, 135, 0.25);
+      box-shadow: 0 0 0 1px #a855f7;
     }
   </style>
 </head>
@@ -1559,14 +1833,17 @@
         <button class="nav-tab active" id="tabNavCurriculum" onclick="switchMainView('curriculum')">
           📚 Curriculum
         </button>
+        <button class="nav-tab" id="tabNavTextbooks" onclick="switchMainView('textbooks')">
+          📖 Textbooks <span class="badge-tab-count">1</span>
+        </button>
+        <button class="nav-tab" id="tabNavSolutions" onclick="switchMainView('solutions')">
+          📝 All Solutions <span class="badge-tab-count">4</span>
+        </button>
         <button class="nav-tab" id="tabNavRobo" onclick="switchMainView('robo')">
           📐 RoboCompass 3D <span class="badge-tab-count">6</span>
         </button>
         <button class="nav-tab" id="tabNavBasics" onclick="switchMainView('basics')">
           🧮 Basics <span class="badge-tab-count">2</span>
-        </button>
-        <button class="nav-tab" id="tabNavTextbooks" onclick="switchMainView('textbooks')">
-          📖 Textbooks <span class="badge-tab-count">2</span>
         </button>
       </div>
       <div class="nav-actions">
@@ -1591,14 +1868,17 @@
           <div class="stat"><strong>7</strong><span>Chapters</span></div>
           <div class="stat"><strong>7</strong><span>Study Notes</span></div>
           <div class="stat"><strong>70+</strong><span>Simulations</span></div>
+          <div class="stat" onclick="switchMainView('textbooks')" style="cursor: pointer; border-color: rgba(52,211,153,0.3);" title="Explore Class 8 SCERT Official Textbooks">
+            <strong style="color: #34d399;">1</strong><span>Textbook</span>
+          </div>
+          <div class="stat" onclick="switchMainView('solutions')" style="cursor: pointer; border-color: rgba(192,132,252,0.3);" title="Explore APMF Sem 1 & Sem 2 Complete Solutions (English & Telugu)">
+            <strong style="color: #c084fc;">4</strong><span>All Solutions</span>
+          </div>
           <div class="stat" onclick="switchMainView('robo')" style="cursor: pointer; border-color: rgba(249,115,22,0.3);" title="Explore 6 RoboCompass 3D Constructions">
             <strong style="color: var(--amber);">6</strong><span>RoboCompass 3D</span>
           </div>
           <div class="stat" onclick="switchMainView('basics')" style="cursor: pointer; border-color: rgba(56,189,248,0.3);" title="Explore 2 Basic Foundation Simulations">
             <strong style="color: #38bdf8;">2</strong><span>Basics Sims</span>
-          </div>
-          <div class="stat" onclick="switchMainView('textbooks')" style="cursor: pointer; border-color: rgba(52,211,153,0.3);" title="Explore Class 8 Semester 2 Textbooks & Material">
-            <strong style="color: #34d399;">2</strong><span>Textbooks</span>
           </div>
         </div>
       </section>
@@ -1762,14 +2042,14 @@
       <!-- Studio Header -->
       <section class="textbooks-studio-header">
         <div>
-          <div class="textbooks-badge-pill">📖 Class 8 Sem-2 Curriculum Books</div>
-          <h2>Class 8 Mathematics Textbooks & Learning Materials</h2>
+          <div class="textbooks-badge-pill">📖 AP SCERT Official Curriculum Textbooks</div>
+          <h2>Class 8 Mathematics Official Textbooks</h2>
           <p>
-            Access the official AP SCERT bilingual textbook (English &amp; Telugu with integrated AI) and APMF comprehensive topic-wise study material with step-by-step exercise solutions for Semester 2.
+            Access official Government of Andhra Pradesh (Samagra Shiksha &amp; SCERT) bilingual curriculum textbooks with English and Telugu side-by-side, complete theory, activities, worked problems, answer keys, and Integrated AI module.
           </p>
         </div>
         <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-          <button class="btn btn-glass" onclick="downloadTextbook()" title="Download current book as PDF">
+          <button class="btn btn-glass" onclick="downloadTextbook()" title="Download current textbook as PDF">
             ⬇ Download PDF
           </button>
           <button class="btn btn-orange" onclick="switchMainView('curriculum')">
@@ -1781,7 +2061,7 @@
       <!-- Selection Tabs -->
       <div>
         <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.6rem; color: #34d399;">
-          📚 Select Textbook / Learning Material:
+          📚 Select Official Textbook:
         </div>
         <div class="textbooks-tabs-bar" id="textbooksStudioTabs">
           <!-- Injected dynamically by JS -->
@@ -1792,9 +2072,9 @@
       <section class="textbooks-player-container" id="textbooksStudioPlayer">
         <div class="textbooks-player-top" id="textbooksPlayerTop">
           <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-            <span class="tag" id="textbookTag" style="background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3);">📘 APMF Material</span>
-            <span class="tag" id="textbookPagesBadge" style="background: rgba(255, 255, 255, 0.08); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.15);">37 Pages</span>
-            <h3 style="font-size: 1rem; font-weight: 800; color: #fff;" id="textbookPlayerTitle">APMF Class 8 Mathematics Sem-2 Study Material</h3>
+            <span class="tag" id="textbookTag" style="background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3);">📗 SCERT Bilingual</span>
+            <span class="tag" id="textbookPagesBadge" style="background: rgba(255, 255, 255, 0.08); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.15);">390 Pages</span>
+            <h3 style="font-size: 1rem; font-weight: 800; color: #fff;" id="textbookPlayerTitle">AP SCERT Class 8 Mathematics Semester 2 Textbook</h3>
           </div>
           <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
             <button class="btn-control" onclick="reloadTextbookIframe()" title="Reload PDF Viewer">🔄 Reload</button>
@@ -1815,7 +2095,7 @@
               <span style="font-size: 0.8rem; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 0.04em;">
                 ⚡ Quick Jump to Chapter / Topic:
               </span>
-              <span style="font-size: 0.74rem; color: var(--slate);" id="textbookNavHint">Click any chapter to jump directly to its starting page in the viewer</span>
+              <span style="font-size: 0.74rem; color: var(--slate);" id="textbookNavHint">Click any chapter to jump directly to its starting page in the textbook</span>
             </div>
             <div class="textbooks-chapter-chips" id="textbooksChapterChips">
               <!-- Injected dynamically by JS -->
@@ -1828,7 +2108,7 @@
                 📋 Textbook Details &amp; Scope
               </h4>
               <p style="font-size: 0.86rem; color: #cbd5e1; line-height: 1.5;" id="textbookDesc">
-                Comprehensive topic-wise concepts, core mathematical formulas, key definitions, and step-by-step exercise solutions for Semester 2.
+                Official government Class 8 bilingual textbook printed with English and Telugu side-by-side. Includes chapters 8 through 14, complete answer keys, glossary, and the special Integrated Artificial Intelligence module for Grade 8.
               </p>
             </div>
             <div>
@@ -1836,6 +2116,112 @@
                 🏛️ Publisher &amp; Highlights
               </h4>
               <p style="font-size: 0.86rem; color: #cbd5e1; line-height: 1.5;" id="textbookPublisher">
+                Published by Samagra Shiksha &amp; SCERT, Government of Andhra Pradesh
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid of textbooks -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.75rem; color: #34d399;">
+          📚 Available Class 8 Mathematics Official Textbooks
+        </div>
+        <div class="textbooks-cards-grid" id="textbooksStudioCards">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- All Solutions Dedicated Studio Tab View -->
+    <main class="solutions-view" id="solutionsView" style="display: none;">
+      <!-- Studio Header -->
+      <section class="solutions-studio-header">
+        <div>
+          <div class="solutions-badge-pill">📝 APMF Complete Exercise Solutions • Sem 1 &amp; Sem 2</div>
+          <h2>Class 8 Mathematics All Solutions &amp; Study Materials</h2>
+          <p>
+            Comprehensive chapter-wise concepts, key definitions, formulas, and complete step-by-step solutions for every "Figure It Out" question across Semester 1 and Semester 2 in both English and Telugu Mediums by Gangalapudi Bhaskar Reddy.
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+          <button class="btn btn-glass" onclick="downloadSolution()" title="Download current solutions book as PDF">
+            ⬇ Download PDF
+          </button>
+          <button class="btn btn-orange" onclick="switchMainView('curriculum')">
+            ← Back to Curriculum
+          </button>
+        </div>
+      </section>
+
+      <!-- Filter and Selection Tabs -->
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.6rem;">
+          <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0; color: #c084fc;">
+            📝 Select Solution Book:
+          </div>
+          <div class="solutions-filter-bar" id="solutionsFilterBar">
+            <button class="solutions-filter-btn active" onclick="filterSolutions('all', this)">🌟 All (4)</button>
+            <button class="solutions-filter-btn" onclick="filterSolutions('sem1', this)">📘 Sem 1 (2)</button>
+            <button class="solutions-filter-btn" onclick="filterSolutions('sem2', this)">📙 Sem 2 (2)</button>
+            <button class="solutions-filter-btn" onclick="filterSolutions('em', this)">🇬🇧 English Medium</button>
+            <button class="solutions-filter-btn" onclick="filterSolutions('tm', this)">🇮🇳 తెలుగు మాధ్యమం</button>
+          </div>
+        </div>
+        <div class="solutions-tabs-bar" id="solutionsStudioTabs">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Active Player Container -->
+      <section class="solutions-player-container" id="solutionsStudioPlayer">
+        <div class="solutions-player-top" id="solutionsPlayerTop">
+          <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+            <span class="tag" id="solutionTag" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3);">📘 Sem-1 English</span>
+            <span class="tag" id="solutionPagesBadge" style="background: rgba(255, 255, 255, 0.08); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.15);">61 Pages</span>
+            <h3 style="font-size: 1rem; font-weight: 800; color: #fff;" id="solutionPlayerTitle">APMF Class 8 Mathematics Semester 1 Solutions (English Medium)</h3>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn-control" onclick="reloadSolutionIframe()" title="Reload PDF Viewer">🔄 Reload</button>
+            <button class="btn-control" onclick="toggleSolutionFullscreen()" title="Fullscreen View">⛶ Fullscreen</button>
+            <button class="btn-control" onclick="openSolutionStandalone()" id="btnSolutionStandalone" title="Open in New Tab">↗ Open Full Tab</button>
+            <button class="btn-control" onclick="downloadSolution()" id="btnSolutionDownload" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.4); color: #c084fc;" title="Download PDF File">⬇ Download</button>
+          </div>
+        </div>
+
+        <div class="solutions-player-iframe-wrap" id="solutionsIframeWrap">
+          <iframe id="iframeSolution" src="about:blank" allowfullscreen></iframe>
+        </div>
+
+        <div class="solutions-player-info">
+          <!-- Chapter Quick-Jump Navigation -->
+          <div class="solutions-chapter-nav">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+              <span style="font-size: 0.8rem; font-weight: 800; color: #c084fc; text-transform: uppercase; letter-spacing: 0.04em;">
+                ⚡ Quick Jump to Chapter / Topic:
+              </span>
+              <span style="font-size: 0.74rem; color: var(--slate);" id="solutionNavHint">Click any chapter to jump directly to its starting page in the solutions viewer</span>
+            </div>
+            <div class="solutions-chapter-chips" id="solutionsChapterChips">
+              <!-- Injected dynamically by JS -->
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem;" id="solutionInfoGrid">
+            <div>
+              <h4 style="font-size: 0.8rem; font-weight: 800; color: #c084fc; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem;">
+                📋 Solution Book Details &amp; Scope
+              </h4>
+              <p style="font-size: 0.86rem; color: #cbd5e1; line-height: 1.5;" id="solutionDesc">
+                Topic-wise concepts, core definitions, formulas, and step-by-step solutions for all Figure It Out problems in Semester 1 (Chapters 1 to 7).
+              </p>
+            </div>
+            <div>
+              <h4 style="font-size: 0.8rem; font-weight: 800; color: #c084fc; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.35rem;">
+                🏛️ Publisher &amp; Author
+              </h4>
+              <p style="font-size: 0.86rem; color: #cbd5e1; line-height: 1.5;" id="solutionPublisher">
                 Published by Andhra Pradesh Mathematics Forum · Author: Gangalapudi Bhaskar Reddy
               </p>
             </div>
@@ -1843,12 +2229,12 @@
         </div>
       </section>
 
-      <!-- Grid of both textbooks -->
+      <!-- Grid of all solution books -->
       <div>
-        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.75rem; color: #34d399;">
-          📚 Available Class 8 Semester 2 Textbooks &amp; Material
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.75rem; color: #c084fc;">
+          📚 Available APMF Solutions &amp; Study Materials (Sem 1 &amp; Sem 2)
         </div>
-        <div class="textbooks-cards-grid" id="textbooksStudioCards">
+        <div class="solutions-cards-grid" id="solutionsStudioCards">
           <!-- Injected dynamically by JS -->
         </div>
       </div>
@@ -2106,36 +2492,8 @@
 
     const textbooks = [
       {
-        id: "apmf-sem2",
-        num: "1",
-        tag: "📘 APMF Study Material",
-        badge: "Concepts & Solutions",
-        title: "APMF Class 8 Mathematics Sem-2 Study Material (2026–27)",
-        publisher: "Andhra Pradesh Mathematics Forum",
-        author: "Gangalapudi Bhaskar Reddy",
-        edition: "2026–27 Academic Year",
-        pages: "37 Pages",
-        file: "Textbooks/APMF_Class_8_Mathematics_2026-27_Sem2.pdf",
-        desc: "Comprehensive topic-wise concepts, core mathematical formulas, key definitions, and step-by-step exercise solutions for Figure It Out 8.1 through 14.5 across all Semester 2 chapters.",
-        highlights: [
-          "Targeted topic-wise formulas & definitions",
-          "Full step-by-step solutions for Figure It Out problems",
-          "Chapters 8 to 14 complete coverage",
-          "Prepared by Gangalapudi Bhaskar Reddy (APMF)"
-        ],
-        chapters: [
-          { num: "8", name: "Fractions in Disguise", page: 1 },
-          { num: "9", name: "Baudhayana-Pythagoras Theorem", page: 9 },
-          { num: "10", name: "Proportional Reasoning - 2", page: 14 },
-          { num: "11", name: "Exploring Geometric Themes", page: 18 },
-          { num: "12", name: "Tales by Dots and Lines", page: 23 },
-          { num: "13", name: "Algebra Play", page: 28 },
-          { num: "14", name: "Area", page: 33 }
-        ]
-      },
-      {
         id: "scert-sem2",
-        num: "2",
+        num: "1",
         tag: "📗 Official SCERT Textbook",
         badge: "Bilingual (Eng / Tel) + AI",
         title: "AP SCERT Class 8 Mathematics Semester 2 Textbook",
@@ -2165,6 +2523,129 @@
       }
     ];
 
+    const allSolutions = [
+      {
+        id: "apmf-sem1-em",
+        num: "1",
+        sem: "sem1",
+        medium: "em",
+        tag: "📘 Sem-1 English Medium",
+        badge: "Chapters 1–7 Solutions",
+        title: "APMF Class 8 Mathematics Semester 1 Solutions (English Medium)",
+        publisher: "Andhra Pradesh Mathematics Forum",
+        author: "Gangalapudi Bhaskar Reddy",
+        edition: "Semester 1 • Academic Year 2026–27",
+        pages: "61 Pages",
+        file: "Textbooks/APMF_Class_8_Mathematics_Sem1_2026-27.pdf",
+        desc: "Topic-wise concepts, core definitions, formulas, and step-by-step solutions for all Figure It Out problems in Semester 1 (Chapters 1 to 7).",
+        highlights: [
+          "Step-by-step solutions for Figure It Out 1.1 through 7.6",
+          "Locker puzzle, powers, number bases, quadrilaterals",
+          "Cryptarithms, distributive properties, and proportional reasoning",
+          "Prepared by Gangalapudi Bhaskar Reddy (APMF)"
+        ],
+        chapters: [
+          { num: "1", name: "A Square and a Cube", page: 4 },
+          { num: "2", name: "Power Play", page: 12 },
+          { num: "3", name: "A Story of Numbers", page: 20 },
+          { num: "4", name: "Quadrilaterals", page: 27 },
+          { num: "5", name: "Number Play", page: 36 },
+          { num: "6", name: "We Distribute, Yet Things Multiply", page: 46 },
+          { num: "7", name: "Proportional Reasoning - 1", page: 54 }
+        ]
+      },
+      {
+        id: "apmf-sem1-tm",
+        num: "2",
+        sem: "sem1",
+        medium: "tm",
+        tag: "📗 Sem-1 తెలుగు మాధ్యమం",
+        badge: "అధ్యాయాలు 1–7 సాధనలు",
+        title: "APMF 8వ తరగతి గణితం సెమిస్టర్ 1 సాధనలు (తెలుగు మాధ్యమం)",
+        publisher: "ఆంధ్రప్రదేశ్ మ్యాథమెటిక్స్ ఫోరం",
+        author: "గంగలపూడి భాస్కర్ రెడ్డి",
+        edition: "సెమిస్టర్ 1 • విద్యా సంవత్సరం 2026–27",
+        pages: "58 Pages",
+        file: "Textbooks/APMF_Class_8_Mathematics_Sem1_Telugu_Medium_2026-27.pdf",
+        desc: "8వ తరగతి సెమిస్టర్ 1 తెలుగు మాధ్యమ గణిత పాఠ్యపుస్తకంలోని ప్రతి 'ప్రయత్నించండి' (Figure It Out) ప్రశ్నకు సమగ్ర, దశల వారీ సాధనలు & ముఖ్యాంశాలు.",
+        highlights: [
+          "అంశాల వారీ భావనలు, సూత్రాలు & పూర్తి సాధనలు",
+          "వర్గం-ఘనం, ఘాతాల ఆట, సంఖ్యల కథ, చతుర్భుజాలు",
+          "సంఖ్యా వినోదం, విభజన-గుణకారం, త్రైరాశికం",
+          "రూపకల్పన: గంగలపూడి భాస్కర్ రెడ్డి (APMF)"
+        ],
+        chapters: [
+          { num: "1", name: "వర్గం మరియు ఘనం", page: 4 },
+          { num: "2", name: "ఘాతాల ఆట", page: 11 },
+          { num: "3", name: "సంఖ్యల కథ", page: 19 },
+          { num: "4", name: "చతుర్భుజాలు", page: 26 },
+          { num: "5", name: "సంఖ్యా వినోదం", page: 35 },
+          { num: "6", name: "విభజన - గుణకారం", page: 43 },
+          { num: "7", name: "అనుపాత తర్కం - 1", page: 51 }
+        ]
+      },
+      {
+        id: "apmf-sem2-em",
+        num: "3",
+        sem: "sem2",
+        medium: "em",
+        tag: "📙 Sem-2 English Medium",
+        badge: "Chapters 8–14 Solutions",
+        title: "APMF Class 8 Mathematics Semester 2 Solutions (English Medium)",
+        publisher: "Andhra Pradesh Mathematics Forum",
+        author: "Gangalapudi Bhaskar Reddy",
+        edition: "Semester 2 • Academic Year 2026–27",
+        pages: "37 Pages",
+        file: "Textbooks/APMF_Class_8_Mathematics_2026-27_Sem2.pdf",
+        desc: "Comprehensive topic-wise concepts, core mathematical formulas, key definitions, and step-by-step exercise solutions for Figure It Out 8.1 through 14.5 across all Semester 2 chapters.",
+        highlights: [
+          "Targeted topic-wise formulas & definitions",
+          "Full step-by-step solutions for Figure It Out problems",
+          "Chapters 8 to 14 complete coverage",
+          "Prepared by Gangalapudi Bhaskar Reddy (APMF)"
+        ],
+        chapters: [
+          { num: "8", name: "Fractions in Disguise", page: 3 },
+          { num: "9", name: "Baudhayana-Pythagoras Theorem", page: 11 },
+          { num: "10", name: "Proportional Reasoning - 2", page: 16 },
+          { num: "11", name: "Exploring Geometric Themes", page: 20 },
+          { num: "12", name: "Tales by Dots and Lines", page: 25 },
+          { num: "13", name: "Algebra Play", page: 30 },
+          { num: "14", name: "Area", page: 35 }
+        ]
+      },
+      {
+        id: "apmf-sem2-tm",
+        num: "4",
+        sem: "sem2",
+        medium: "tm",
+        tag: "📕 Sem-2 తెలుగు మాధ్యమం",
+        badge: "అధ్యాయాలు 8–14 సాధనలు",
+        title: "APMF 8వ తరగతి గణితం సెమిస్టర్ 2 సాధనలు (తెలుగు మాధ్యమం)",
+        publisher: "ఆంధ్రప్రదేశ్ మ్యాథమెటిక్స్ ఫోరం",
+        author: "గంగలపూడి భాస్కర్ రెడ్డి",
+        edition: "సెమిస్టర్ 2 • విద్యా సంవత్సరం 2026–27 (Ver 2)",
+        pages: "52 Pages",
+        file: "Textbooks/APMF_Class_8_Mathematics_Telugu_Medium_2026-27 ver 2.pdf",
+        desc: "8వ తరగతి సెమిస్టర్ 2 తెలుగు మాధ్యమ గణిత పాఠ్యపుస్తకంలోని ప్రతి 'ప్రయత్నించండి' ప్రశ్నకు దశల వారీ వివరణలు, సూత్రాలు & పూర్తి సాధనలు.",
+        highlights: [
+          "మారువేషంలో భిన్నాలు, బౌధాయన-పైథాగరస్ సిద్ధాంతం",
+          "అనుపాత తర్కం-2, జ్యామితీయ అంశాల అన్వేషణ, చుక్కలు-గీతలు",
+          "బీజగణిత క్రీడ, వైశాల్యం పూర్తి సాధనలు",
+          "రూపకల్పన: గంగలపూడి భాస్కర్ రెడ్డి (APMF)"
+        ],
+        chapters: [
+          { num: "8", name: "మారువేషంలో భిన్నాలు", page: 3 },
+          { num: "9", name: "బౌధాయన-పైథాగరస్ సిద్ధాంతం", page: 14 },
+          { num: "10", name: "అనుపాత తర్కం - 2", page: 21 },
+          { num: "11", name: "జ్యామితీయ అంశాల అన్వేషణ", page: 25 },
+          { num: "12", name: "చుక్కలు, గీతల కథలు", page: 32 },
+          { num: "13", name: "బీజగణిత క్రీడ", page: 39 },
+          { num: "14", name: "వైశాల్యం", page: 43 }
+        ]
+      }
+    ];
+
     // State Variables
     let currentChapterId = 1;
     let activeTab = 'notes'; // 'notes' | 'sim' | 'robo'
@@ -2173,12 +2654,15 @@
     let currentWsRoboIndex = 0;
     let currentBasicsIndex = 0;
     let currentTextbookIndex = 0;
+    let currentSolutionIndex = 0;
+    let currentSolutionFilter = 'all';
 
     // DOM Elements
     const dashboardView = document.getElementById('dashboardView');
     const robocompassView = document.getElementById('robocompassView');
     const basicsView = document.getElementById('basicsView');
     const textbooksView = document.getElementById('textbooksView');
+    const solutionsView = document.getElementById('solutionsView');
     const workspaceView = document.getElementById('workspaceView');
     const globalFooter = document.getElementById('globalFooter');
     const btnNavHome = document.getElementById('btnNavHome');
@@ -2190,6 +2674,7 @@
     const iframeRobo = document.getElementById('iframeRobo');
     const iframeBasics = document.getElementById('iframeBasics');
     const iframeTextbook = document.getElementById('iframeTextbook');
+    const iframeSolution = document.getElementById('iframeSolution');
     const panesContainer = document.getElementById('panesContainer');
     const sidebar = document.getElementById('workspaceSidebar');
     const dragResizer = document.getElementById('dragResizer');
@@ -2235,12 +2720,13 @@
       });
     }
 
-    // Top Navigation between Main Curriculum, RoboCompass Studio, Basics, and Textbooks
+    // Top Navigation between Main Curriculum, RoboCompass Studio, Basics, Textbooks, and All Solutions
     function switchMainView(view) {
       const tabCurriculum = document.getElementById('tabNavCurriculum');
       const tabRobo = document.getElementById('tabNavRobo');
       const tabBasics = document.getElementById('tabNavBasics');
       const tabTextbooks = document.getElementById('tabNavTextbooks');
+      const tabSolutions = document.getElementById('tabNavSolutions');
 
       workspaceView.classList.remove('open');
       globalFooter.style.display = 'block';
@@ -2251,40 +2737,64 @@
         if (tabRobo) tabRobo.classList.remove('active');
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
+        if (tabSolutions) tabSolutions.classList.remove('active');
         dashboardView.style.display = 'flex';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'none';
+      if (solutionsView) solutionsView.style.display = 'none';
+        if (solutionsView) solutionsView.style.display = 'none';
       } else if (view === 'robo') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
         if (tabRobo) tabRobo.classList.add('active');
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
+        if (tabSolutions) tabSolutions.classList.remove('active');
         dashboardView.style.display = 'none';
         robocompassView.style.display = 'flex';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'none';
+      if (solutionsView) solutionsView.style.display = 'none';
+        if (solutionsView) solutionsView.style.display = 'none';
         initRoboStudio();
       } else if (view === 'basics') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
         if (tabRobo) tabRobo.classList.remove('active');
-        if (tabBasics) tabBasics.classList.add('active');
+        if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
+        if (tabSolutions) tabSolutions.classList.remove('active');
         dashboardView.style.display = 'none';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'flex';
         if (textbooksView) textbooksView.style.display = 'none';
+      if (solutionsView) solutionsView.style.display = 'none';
+        if (solutionsView) solutionsView.style.display = 'none';
         initBasicsStudio();
       } else if (view === 'textbooks') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
         if (tabRobo) tabRobo.classList.remove('active');
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.add('active');
+        if (tabSolutions) tabSolutions.classList.remove('active');
         dashboardView.style.display = 'none';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'flex';
+        if (solutionsView) solutionsView.style.display = 'none';
         initTextbooksStudio();
+      } else if (view === 'solutions') {
+        if (tabCurriculum) tabCurriculum.classList.remove('active');
+        if (tabRobo) tabRobo.classList.remove('active');
+        if (tabBasics) tabBasics.classList.remove('active');
+        if (tabTextbooks) tabTextbooks.classList.remove('active');
+        if (tabSolutions) tabSolutions.classList.add('active');
+        dashboardView.style.display = 'none';
+        robocompassView.style.display = 'none';
+        if (basicsView) basicsView.style.display = 'none';
+        if (textbooksView) textbooksView.style.display = 'none';
+      if (solutionsView) solutionsView.style.display = 'none';
+        if (solutionsView) solutionsView.style.display = 'flex';
+        initSolutionsStudio();
       }
     }
 
@@ -2685,12 +3195,198 @@
       document.body.removeChild(a);
     }
 
+
+    // All Solutions Studio Functions
+    function initSolutionsStudio() {
+      const tabsWrap = document.getElementById('solutionsStudioTabs');
+      const cardsWrap = document.getElementById('solutionsStudioCards');
+      if (!tabsWrap) return;
+
+      renderSolutionsList(currentSolutionFilter);
+      selectSolution(0);
+    }
+
+    function filterSolutions(filterKey, btn = null) {
+      currentSolutionFilter = filterKey;
+      if (btn) {
+        document.querySelectorAll('.solutions-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      renderSolutionsList(filterKey);
+      
+      // Select first item in filtered list
+      const filtered = getFilteredSolutions(filterKey);
+      if (filtered.length > 0) {
+        const originalIndex = allSolutions.findIndex(s => s.id === filtered[0].id);
+        if (originalIndex !== -1) selectSolution(originalIndex);
+      }
+    }
+
+    function getFilteredSolutions(filterKey) {
+      if (filterKey === 'sem1') return allSolutions.filter(s => s.sem === 'sem1');
+      if (filterKey === 'sem2') return allSolutions.filter(s => s.sem === 'sem2');
+      if (filterKey === 'em') return allSolutions.filter(s => s.medium === 'em');
+      if (filterKey === 'tm') return allSolutions.filter(s => s.medium === 'tm');
+      return allSolutions;
+    }
+
+    function renderSolutionsList(filterKey) {
+      const tabsWrap = document.getElementById('solutionsStudioTabs');
+      const cardsWrap = document.getElementById('solutionsStudioCards');
+      if (!tabsWrap || !cardsWrap) return;
+
+      tabsWrap.innerHTML = '';
+      cardsWrap.innerHTML = '';
+
+      const items = getFilteredSolutions(filterKey);
+
+      items.forEach((item) => {
+        const originalIndex = allSolutions.findIndex(s => s.id === item.id);
+
+        // Tab button
+        const btn = document.createElement('button');
+        btn.className = `solution-select-tab ${originalIndex === currentSolutionIndex ? 'active' : ''}`;
+        btn.id = `solution-tab-${originalIndex}`;
+        btn.onclick = () => selectSolution(originalIndex);
+        btn.innerHTML = `
+          <span class="solution-tab-badge">${item.num}</span>
+          <span>${item.tag}</span>
+        `;
+        tabsWrap.appendChild(btn);
+
+        // Card
+        const card = document.createElement('div');
+        card.className = `solution-card ${originalIndex === currentSolutionIndex ? 'active' : ''}`;
+        card.id = `solution-card-${originalIndex}`;
+        card.onclick = () => {
+          selectSolution(originalIndex);
+          document.getElementById('solutionsStudioPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="tag" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); font-size: 0.72rem; font-weight: 800;">${item.tag}</span>
+            <span class="tag" style="background: rgba(255,255,255,0.06); color: #94a3b8; font-size: 0.72rem;">${item.pages}</span>
+          </div>
+          <h3 style="font-size: 1.12rem; font-weight: 800; color: #fff; line-height: 1.35;">${item.title}</h3>
+          <p style="font-size: 0.85rem; color: var(--slate); line-height: 1.45; flex: 1;">${item.desc}</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.2rem;">
+            ${item.highlights.map(h => `<span class="tag" style="font-size: 0.68rem; background: rgba(15, 23, 42, 0.6); color: #cbd5e1;">✓ ${h}</span>`).join('')}
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.75rem; margin-top: 0.25rem;">
+            <span style="font-size: 0.74rem; color: #c084fc; font-weight: 700;">🏛️ ${item.publisher}</span>
+            <div style="display: flex; gap: 0.4rem;">
+              <button class="btn btn-orange" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;" onclick="event.stopPropagation(); selectSolution(${originalIndex}); document.getElementById('solutionsStudioPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });">📖 Read Solutions</button>
+              <a href="${encodeURI(item.file)}" download class="btn btn-glass" style="padding: 0.35rem 0.65rem; font-size: 0.75rem; color: #c084fc;" onclick="event.stopPropagation();" title="Download PDF file">⬇ PDF</a>
+            </div>
+          </div>
+        `;
+        cardsWrap.appendChild(card);
+      });
+    }
+
+    function selectSolution(index, jumpPage = null) {
+      currentSolutionIndex = index;
+      const data = allSolutions[index];
+      if (!data) return;
+
+      document.querySelectorAll('.solution-select-tab').forEach((tab) => {
+        tab.classList.toggle('active', tab.id === `solution-tab-${index}`);
+      });
+      document.querySelectorAll('.solution-card').forEach((card) => {
+        card.classList.toggle('active', card.id === `solution-card-${index}`);
+      });
+
+      const tag = document.getElementById('solutionTag');
+      const pagesBadge = document.getElementById('solutionPagesBadge');
+      const title = document.getElementById('solutionPlayerTitle');
+      const desc = document.getElementById('solutionDesc');
+      const publisher = document.getElementById('solutionPublisher');
+      const iframe = document.getElementById('iframeSolution');
+      const chipsContainer = document.getElementById('solutionsChapterChips');
+
+      if (tag) tag.textContent = data.tag;
+      if (pagesBadge) pagesBadge.textContent = data.pages;
+      if (title) title.textContent = data.title;
+      if (desc) desc.textContent = data.desc;
+      if (publisher) publisher.innerHTML = `<strong>Publisher:</strong> ${data.publisher}<br><strong>Author:</strong> ${data.author}<br><strong>Edition:</strong> ${data.edition}`;
+
+      // Populate Quick Jump Chips
+      if (chipsContainer) {
+        chipsContainer.innerHTML = '';
+        data.chapters.forEach(ch => {
+          const chip = document.createElement('button');
+          chip.className = 'solution-jump-chip';
+          chip.onclick = () => jumpSolutionPage(ch.page);
+          chip.title = `Jump to page ${ch.page}`;
+          chip.innerHTML = `
+            <span class="chip-num">Ch ${ch.num}</span>
+            <span>${ch.name}</span>
+            <span class="chip-page">p. ${ch.page}</span>
+          `;
+          chipsContainer.appendChild(chip);
+        });
+      }
+
+      const targetPage = jumpPage || 1;
+      const fileUrl = encodeURI(data.file) + '#page=' + targetPage;
+      if (iframe) {
+        iframe.src = fileUrl;
+      }
+    }
+
+    function jumpSolutionPage(pageNo) {
+      const data = allSolutions[currentSolutionIndex];
+      const iframe = document.getElementById('iframeSolution');
+      if (iframe && data) {
+        iframe.src = encodeURI(data.file) + '#page=' + pageNo;
+        const playerTop = document.getElementById('solutionsPlayerTop');
+        if (playerTop) playerTop.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function reloadSolutionIframe() {
+      const iframe = document.getElementById('iframeSolution');
+      const data = allSolutions[currentSolutionIndex];
+      if (iframe && data) {
+        const curSrc = iframe.src;
+        iframe.src = 'about:blank';
+        setTimeout(() => { iframe.src = curSrc; }, 150);
+      }
+    }
+
+    function toggleSolutionFullscreen() {
+      const wrap = document.getElementById('solutionsIframeWrap');
+      if (!document.fullscreenElement) {
+        if (wrap.requestFullscreen) wrap.requestFullscreen();
+        else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function openSolutionStandalone() {
+      const data = allSolutions[currentSolutionIndex];
+      if (data) window.open(encodeURI(data.file), '_blank');
+    }
+
+    function downloadSolution() {
+      const data = allSolutions[currentSolutionIndex];
+      if (!data) return;
+      const a = document.createElement('a');
+      a.href = encodeURI(data.file);
+      a.download = data.file.split('/').pop();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
     // Navigation and Workspaces
     function launchWorkspace(chapterId, tab = 'notes') {
       dashboardView.style.display = 'none';
       robocompassView.style.display = 'none';
       if (basicsView) basicsView.style.display = 'none';
       if (textbooksView) textbooksView.style.display = 'none';
+      if (solutionsView) solutionsView.style.display = 'none';
       workspaceView.classList.add('open');
       globalFooter.style.display = 'none';
       btnNavHome.style.display = 'inline-flex';
@@ -2946,6 +3642,8 @@
       const tabParam = urlParams.get('tab') || window.location.hash.replace('#', '');
       if (tabParam === 'textbooks') {
         switchMainView('textbooks');
+      } else if (tabParam === 'solutions') {
+        switchMainView('solutions');
       } else if (tabParam === 'robo') {
         switchMainView('robo');
       } else if (tabParam === 'basics') {
