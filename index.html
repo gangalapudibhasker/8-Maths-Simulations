@@ -2067,6 +2067,90 @@
       background: rgba(88, 28, 135, 0.25);
       box-shadow: 0 0 0 1px #a855f7;
     }
+
+    /* Mind Maps Studio & Google Flow Styles */
+    .mindmaps-view {
+      display: none;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 1.5rem 2rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .mindmaps-studio-header {
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.4), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 16px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    .mindmaps-studio-header h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 0.4rem 0;
+      letter-spacing: -0.02em;
+    }
+    .mindmaps-studio-header p {
+      color: #94a3b8;
+      font-size: 0.92rem;
+      max-width: 800px;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .mindmap-flow-container {
+      position: relative;
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      overflow: hidden;
+    }
+    .mindmap-root-node {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border: 2px solid #38bdf8;
+      box-shadow: 0 0 25px rgba(2, 132, 199, 0.4);
+      border-radius: 16px;
+      padding: 1.2rem 1.8rem;
+      color: #fff;
+      max-width: 420px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .mindmap-branches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.75rem;
+    }
+    .mindmap-node-card {
+      background: rgba(15, 23, 42, 0.92);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      border: 2px solid #334155;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    .mindmap-node-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+    }
+    .mindmap-node-card.orange { border-color: #f97316; box-shadow: 0 0 15px rgba(249, 115, 22, 0.15); }
+    .mindmap-node-card.blue { border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.15); }
+    .mindmap-node-card.emerald { border-color: #10b981; box-shadow: 0 0 15px rgba(16, 185, 129, 0.15); }
+    .mindmap-node-card.purple { border-color: #8b5cf6; box-shadow: 0 0 15px rgba(139, 92, 246, 0.15); }
+    .mindmap-node-card.amber { border-color: #f59e0b; box-shadow: 0 0 15px rgba(245, 158, 11, 0.15); }
+    .mindmap-node-card.rose { border-color: #f43f5e; box-shadow: 0 0 15px rgba(244, 63, 94, 0.15); }
+
   </style>
 </head>
 <body>
@@ -2088,6 +2172,9 @@
         </button>
         <button class="nav-tab" id="tabNavSims" onclick="switchMainView('sims')">
           🎮 Simulations <span class="badge-tab-count">14</span>
+        </button>
+        <button class="nav-tab" id="tabNavMindMaps" onclick="switchMainView('mindmaps')">
+          🧠 Mind Maps <span class="badge-tab-count">14</span>
         </button>
         <button class="nav-tab" id="tabNavTextbooks" onclick="switchMainView('textbooks')">
           📖 Textbooks <span class="badge-tab-count">2</span>
@@ -2124,6 +2211,9 @@
           <div class="stat"><strong style="color: #c084fc;">28</strong><span>Full Solved (EM & TM)</span></div>
           <div class="stat" onclick="switchMainView('sims')" style="cursor: pointer; border-color: rgba(249,115,22,0.3);" title="Explore 14 Chapter Interactive Simulation Suites">
             <strong style="color: #fb923c;">14</strong><span>Sim Suites</span>
+          </div>
+          <div class="stat" onclick="switchMainView('mindmaps')" style="cursor: pointer; border-color: rgba(56,189,248,0.3);" title="Explore 14 Chapter Interactive Concept Flow Mind Maps">
+            <strong style="color: #38bdf8;">14</strong><span>Mind Maps</span>
           </div>
           <div class="stat" onclick="switchMainView('textbooks')" style="cursor: pointer; border-color: rgba(52,211,153,0.3);" title="Explore Class 8 SCERT Official Textbooks">
             <strong style="color: #34d399;">2</strong><span>Textbooks</span>
@@ -2217,6 +2307,71 @@
           📚 All 14 Chapter Interactive Simulation Suites
         </div>
         <div class="sims-cards-grid" id="simsStudioCards">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Concept Mind Maps Dedicated Studio Tab View -->
+    <main class="mindmaps-view" id="mindmapsView" style="display: none;">
+      <section class="mindmaps-studio-header">
+        <div>
+          <div class="sims-badge-pill" style="background: rgba(56,189,248,0.15); color: #38bdf8; border-color: rgba(56,189,248,0.3);">🧠 14 Chapter Interactive Concept Flow Maps</div>
+          <h2>Class 8 Mathematics Interactive Concept Mind Maps (మైండ్ మ్యాప్స్)</h2>
+          <p>
+            Explore interactive node-and-connector concept mind maps for all 14 chapters across Semester 1 and Semester 2 (specifically Chapters 8 to 14). Understand conceptual hierarchies, formulas, and connections at a single glance, and launch simulations directly from any concept node.
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+          <div class="curriculum-filter-tabs">
+            <button class="curr-filter-btn active" id="btnMindFilterAll" onclick="filterMindMapsStudio('all', this)">All (14)</button>
+            <button class="curr-filter-btn" id="btnMindFilterSem1" onclick="filterMindMapsStudio('sem1', this)">📘 Sem 1 (1–7)</button>
+            <button class="curr-filter-btn" id="btnMindFilterSem2" onclick="filterMindMapsStudio('sem2', this)">📗 Sem 2 (8–14)</button>
+          </div>
+          <button class="btn btn-orange" onclick="switchMainView('curriculum')">
+            ← Back to Curriculum
+          </button>
+        </div>
+      </section>
+
+      <!-- Selection Tabs -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.6rem;">
+          ⚙️ Select Chapter Mind Map:
+        </div>
+        <div class="sims-tabs-bar" id="mindmapsStudioTabs">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Active Mind Map Display Container -->
+      <section class="sims-player-container" id="mindmapsStudioPlayer" style="padding: 1.5rem; background: #0b0f19;">
+        <div class="sims-player-top" style="margin-bottom: 1.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span class="tag" id="mindmapChapterTag" style="background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3);">Chapter 8 • Sem 2</span>
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff;" id="mindmapPlayerTitle">Fractions in Disguise</h3>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button class="btn btn-orange" id="btnLaunchSimFromMap" onclick="launchSimFromCurrentMap()" title="Launch Interactive Simulation">
+              ▶ Launch Simulation Suite
+            </button>
+            <button class="btn btn-glass" onclick="switchMainView('sims')" title="Go to Sims Studio">
+              🎮 Sims Studio
+            </button>
+          </div>
+        </div>
+
+        <div id="mindmapContentContainer">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </section>
+
+      <!-- Grid of all 14 Mind Map cards -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.75rem;">
+          📚 All 14 Chapter Concept Mind Maps
+        </div>
+        <div class="sims-cards-grid" id="mindmapsStudioCards">
           <!-- Injected dynamically by JS -->
         </div>
       </div>
@@ -3172,6 +3327,7 @@
     const basicsView = document.getElementById('basicsView');
     const textbooksView = document.getElementById('textbooksView');
     const solutionsView = document.getElementById('solutionsView');
+    const mindmapsView = document.getElementById('mindmapsView');
     const workspaceView = document.getElementById('workspaceView');
     const globalFooter = document.getElementById('globalFooter');
     const btnNavHome = document.getElementById('btnNavHome');
@@ -3229,6 +3385,7 @@
               📗 తెలుగు నోట్స్
             </button>
             ${ch.simFile ? `<button class="btn btn-orange" onclick="launchWorkspace(${ch.id}, 'sim')" title="Launch Chapter ${ch.id} Interactive Simulation">▶ Run Sim</button>` : ''}
+            <button class="btn btn-glass" onclick="openChapterMindMap(${ch.id})" style="border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;" title="View Chapter ${ch.id} Google Flow Concept Mind Map">🧠 Mind Map</button>
             ${ch.hasRobo ? `<button class="btn btn-glass" onclick="switchMainView('robo')" style="border-color: rgba(249,115,22,0.4); color: var(--orange-bright);">📐 3D Robo</button>` : ''}
           </div>
         `;
@@ -3323,6 +3480,7 @@
       const tabBasics = document.getElementById('tabNavBasics');
       const tabTextbooks = document.getElementById('tabNavTextbooks');
       const tabSolutions = document.getElementById('tabNavSolutions');
+      const tabMindMaps = document.getElementById('tabNavMindMaps');
 
       workspaceView.classList.remove('open');
       globalFooter.style.display = 'block';
@@ -3335,12 +3493,14 @@
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
         if (tabSolutions) tabSolutions.classList.remove('active');
+        if (tabMindMaps) tabMindMaps.classList.remove('active');
         dashboardView.style.display = 'flex';
         if (simsView) simsView.style.display = 'none';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'none';
         if (solutionsView) solutionsView.style.display = 'none';
+        if (mindmapsView) mindmapsView.style.display = 'none';
       } else if (view === 'sims') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
         if (tabSims) tabSims.classList.add('active');
@@ -3348,12 +3508,14 @@
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
         if (tabSolutions) tabSolutions.classList.remove('active');
+        if (tabMindMaps) tabMindMaps.classList.remove('active');
         dashboardView.style.display = 'none';
         if (simsView) simsView.style.display = 'flex';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'none';
         if (solutionsView) solutionsView.style.display = 'none';
+        if (mindmapsView) mindmapsView.style.display = 'none';
         initSimsStudio();
       } else if (view === 'robo') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
@@ -3362,12 +3524,14 @@
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
         if (tabSolutions) tabSolutions.classList.remove('active');
+        if (tabMindMaps) tabMindMaps.classList.remove('active');
         dashboardView.style.display = 'none';
         if (simsView) simsView.style.display = 'none';
         robocompassView.style.display = 'flex';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'none';
         if (solutionsView) solutionsView.style.display = 'none';
+        if (mindmapsView) mindmapsView.style.display = 'none';
         initRoboStudio();
       } else if (view === 'basics') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
@@ -3376,12 +3540,14 @@
         if (tabBasics) tabBasics.classList.add('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
         if (tabSolutions) tabSolutions.classList.remove('active');
+        if (tabMindMaps) tabMindMaps.classList.remove('active');
         dashboardView.style.display = 'none';
         if (simsView) simsView.style.display = 'none';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'flex';
         if (textbooksView) textbooksView.style.display = 'none';
         if (solutionsView) solutionsView.style.display = 'none';
+        if (mindmapsView) mindmapsView.style.display = 'none';
         initBasicsStudio();
       } else if (view === 'textbooks') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
@@ -3390,12 +3556,14 @@
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.add('active');
         if (tabSolutions) tabSolutions.classList.remove('active');
+        if (tabMindMaps) tabMindMaps.classList.remove('active');
         dashboardView.style.display = 'none';
         if (simsView) simsView.style.display = 'none';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'flex';
         if (solutionsView) solutionsView.style.display = 'none';
+        if (mindmapsView) mindmapsView.style.display = 'none';
         initTextbooksStudio();
       } else if (view === 'solutions') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
@@ -3404,6 +3572,7 @@
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
         if (tabSolutions) tabSolutions.classList.add('active');
+        if (tabMindMaps) tabMindMaps.classList.remove('active');
         dashboardView.style.display = 'none';
         if (simsView) simsView.style.display = 'none';
         robocompassView.style.display = 'none';
@@ -3411,6 +3580,22 @@
         if (textbooksView) textbooksView.style.display = 'none';
         if (solutionsView) solutionsView.style.display = 'flex';
         initSolutionsStudio();
+      } else if (view === 'mindmaps') {
+        if (tabCurriculum) tabCurriculum.classList.remove('active');
+        if (tabSims) tabSims.classList.remove('active');
+        if (tabRobo) tabRobo.classList.remove('active');
+        if (tabBasics) tabBasics.classList.remove('active');
+        if (tabTextbooks) tabTextbooks.classList.remove('active');
+        if (tabSolutions) tabSolutions.classList.remove('active');
+        if (tabMindMaps) tabMindMaps.classList.add('active');
+        dashboardView.style.display = 'none';
+        if (simsView) simsView.style.display = 'none';
+        robocompassView.style.display = 'none';
+        if (basicsView) basicsView.style.display = 'none';
+        if (textbooksView) textbooksView.style.display = 'none';
+        if (solutionsView) solutionsView.style.display = 'none';
+        if (mindmapsView) mindmapsView.style.display = 'flex';
+        initMindMapsStudio();
       }
       return; // done
     }
@@ -3488,9 +3673,12 @@
           <div class="tags">
             ${ch.tags.map(t => `<span class="tag">${t}</span>`).join('')}
           </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.65rem; margin-top: 0.4rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.65rem; margin-top: 0.4rem; gap: 0.4rem; flex-wrap: wrap;">
             <button class="btn btn-orange" style="padding: 0.38rem 0.8rem; font-size: 0.78rem;" onclick="event.stopPropagation(); selectSimStudio(${originalIndex}); document.getElementById('simsStudioPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });">
               ▶ Launch Sim
+            </button>
+            <button class="btn btn-glass" style="padding: 0.38rem 0.7rem; font-size: 0.78rem; border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;" onclick="event.stopPropagation(); openChapterMindMap(${ch.id});" title="View Chapter ${ch.id} Google Flow Concept Mind Map">
+              🧠 Mind Map
             </button>
             <a href="${encodeURI(ch.simFile)}" target="_blank" class="btn btn-glass" style="padding: 0.38rem 0.7rem; font-size: 0.78rem;" onclick="event.stopPropagation();" title="Open in new window">
               ↗ Standalone
@@ -4141,6 +4329,7 @@
       if (basicsView) basicsView.style.display = 'none';
       if (textbooksView) textbooksView.style.display = 'none';
       if (solutionsView) solutionsView.style.display = 'none';
+        if (mindmapsView) mindmapsView.style.display = 'none';
       workspaceView.classList.add('open');
       globalFooter.style.display = 'none';
       btnNavHome.style.display = 'inline-flex';
@@ -4166,6 +4355,307 @@
 
       workspaceView.classList.remove('open');
       switchMainView('curriculum');
+    }
+
+
+    // 14 Chapter Google Flow Concept Mind Maps Data
+    const chapterMindMaps = {
+      1: {
+        nodes: [
+          { title: "1. 100 Lockers Puzzle", tel: "100 లాకర్ల సమస్య", color: "orange", desc: "Lockers with odd number of factors remain open — only perfect square numbers!", formula: "Perfect Squares: 1, 4, 9, 16, 25...", badge: "Puzzle Logic" },
+          { title: "2. Patterns in Unit Digits", tel: "ఒకట్ల స్థానాల నియమాలు", color: "blue", desc: "Squares end only in 0, 1, 4, 5, 6, 9. Never in 2, 3, 7, 8.", formula: "Unit digit patterns", badge: "Number Theory" },
+          { title: "3. Sum of First n Odd Numbers", tel: "మొదటి n బేసి సంఖ్యల మొత్తం", color: "emerald", desc: "Sum of first n consecutive odd numbers always equals n².", formula: "1 + 3 + ... + (2n-1) = n²", badge: "Visual Theorem" },
+          { title: "4. Square Roots by Prime Factors", tel: "ప్రధాన కారణాంకాల వర్గమూలం", color: "purple", desc: "Group prime factors into pairs to extract the square root.", formula: "√x² = x", badge: "Square Roots" },
+          { title: "5. Cubes & Hardy-Ramanujan", tel: "ఘనాలు & రామానుజన్ సంఖ్య 1729", color: "amber", desc: "1729 is smallest number expressible as sum of two cubes in two ways.", formula: "1729 = 1³ + 12³ = 9³ + 10³", badge: "Cube Numbers" },
+          { title: "6. Cube Roots & Factorization", tel: "ప్రధాన కారణాంకాల ఘనమూలం", color: "rose", desc: "Group prime factors into triplets to compute exact cube roots.", formula: "∛x³ = x", badge: "Cube Roots" }
+        ]
+      },
+      2: {
+        nodes: [
+          { title: "1. Powers with Positive Exponents", tel: "ధన ఘాతాంకాలు", color: "blue", desc: "Repeated multiplication expressed compactly as base raised to exponent.", formula: "aⁿ = a × a × ... × a", badge: "Exponents" },
+          { title: "2. Powers with Negative Exponents", tel: "ఋణ ఘాతాంకాలు", color: "purple", desc: "A negative exponent indicates reciprocal of the base.", formula: "a⁻ⁿ = 1 / aⁿ", badge: "Reciprocals" },
+          { title: "3. Multiplication Law", tel: "గుణకార న్యాయం", color: "orange", desc: "When multiplying powers with the same base, add their exponents.", formula: "aᵐ × aⁿ = aᵐ⁺ⁿ", badge: "Laws of Exponents" },
+          { title: "4. Division Law", tel: "భాగహార న్యాయం", color: "emerald", desc: "When dividing powers with the same base, subtract exponents.", formula: "aᵐ ÷ aⁿ = aᵐ⁻ⁿ", badge: "Laws of Exponents" },
+          { title: "5. Power of a Power", tel: "ఘాతానికి ఘాతం", color: "amber", desc: "When a power is raised to another power, multiply the exponents.", formula: "(aᵐ)ⁿ = aᵐⁿ", badge: "Power Rules" },
+          { title: "6. Scientific Standard Form", tel: "శాస్త్రీయ ప్రమాణ రూపం", color: "rose", desc: "Expressing very large or small numbers as m × 10ⁿ.", formula: "0.000007 = 7 × 10⁻⁶", badge: "Standard Form" }
+        ]
+      },
+      3: {
+        nodes: [
+          { title: "1. Rational Numbers (Q)", tel: "అకరణీయ సంఖ్యలు", color: "emerald", desc: "Numbers expressible in p/q form where p, q are integers and q ≠ 0.", formula: "Q = {p/q : p,q ∈ Z, q ≠ 0}", badge: "Number Systems" },
+          { title: "2. Closure Property", tel: "సంవృత ధర్మం", color: "blue", desc: "Sum, difference, and product of two rational numbers is always rational.", formula: "a + b ∈ Q, a × b ∈ Q", badge: "Properties" },
+          { title: "3. Commutative Property", tel: "స్థిత్యంతర ధర్మం", color: "orange", desc: "Order of addition or multiplication does not change the result.", formula: "a + b = b + a, a × b = b × a", badge: "Properties" },
+          { title: "4. Associative Property", tel: "సహచర ధర్మం", color: "purple", desc: "Grouping of three rational numbers does not alter the sum or product.", formula: "(a + b) + c = a + (b + c)", badge: "Properties" },
+          { title: "5. Distributive Law", tel: "విభాగ న్యాయం", color: "amber", desc: "Multiplication distributes over addition for rational numbers.", formula: "a(b + c) = ab + ac", badge: "Properties" },
+          { title: "6. Dense Property", tel: "సాంద్రతా ధర్మం", color: "rose", desc: "Infinitely many rational numbers lie between any two rational numbers.", formula: "Mean = (a + b) / 2", badge: "Number Line" }
+        ]
+      },
+      4: {
+        nodes: [
+          { title: "1. Angle Sum Property of Quadrilaterals", tel: "చతుర్భుజ కోణాల మొత్తం", color: "orange", desc: "Sum of all four interior angles of any convex quadrilateral is 360°.", formula: "∠A + ∠B + ∠C + ∠D = 360°", badge: "Angle Sum" },
+          { title: "2. Parallelograms (సమాంతర చతుర్భుజం)", tel: "సమాంతర చతుర్భుజ ధర్మాలు", color: "blue", desc: "Opposite sides equal, opposite angles equal, diagonals bisect each other.", formula: "AB = CD, AD = BC", badge: "Parallelogram" },
+          { title: "3. Rhombus & Rectangle", tel: "రాంబస్ & దీర్ఘచతురస్రం", color: "purple", desc: "Rhombus: all sides equal, diagonals perpendicular. Rectangle: all angles 90°.", formula: "Rhombus: d₁ ⊥ d₂", badge: "Special Quads" },
+          { title: "4. Square & Kite", tel: "సమచతురస్రం & గాలిపటం", color: "emerald", desc: "Square combines rectangle and rhombus. Kite has two pairs of equal adjacent sides.", formula: "Square: all 90°, all equal", badge: "Special Quads" },
+          { title: "5. Trapezium (సమలంబ చతుర్భుజం)", tel: "ట్రెపీజియం లక్షణాలు", color: "amber", desc: "One pair of opposite sides parallel; adjacent angles between parallels sum to 180°.", formula: "AB || CD, ∠A + ∠D = 180°", badge: "Trapezium" },
+          { title: "6. Geometric Constructions", tel: "జ్యామితీయ నిర్మాణాలు", color: "rose", desc: "Constructing quadrilaterals given 4 sides + 1 diagonal or 3 sides + 2 angles.", formula: "RoboCompass 3D Steps", badge: "Constructions" }
+        ]
+      },
+      5: {
+        nodes: [
+          { title: "1. Generalized Number Form", tel: "సంఖ్యల సాధారణ విస్తరణ రూపం", color: "blue", desc: "A two-digit number ab is 10a + b; a three-digit number abc is 100a + 10b + c.", formula: "abc = 100a + 10b + c", badge: "Number Form" },
+          { title: "2. Reversing Digits Puzzles", tel: "అంకెలను తిరగరాయుట", color: "purple", desc: "Sum (ab + ba) is divisible by 11; difference (ab - ba) is divisible by 9.", formula: "(10a + b) + (10b + a) = 11(a + b)", badge: "Algebraic Tricks" },
+          { title: "3. Divisibility Tests for 3 & 9", tel: "3 మరియు 9 భాజనీయతా సూత్రాలు", color: "orange", desc: "A number is divisible by 3 or 9 if the sum of its digits is divisible by 3 or 9.", formula: "Sum of digits divisible by 9", badge: "Divisibility" },
+          { title: "4. Divisibility Tests for 2, 5 & 10", tel: "2, 5, 10 భాజనీయతా సూత్రాలు", color: "emerald", desc: "Determined solely by the last unit digit (even for 2, 0/5 for 5, 0 for 10).", formula: "Units digit rule", badge: "Divisibility" },
+          { title: "5. Divisibility Test for 11", tel: "11 యొక్క భాజనీయతా సూత్రం", color: "amber", desc: "Difference between sum of odd-place digits and even-place digits is 0 or multiple of 11.", formula: "|Odd Sum - Even Sum| = 0 or 11k", badge: "Divisibility" },
+          { title: "6. Cryptarithms & Letter Math", tel: "అక్షర సంఖ్యా పజిల్స్", color: "rose", desc: "Puzzles where letters represent distinct decimal digits: e.g. 3A + 25 = B2.", formula: "Decipher Letter Values", badge: "Puzzles" }
+        ]
+      },
+      6: {
+        nodes: [
+          { title: "1. Distributive Law of Multiplication", tel: "గుణకార విభాగ న్యాయం", color: "emerald", desc: "Multiplication distributes across addition: a(b + c) = ab + ac.", formula: "a(b + c) = ab + ac", badge: "Distributive" },
+          { title: "2. Monomial by Monomial", tel: "ఏకపది × ఏకపది", color: "blue", desc: "Multiply numerical coefficients together and add exponents of like variables.", formula: "(3x²)(4x³) = 12x⁵", badge: "Multiplication" },
+          { title: "3. Monomial by Binomial", tel: "ఏకపది × ద్విపది", color: "orange", desc: "Multiply the single term by each term inside the bracket.", formula: "2x(3x + 5) = 6x² + 10x", badge: "Multiplication" },
+          { title: "4. Binomial by Binomial", tel: "ద్విపది × ద్విపది", color: "purple", desc: "FOIL method: First, Outer, Inner, Last term products added together.", formula: "(a + b)(c + d) = ac + ad + bc + bd", badge: "Expansion" },
+          { title: "5. Geometric Area Rectangles", tel: "వైశాల్య నమూనా నిరూపణ", color: "amber", desc: "Visualizing polynomial multiplication as the area of a partitioned rectangle.", formula: "Area = Length × Width", badge: "Visual Algebra" },
+          { title: "6. Figure It Out Problems", tel: "పాఠ్యపుస్తక సాధన ప్రశ్నలు", color: "rose", desc: "Step-by-step solutions for NCERT Ganita Prakash Chapter 6 exercises.", formula: "All 6.1 - 6.3 Solved", badge: "SCERT Exercises" }
+        ]
+      },
+      7: {
+        nodes: [
+          { title: "1. Meaning of Ratio", tel: "నిష్పత్తి భావన", color: "orange", desc: "Comparing two quantities of the same unit by division. Simplest form a : b.", formula: "Ratio = a / b (a : b)", badge: "Ratios" },
+          { title: "2. Proportion & Equality of Ratios", tel: "అనుపాతం - నిష్పత్తుల సమానత్వం", color: "blue", desc: "Four quantities are in proportion if a : b = c : d.", formula: "Product of Extremes = Means (ad = bc)", badge: "Proportion" },
+          { title: "3. Unitary Method", tel: "ఏకీకృత పద్ధతి", color: "emerald", desc: "Finding the value of one unit first, then multiplying to find the desired quantity.", formula: "Cost of 1 = Total / n", badge: "Unitary Method" },
+          { title: "4. Scale Factors & Similar Figures", tel: "స్కేల్ గుణకం & సారూప్య పటాలు", color: "purple", desc: "Enlarging or reducing shapes while maintaining exact angle and proportion.", formula: "Scale k = New / Original", badge: "Geometry Ratio" },
+          { title: "5. Sharing in a Given Ratio", tel: "ఇచ్చిన నిష్పత్తిలో విభజన", color: "amber", desc: "Dividing a total sum into parts corresponding to ratio shares.", formula: "Share A = [a / (a + b)] × Total", badge: "Real-life Math" },
+          { title: "6. Figure It Out Problems", tel: "పాఠ్యపుస్తక సాధన ప్రశ్నలు", color: "rose", desc: "Step-by-step solutions for NCERT Ganita Prakash Chapter 7 exercises.", formula: "All 7.1 - 7.3 Solved", badge: "SCERT Exercises" }
+        ]
+      },
+      8: {
+        nodes: [
+          { title: "1. The 100-Grid & % Model", tel: "100 గళ్ల బోర్డు & శాతం", color: "orange", desc: "Percentage means per hundred. Shading x squares out of 100 represents x%.", formula: "x% = x / 100 = 0.0x", badge: "Visual Grid" },
+          { title: "2. Fractions to % & Decimals", tel: "భిన్నాలు - దశాంశాలు - శాతాలు", color: "blue", desc: "Multiply fraction by 100% to get percentage. Divide % by 100 for fraction.", formula: "3/4 = (3/4 × 100)% = 75%", badge: "Equivalence" },
+          { title: "3. Finding Part & Total Quantity", tel: "మొత్తం & భాగాన్ని కనుగొనుట", color: "emerald", desc: "Calculate x% of a given quantity, or find the whole total when percentage is given.", formula: "Value = (P / 100) × Total", badge: "Calculations" },
+          { title: "4. Profit, Loss & Discount", tel: "లాభం, నష్టం, తగ్గింపు (డిస్కౌంట్)", color: "purple", desc: "Cost Price (CP), Selling Price (SP), Profit %, Loss %, and Discount % on MP.", formula: "Profit% = (Profit / CP) × 100", badge: "Commercial" },
+          { title: "5. Ratio as Disguised %", tel: "నిష్పత్తి - మారువేషంలో శాతం", color: "amber", desc: "Part-to-part ratio converted to part-to-whole fractions, and then into percentage shares.", formula: "2:3 → 2/5 (40%) & 3/5 (60%)", badge: "Ratio Reasoning" },
+          { title: "6. Figure It Out Problems", tel: "పాఠ్యపుస్తక సాధన ప్రశ్నలు", color: "rose", desc: "Complete step-by-step solutions for all NCERT Chapter 8 exercises.", formula: "All 8.1 - 8.3 Solved", badge: "SCERT Textbook" }
+        ]
+      },
+      9: {
+        nodes: [
+          { title: "1. Baudhayana-Pythagoras Theorem", tel: "బౌధాయన పైథాగరస్ సిద్ధాంతం", color: "blue", desc: "In right-angled triangle, area of square on hypotenuse equals sum of areas on other two legs.", formula: "a² + b² = c²", badge: "Core Theorem" },
+          { title: "2. Baudhayana Sulba Sutras (800 BCE)", tel: "బౌధాయన శుల్బ సూత్రాలు", color: "amber", desc: "Ancient Indian text formulating the diagonal theorem centuries before Pythagoras.", formula: "దీర్ఘచతురస్ర కర్ణంపై చతురస్రం...", badge: "Indian Heritage" },
+          { title: "3. Bhaskara Behold! Dissection", tel: "భాస్కరాచార్యుని 'చూడుము!' నిరూపణ", color: "emerald", desc: "Visual dissection proof by Bhaskara II using 4 right triangles and 1 inner square.", formula: "c² = 4(½ab) + (b - a)²", badge: "Visual Proof" },
+          { title: "4. Pythagorean Triples Generator", tel: "పైథాగరియన్ త్రికాల జనరేటర్", color: "purple", desc: "Any integer m > 1 produces integer triples (2m, m² - 1, m² + 1). E.g. 3-4-5, 5-12-13, 8-15-17.", formula: "(2m)² + (m² - 1)² = (m² + 1)²", badge: "Triples" },
+          { title: "5. Real-World Applications", tel: "నిత్యజీవిత అనువర్తనాలు (నిచ్చెన)", color: "orange", desc: "Heights reached by ladders, tree heights, diagonals of fields, and direct routes.", formula: "Ladder: H = √(L² - D²)", badge: "Practical Math" },
+          { title: "6. Figure It Out Problems", tel: "పాఠ్యపుస్తక సాధన ప్రశ్నలు", color: "rose", desc: "Complete step-by-step solutions for all NCERT Chapter 9 exercises.", formula: "All 9.1 & 9.2 Solved", badge: "SCERT Textbook" }
+        ]
+      },
+      10: {
+        nodes: [
+          { title: "1. Direct Proportion (x ∝ y)", tel: "ప్రత్యక్ష అనుపాతం", color: "emerald", desc: "Two quantities increase or decrease together such that their ratio x/y remains constant k.", formula: "x₁ / y₁ = x₂ / y₂", badge: "Direct Ratio" },
+          { title: "2. Inverse Proportion (x ∝ 1/y)", tel: "విలోమ అనుపాతం", color: "blue", desc: "When one quantity increases, the other decreases such that product x × y remains constant k.", formula: "x₁ × y₁ = x₂ × y₂", badge: "Inverse Product" },
+          { title: "3. Compound Interest (CI)", tel: "చక్రవడ్డీ గణన సూత్రం", color: "orange", desc: "Interest calculated on principal plus accumulated interest: exponential growth curve.", formula: "A = P(1 + R/100)ⁿ", badge: "Financial Math" },
+          { title: "4. Time, Work & Pipes", tel: "కాలము - పని - పైపులు", color: "purple", desc: "Work rate per day is inversely proportional to time. Combined work: 1/T = 1/A + 1/B.", formula: "T = (A × B) / (A + B)", badge: "Unitary Method" },
+          { title: "5. Population & Depreciation", tel: "జనాభా పెరుగుదల & తరుగుదల", color: "amber", desc: "Compound increase for bacteria/population growth, compound decrease for depreciation.", formula: "V = P(1 - R/100)ⁿ", badge: "Growth / Decay" },
+          { title: "6. Figure It Out Problems", tel: "పాఠ్యపుస్తక సాధన ప్రశ్నలు", color: "rose", desc: "Complete step-by-step solutions for all NCERT Chapter 10 exercises.", formula: "All 10.1 - 10.4 Solved", badge: "SCERT Textbook" }
+        ]
+      },
+      11: {
+        nodes: [
+          { title: "1. Fractals & Sierpinski Triangle", tel: "ఫ్రాక్టల్స్ - స్వయం సారూప్యత", color: "purple", desc: "Shapes exhibiting infinite self-similarity at every scale. Sierpinski recursive construction.", formula: "3ⁿ sub-triangles, (¾)ⁿ area", badge: "Fractals" },
+          { title: "2. Tessellations & Tilings", tel: "టైలింగ్ (నేలపరుపు నమూనాలు)", color: "blue", desc: "Covering a plane without gaps or overlaps. Vertex angles must sum to 360°.", formula: "Sum of angles at vertex = 360°", badge: "2D Tilings" },
+          { title: "3. Euler Polyhedral Formula", tel: "ఆయిలర్ సూత్రం: V - E + F = 2", color: "emerald", desc: "Universal relationship for any convex polyhedron: Vertices (V) - Edges (E) + Faces (F) = 2.", formula: "V - E + F = 2", badge: "3D Polyhedra" },
+          { title: "4. The 5 Platonic Solids", tel: "5 ప్లాటోనిక్ ఘనాకారాలు", color: "amber", desc: "Regular convex polyhedra: Tetrahedron, Cube, Octahedron, Dodecahedron, Icosahedron.", formula: "Cube: 8 - 12 + 6 = 2", badge: "Platonic Solids" },
+          { title: "5. Polyhedral Nets", tel: "ఘనాకారాల తలాల నెట్స్ (విస్తరణ)", color: "orange", desc: "2D flat folding patterns that fold up to form 3D solids like cubes and pyramids.", formula: "Fold 2D Flat → 3D Shape", badge: "Spatial Nets" },
+          { title: "6. Figure It Out Problems", tel: "పాఠ్యపుస్తక సాధన ప్రశ్నలు", color: "rose", desc: "Complete step-by-step solutions for all NCERT Chapter 11 exercises.", formula: "All 11.1 - 11.3 Solved", badge: "SCERT Textbook" }
+        ]
+      },
+      12: {
+        nodes: [
+          { title: "1. Cartesian Coordinate Plane", tel: "కార్టీసియన్ నిరూపక తలం", color: "blue", desc: "Perpendicular x-axis and y-axis intersecting at Origin (0,0) dividing into 4 quadrants.", formula: "Point P = (x, y)", badge: "Coordinate Grid" },
+          { title: "2. Hit the Point Game", tel: "చుక్కల గురి ఆట (Target Game)", color: "emerald", desc: "Locate coordinates across quadrants I, II, III, and IV with positive and negative signs.", formula: "Q1(+,+), Q2(-,+), Q3(-,-), Q4(+,-)", badge: "Coordinates" },
+          { title: "3. Linear Graphs & Equations", tel: "సరళరేఖా గ్రాఫ్‌లు & సమీకరణాలు", color: "orange", desc: "Plotting linear relationships: Distance-Time, Perimeter-Side, and Cost-Quantity.", formula: "y = mx + c (Straight Line)", badge: "Linear Graphs" },
+          { title: "4. Maps & Cartography", tel: "పటములు - రేఖాంశాలు - అక్షాంశాలు", color: "purple", desc: "How cartographers and GPS navigation systems use coordinate grids and scales.", formula: "Grid Reference (Easting, Northing)", badge: "Cartography" },
+          { title: "5. Slope & Rate of Change", tel: "వాలు (Slope) & మార్పు రేటు", color: "amber", desc: "Slope m = (y₂ - y₁) / (x₂ - x₁) represents physical rates like speed or cost per unit.", formula: "Slope m = Δy / Δx", badge: "Rate of Change" },
+          { title: "6. Figure It Out Problems", tel: "పాఠ్యపుస్తక సాధన ప్రశ్నలు", color: "rose", desc: "Complete step-by-step solutions for all NCERT Chapter 12 exercises.", formula: "All 12.1 - 12.3 Solved", badge: "SCERT Textbook" }
+        ]
+      },
+      13: {
+        nodes: [
+          { title: "1. Think of a Number Magic", tel: "గణిత మ్యాజిక్ - మనసులోని సంఖ్య", color: "rose", desc: "Algebra reveals why mathematical magic tricks always work regardless of chosen number.", formula: "2(x + 5) / 2 - x = 5", badge: "Algebra Magic" },
+          { title: "2. Geometric (a + b)² Model", tel: "(a + b)² జ్యామితీయ నమూనా", color: "blue", desc: "Square of side (a + b) dissected into 4 area pieces: square a², square b², two rectangles ab.", formula: "(a + b)² = a² + 2ab + b²", badge: "Visual Proof" },
+          { title: "3. The 4 Standard Identities", tel: "4 ప్రామాణిక సర్వసమీకరణాలు", color: "emerald", desc: "Core algebraic formulas: (a+b)², (a-b)², (a+b)(a-b) = a²-b², and (x+a)(x+b).", formula: "(a - b)² = a² - 2ab + b²", badge: "Identities" },
+          { title: "4. Difference of Two Squares", tel: "వర్గాల భేదం: a² - b²", color: "purple", desc: "Fast mental multiplication: (a + b)(a - b) = a² - b². E.g. 52 × 48 = 50² - 2² = 2496.", formula: "52 × 48 = (50+2)(50-2) = 2496", badge: "Fast Math" },
+          { title: "5. Polynomial Factorization Lab", tel: "కారణాంకాలుగా విభజించుట", color: "amber", desc: "Factoring quadratic polynomials by grouping: x² + (a+b)x + ab = (x + a)(x + b).", formula: "x² + 5x + 6 = (x + 2)(x + 3)", badge: "Factorization" },
+          { title: "6. Figure It Out Problems", tel: "పాఠ్యపుస్తక సాధన ప్రశ్నలు", color: "orange", desc: "Complete step-by-step solutions for all NCERT Chapter 13 exercises.", formula: "All 13.1 - 13.4 Solved", badge: "SCERT Textbook" }
+        ]
+      },
+      14: {
+        nodes: [
+          { title: "1. Area of a Trapezium", tel: "ట్రెపీజియం వైశాల్యం", color: "orange", desc: "Area of trapezium with parallel sides a and b, and perpendicular height h.", formula: "Area = ½(a + b)h", badge: "2D Mensuration" },
+          { title: "2. Rhombus & Quadrilaterals", tel: "రాంబస్ & చతుర్భుజ వైశాల్యం", color: "blue", desc: "Area of general quadrilateral: ½d(h₁ + h₂). Area of Rhombus: ½(d₁ × d₂).", formula: "Area = ½ d₁ d₂", badge: "Quadrilaterals" },
+          { title: "3. Polygon Field Surveying", tel: "క్రమరహిత బహుభుజి క్షేత్ర గణన", color: "emerald", desc: "Dividing irregular plots/fields into triangles and trapeziums along a central baseline.", formula: "Total = Sum of Triangles + Trapeziums", badge: "Field Surveying" },
+          { title: "4. 3D Surface Area (TSA & CSA)", tel: "ఘనాల సంపూర్ణతల వైశాల్యం", color: "purple", desc: "Total and lateral surface area for Cuboids: 2(lb+bh+hl), Cubes: 6a², Cylinders: 2πr(r+h).", formula: "TSA = 2(lb + bh + hl)", badge: "3D Surface Area" },
+          { title: "5. Volume & Capacity of Solids", tel: "ఘనపరిమాణం & సామర్థ్యం (లీటర్లు)", color: "amber", desc: "Volume of Cuboid: l×b×h, Cube: a³, Cylinder: πr²h. Relation: 1 m³ = 1000 litres.", formula: "Volume = Base Area × Height", badge: "Volume & Capacity" },
+          { title: "6. Figure It Out Problems", tel: "పాఠ్యపుస్తక సాధన ప్రశ్నలు", color: "rose", desc: "Complete step-by-step solutions for all NCERT Chapter 14 exercises.", formula: "All 14.1 - 14.4 Solved", badge: "SCERT Textbook" }
+        ]
+      }
+    };
+
+    let currentMindMapChapterId = 8;
+    let currentMindMapStudioFilter = 'all';
+
+    function initMindMapsStudio() {
+      renderMindMapsStudioContent();
+      selectMindMapStudio(currentMindMapChapterId);
+    }
+
+    function filterMindMapsStudio(sem, btn) {
+      currentMindMapStudioFilter = sem;
+      document.querySelectorAll('#mindmapsView .curr-filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderMindMapsStudioContent();
+    }
+
+    function renderMindMapsStudioContent() {
+      const tabsWrap = document.getElementById('mindmapsStudioTabs');
+      const cardsWrap = document.getElementById('mindmapsStudioCards');
+      if (!tabsWrap || !cardsWrap) return;
+
+      tabsWrap.innerHTML = '';
+      cardsWrap.innerHTML = '';
+
+      const filtered = chapters.filter(ch => {
+        if (currentMindMapStudioFilter === 'sem1') return ch.sem === 1;
+        if (currentMindMapStudioFilter === 'sem2') return ch.sem === 2;
+        return true;
+      });
+
+      filtered.forEach(ch => {
+        // Tab button
+        const btn = document.createElement('button');
+        btn.className = `sims-select-tab ${ch.id === currentMindMapChapterId ? 'active' : ''}`;
+        btn.id = `mind-tab-${ch.id}`;
+        btn.onclick = () => selectMindMapStudio(ch.id);
+        btn.innerHTML = `
+          <span class="sims-tab-badge">Ch ${ch.id}</span>
+          <span>${ch.title}</span>
+        `;
+        tabsWrap.appendChild(btn);
+
+        // Card
+        const card = document.createElement('div');
+        card.className = `sim-card ${ch.id === currentMindMapChapterId ? 'active' : ''}`;
+        card.id = `mind-card-${ch.id}`;
+        card.onclick = () => {
+          selectMindMapStudio(ch.id);
+          document.getElementById('mindmapsStudioPlayer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; gap: 0.35rem; align-items: center;">
+              <span class="tag" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3);">Sem ${ch.sem}</span>
+              <span class="tag" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">Chapter ${ch.id}</span>
+            </div>
+            <span style="font-size: 1.25rem;">${ch.icon}</span>
+          </div>
+          <h3 style="font-size: 1.08rem; font-weight: 800; color: #fff; margin: 0.2rem 0 0 0;">${ch.title}</h3>
+          <h4 style="font-size: 0.85rem; color: #a78bfa; font-weight: 600; margin: 0 0 0.3rem 0;">${ch.titleTel}</h4>
+          <p style="font-size: 0.85rem; color: var(--slate); line-height: 1.45; flex: 1;">${ch.desc}</p>
+          <div class="tags">
+            ${ch.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.65rem; margin-top: 0.4rem;">
+            <button class="btn btn-glass" style="padding: 0.38rem 0.8rem; font-size: 0.78rem; border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;" onclick="event.stopPropagation(); selectMindMapStudio(${ch.id}); document.getElementById('mindmapsStudioPlayer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });">
+              🧠 View Mind Map
+            </button>
+            <button class="btn btn-orange" style="padding: 0.38rem 0.75rem; font-size: 0.78rem;" onclick="event.stopPropagation(); launchSimFromNode(${ch.id});">
+              ▶ Run Sim
+            </button>
+          </div>
+        `;
+        cardsWrap.appendChild(card);
+      });
+    }
+
+    function openChapterMindMap(chId) {
+      currentMindMapChapterId = chId;
+      switchMainView('mindmaps');
+      selectMindMapStudio(chId);
+      document.getElementById('mindmapsStudioPlayer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function selectMindMapStudio(chId) {
+      currentMindMapChapterId = chId;
+      const ch = chapters.find(c => c.id === chId) || chapters[0];
+      const mm = chapterMindMaps[chId];
+      if (!ch || !mm) return;
+
+      document.querySelectorAll('#mindmapsStudioTabs .sims-select-tab').forEach(t => {
+        t.classList.toggle('active', t.id === `mind-tab-${chId}`);
+      });
+      document.querySelectorAll('#mindmapsStudioCards .sim-card').forEach(c => {
+        c.classList.toggle('active', c.id === `mind-card-${chId}`);
+      });
+
+      const tag = document.getElementById('mindmapChapterTag');
+      const title = document.getElementById('mindmapPlayerTitle');
+      if (tag) tag.textContent = `Chapter ${ch.id} • Semester ${ch.sem}`;
+      if (title) title.textContent = `${ch.title} (${ch.titleTel})`;
+
+      renderMindMapFlow(ch, mm);
+    }
+
+    function renderMindMapFlow(ch, mm) {
+      const container = document.getElementById('mindmapContentContainer');
+      if (!container) return;
+
+      container.innerHTML = `
+        <div class="mindmap-flow-container">
+          <div class="mindmap-root-node">
+            <span style="font-size: 1.8rem; display: block; margin-bottom: 0.2rem;">${ch.icon}</span>
+            <h3 style="font-size: 1.25rem; font-weight: 900; margin: 0; color: #fff;">${ch.title}</h3>
+            <p style="font-size: 0.92rem; color: #bae6fd; margin: 0.2rem 0 0.5rem 0;">${ch.titleTel}</p>
+            <span class="tag" style="background: rgba(0,0,0,0.35); color: #fff; border: 1px solid rgba(255,255,255,0.2);">
+              Semester ${ch.sem} • Ganita Prakash Grade 8
+            </span>
+          </div>
+
+          <div style="text-align: center; color: #94a3b8; font-size: 0.85rem; margin-top: 1.25rem;">
+            ⬇️ <em>Interactive Google Flow Concept Branches (Click any card to launch simulation)</em> ⬇️
+          </div>
+
+          <div class="mindmap-branches-grid">
+            ${mm.nodes.map(n => `
+              <div class="mindmap-node-card ${n.color}" onclick="launchSimFromNode(${ch.id})">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span class="badge" style="font-size: 0.72rem; background: rgba(255,255,255,0.1); color: #fff;">${n.badge}</span>
+                  <span style="font-size: 0.78rem; color: #38bdf8; font-weight: 700;">▶ Launch Sim</span>
+                </div>
+                <h4 style="font-size: 1.02rem; font-weight: 800; color: #fff; margin: 0.2rem 0 0 0;">${n.title}</h4>
+                <div style="font-size: 0.84rem; color: #cbd5e1;">${n.tel}</div>
+                <p style="font-size: 0.84rem; color: #94a3b8; line-height: 1.4; margin: 0.2rem 0 0.4rem 0;">${n.desc}</p>
+                <div class="result-box font-mono" style="padding: 0.4rem 0.65rem; font-size: 0.82rem; color: #fef08a; background: #070b14; border-radius: 8px;">
+                  ${n.formula}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function launchSimFromNode(chId) {
+      const chIdx = chapters.findIndex(c => c.id === chId);
+      if (chIdx !== -1) {
+        switchMainView('sims');
+        selectSimStudio(chIdx);
+        document.getElementById('simsStudioPlayer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function launchSimFromCurrentMap() {
+      launchSimFromNode(currentMindMapChapterId);
     }
 
     function selectChapter(chapterId, defaultTab = null) {
