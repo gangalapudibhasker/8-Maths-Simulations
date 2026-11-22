@@ -1834,7 +1834,7 @@
           📚 Curriculum
         </button>
         <button class="nav-tab" id="tabNavTextbooks" onclick="switchMainView('textbooks')">
-          📖 Textbooks <span class="badge-tab-count">1</span>
+          📖 Textbooks <span class="badge-tab-count">2</span>
         </button>
         <button class="nav-tab" id="tabNavSolutions" onclick="switchMainView('solutions')">
           📝 All Solutions <span class="badge-tab-count">4</span>
@@ -1869,7 +1869,7 @@
           <div class="stat"><strong>7</strong><span>Study Notes</span></div>
           <div class="stat"><strong>70+</strong><span>Simulations</span></div>
           <div class="stat" onclick="switchMainView('textbooks')" style="cursor: pointer; border-color: rgba(52,211,153,0.3);" title="Explore Class 8 SCERT Official Textbooks">
-            <strong style="color: #34d399;">1</strong><span>Textbook</span>
+            <strong style="color: #34d399;">2</strong><span>Textbooks</span>
           </div>
           <div class="stat" onclick="switchMainView('solutions')" style="cursor: pointer; border-color: rgba(192,132,252,0.3);" title="Explore APMF Sem 1 & Sem 2 Complete Solutions (English & Telugu)">
             <strong style="color: #c084fc;">4</strong><span>All Solutions</span>
@@ -2492,9 +2492,38 @@
 
     const textbooks = [
       {
-        id: "scert-sem2",
+        id: "scert-sem1",
         num: "1",
-        tag: "📗 Official SCERT Textbook",
+        tag: "📗 SCERT Sem-1 Textbook",
+        badge: "Bilingual (Eng / Tel) + AI",
+        title: "AP SCERT Class 8 Mathematics Semester 1 Textbook",
+        publisher: "Samagra Shiksha & SCERT, Govt. of Andhra Pradesh",
+        author: "AP SCERT Textbook Development Committee",
+        edition: "Semester 1 (Bilingual Edition)",
+        pages: "190 Pages",
+        file: "Textbooks/AP_SCERT_Class_8_Mathematics_Sem1.pdf",
+        desc: "Official government Class 8 bilingual textbook (English and Telugu side-by-side). Includes Chapters 1 to 7 with full theory, activities, worked examples, and the Grade 8 Integrated Artificial Intelligence module.",
+        highlights: [
+          "Complete 190-page bilingual textbook (English & Telugu)",
+          "Chapters 1 to 7 full curriculum coverage",
+          "Official SCERT 'Integrated Artificial Intelligence' module",
+          "Theory, definitions, and classroom activities"
+        ],
+        chapters: [
+          { num: "1", name: "A Square and a Cube (వర్గం మరియు ఘనం)", page: 1 },
+          { num: "2", name: "Power Play (ఘాతాల ఆట)", page: 19 },
+          { num: "3", name: "The Story of Numbers (సంఖ్యల కథ)", page: 50 },
+          { num: "4", name: "Quadrilaterals (చతుర్భుజాలు)", page: 77 },
+          { num: "5", name: "Number Play (సంఖ్యా వినోదం)", page: 109 },
+          { num: "6", name: "We Distribute, Yet Things Multiply (విభజన - గుణకారం)", page: 135 },
+          { num: "7", name: "Proportional Reasoning - 1 (అనుపాత తర్కం - 1)", page: 160 },
+          { num: "AI", name: "Integrated Artificial Intelligence (కృత్రిమ మేధస్సు)", page: 183 }
+        ]
+      },
+      {
+        id: "scert-sem2",
+        num: "2",
+        tag: "📗 SCERT Sem-2 Textbook",
         badge: "Bilingual (Eng / Tel) + AI",
         title: "AP SCERT Class 8 Mathematics Semester 2 Textbook",
         publisher: "Samagra Shiksha & SCERT, Govt. of Andhra Pradesh",
@@ -3063,7 +3092,7 @@
         btn.onclick = () => selectTextbook(index);
         btn.innerHTML = `
           <span class="textbook-tab-badge">${item.num}</span>
-          <span>${item.title.split('(')[0].trim()}</span>
+          <span>${item.tag}</span>
         `;
         tabsWrap.appendChild(btn);
 
