@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Tales by Dots and Lines • Ganita Prakash Grade 8</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100vw;height:100vh;background:#0b0f19;color:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow:hidden;display:flex;justify-content:center;align-items:center;touch-action:manipulation}
+.viewport-wrapper{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 25% 15%,#1e293b 0%,#0f172a 65%)}
+.simulation-container{width:100vw;height:56.25vw;max-height:100vh;max-width:177.78vh;position:relative;box-shadow:0 25px 50px -12px rgba(0,0,0,.75);display:flex;flex-direction:column;overflow:hidden;background:#0f172a;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(249,115,22,.6);border-radius:4px}
+.flex{display:flex}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.7rem}
+.w-full{width:100%}.h-full{height:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}
+.overflow-y-auto{overflow-y:auto}.overflow-hidden{overflow:hidden}.relative{position:relative}
+h2{font-size:1.35rem;font-weight:800;color:#fb923c;margin-bottom:.12rem;letter-spacing:-.02em}
+.sub{font-size:0.95rem;color:#94a3b8;margin-bottom:.45rem;line-height:1.4}
+label{font-size:.92rem;font-weight:700;color:#e2e8f0;display:block;margin-bottom:.18rem}
+.text-lg{font-size:1.15rem}.text-base{font-size:1.05rem}.text-sm{font-size:.95rem}.text-xs{font-size:.82rem}
+.font-mono{font-family:ui-monospace,Menlo,Consolas,monospace}.font-bold{font-weight:700}.font-black{font-weight:900}
+.orange{color:#fb923c}.amber{color:#fbbf24}.green{color:#4ade80}.red{color:#f87171}.blue{color:#60a5fa}.slate{color:#94a3b8}
+.btn{cursor:pointer;border:none;border-radius:.5rem;font-weight:700;font-size:.92rem;padding:.45rem .85rem;transition:all .12s;touch-action:manipulation}
+.btn-orange{background:#ea580c;color:#fff}.btn-orange:hover,.btn-orange:active{background:#f97316}
+.btn-dark{background:#1e293b;color:#e2e8f0;border:1px solid #475569}.btn-dark:hover,.btn-dark:active{background:#334155}
+.tab-bar{display:flex;overflow-x:auto;gap:.3rem;padding:.4rem .6rem;background:#0f172a;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0}
+.tab{display:flex;align-items:center;gap:.28rem;padding:.45rem .75rem;border-radius:.5rem;font-size:.85rem;font-weight:700;cursor:pointer;border:none;white-space:nowrap;transition:all .12s;background:transparent;color:#94a3b8;touch-action:manipulation}
+.tab:hover{background:#1e293b;color:#e2e8f0}
+.tab.on{background:#ea580c;color:#fff;box-shadow:0 3px 12px rgba(234,88,12,.45)}
+.card{background:rgba(30,41,59,.95);border:1px solid rgba(255,255,255,.12);border-radius:.85rem;padding:.85rem 1rem;display:flex;flex-direction:column}
+.result-box{background:#0f172a;border:1px solid #475569;border-radius:.65rem;padding:.65rem .85rem;font-size:1rem;line-height:1.45}
+.tip{margin-top:.35rem;padding:.55rem .8rem;background:rgba(251,191,36,.15);border-left:4px solid #fbbf24;border-radius:0 .5rem .5rem 0;font-size:.95rem;color:#f1f5f9;line-height:1.4}
+.slider{width:100%;accent-color:#f97316}
+</style>
+</head>
+<body>
+<div id="root" class="viewport-wrapper"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const { useState } = React;
+
+// Tab 1: Mean as Center of Gravity (Seesaw)
+function BalanceTab(){
+  const [weights, setWeights] = useState([2, 4, 8, 10]);
+
+  const mean = weights.reduce((a,b)=>a+b, 0) / weights.length;
+
+  const addWeight = (pos) => {
+    setWeights([...weights, pos]);
+  };
+
+  const removeWeight = (idx) => {
+    setWeights(weights.filter((_, i) => i !== idx));
+  };
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>The Balancing Act: Mean as Fulcrum (సమతుల్యత - సగటు)</h2>
+      <p className="sub">The Arithmetic Mean is the exact center of gravity where the sum of deviations to the left equals the sum of deviations to the right: \(\sum (x_i - \bar{x}) = 0\).</p>
+
+      {/* SVG Balance Seesaw */}
+      <svg width="100%" height="160" viewBox="0 0 400 160" style={{background:'#0f172a', borderRadius:'8px', border:'1px solid #334155'}}>
+        {/* Beam (1 to 10) */}
+        <line x1="30" y1="80" x2="370" y2="80" stroke="#f97316" strokeWidth="6" strokeLinecap="round" />
+        
+        {/* Number markings */}
+        {[1,2,3,4,5,6,7,8,9,10].map(n => {
+          const x = 30 + (n - 1) * (340 / 9);
+          return (
+            <g key={n}>
+              <line x1={x} y1="75" x2={x} y2="85" stroke="#94a3b8" strokeWidth="2" />
+              <text x={x} y="102" fill="#cbd5e1" fontSize="11" textAnchor="middle">{n}</text>
+            </g>
+          );
+        })}
+
+        {/* Weights stacked at positions */}
+        {weights.map((w, idx) => {
+          const x = 30 + (w - 1) * (340 / 9);
+          return (
+            <circle key={idx} cx={x} cy={68 - (idx % 3)*12} r="6" fill="#3b82f6" stroke="#fff" strokeWidth="1" />
+          );
+        })}
+
+        {/* Fulcrum at Mean */}
+        <polygon points={`${30 + (mean-1)*(340/9)},84 ${30 + (mean-1)*(340/9) - 12},115 ${30 + (mean-1)*(340/9) + 12},115`} fill="#10b981" />
+        <text x={30 + (mean-1)*(340/9)} y="132" fill="#34d399" fontSize="12" fontWeight="bold" textAnchor="middle">Mean: {mean.toFixed(2)}</text>
+      </svg>
+
+      <div className="result-box space-y-1">
+        <div>📍 <strong>Data Points:</strong> [{weights.join(', ')}]</div>
+        <div>⚖️ <strong>Calculated Mean:</strong> <span className="green text-lg font-black">{mean.toFixed(2)}</span></div>
+        <div className="flex flex-wrap gap-1 mt-2">
+          {[1,2,3,4,5,6,7,8,9,10].map(n => (
+            <button key={n} className="btn btn-sm btn-dark" onClick={()=>addWeight(n)}>+ Add {n}</button>
+          ))}
+          {weights.length > 1 && (
+            <button className="btn btn-sm btn-orange" onClick={()=>setWeights(weights.slice(0, -1))}>Remove Last</button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Tab 2: Mean, Median, Mode
+function CentralTendencyTab(){
+  const [data, setData] = useState([12, 14, 15, 15, 16, 18, 50]);
+
+  const sorted = [...data].sort((a,b)=>a-b);
+  const mean = data.reduce((a,b)=>a+b,0) / data.length;
+  
+  // Median
+  const mid = Math.floor(sorted.length / 2);
+  const median = sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid-1] + sorted[mid]) / 2;
+
+  // Mode
+  const freq = {};
+  data.forEach(x => freq[x] = (freq[x]||0) + 1);
+  let maxFreq = 0, modes = [];
+  for(let k in freq){
+    if(freq[k] > maxFreq){ maxFreq = freq[k]; modes = [Number(k)]; }
+    else if(freq[k] === maxFreq){ modes.push(Number(k)); }
+  }
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>Mean, Median & Mode Explorer (సగటు, మధ్యగతం, బాహుళకం)</h2>
+      <p className="sub">Compare how extreme values (outliers) affect the Mean versus the Median.</p>
+
+      <div className="result-box space-y-1">
+        <div>📊 <strong>Current Data:</strong> [{sorted.join(', ')}]</div>
+        <div className="grid grid-cols-3 gap-2 mt-2">
+          <div className="p-2 rounded bg-blue-950/40 border border-blue-800">
+            <div className="text-xs text-slate-300">Mean (సగటు)</div>
+            <div className="text-lg font-bold text-blue">{mean.toFixed(1)}</div>
+            <div className="text-xs text-slate-400">Heavily pulled by outliers!</div>
+          </div>
+          <div className="p-2 rounded bg-orange-950/40 border border-orange-800">
+            <div className="text-xs text-slate-300">Median (మధ్యగతం)</div>
+            <div className="text-lg font-bold text-orange">{median}</div>
+            <div className="text-xs text-slate-400">Resistant to outliers!</div>
+          </div>
+          <div className="p-2 rounded bg-emerald-950/40 border border-emerald-800">
+            <div className="text-xs text-slate-300">Mode (బాహుళకం)</div>
+            <div className="text-lg font-bold text-green">{modes.join(', ')}</div>
+            <div className="text-xs text-slate-400">Most frequent ({maxFreq}×)</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="tip">
+        🎯 <strong>The Lesson:</strong> Notice the outlier (50). The <strong>Mean ({mean.toFixed(1)})</strong> jumps up, while the <strong>Median ({median})</strong> accurately reflects the typical middle value!
+      </div>
+    </div>
+  );
+}
+
+function App(){
+  const [tab, setTab] = useState('balance');
+  return (
+    <div className="simulation-container">
+      <div className="tab-bar">
+        <button className={`tab ${tab==='balance'?'on':''}`} onClick={()=>setTab('balance')}>⚖️ Seesaw Mean</button>
+        <button className={`tab ${tab==='ct'?'on':''}`} onClick={()=>setTab('ct')}>📊 Mean, Median, Mode</button>
+      </div>
+      <div className="flex-1 p-2 overflow-hidden">
+        {tab === 'balance' && <BalanceTab />}
+        {tab === 'ct' && <CentralTendencyTab />}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

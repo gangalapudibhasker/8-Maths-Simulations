@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Baudhayana–Pythagoras Theorem • Ganita Prakash Grade 8</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100vw;height:100vh;background:#0b0f19;color:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow:hidden;display:flex;justify-content:center;align-items:center;touch-action:manipulation}
+.viewport-wrapper{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 25% 15%,#1e293b 0%,#0f172a 65%)}
+.simulation-container{width:100vw;height:56.25vw;max-height:100vh;max-width:177.78vh;position:relative;box-shadow:0 25px 50px -12px rgba(0,0,0,.75);display:flex;flex-direction:column;overflow:hidden;background:#0f172a;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+.simulation-container:fullscreen,.simulation-container:-webkit-full-screen{width:100vw;height:100vh;max-width:none;max-height:none;border-radius:0;border:none}
+::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(249,115,22,.6);border-radius:4px}
+.flex{display:flex}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.7rem}
+.w-full{width:100%}.h-full{height:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}
+.overflow-y-auto{overflow-y:auto}.overflow-hidden{overflow:hidden}.relative{position:relative}
+h2{font-size:1.35rem;font-weight:800;color:#fb923c;margin-bottom:.12rem;letter-spacing:-.02em}
+.sub{font-size:0.95rem;color:#94a3b8;margin-bottom:.45rem;line-height:1.4}
+label{font-size:.92rem;font-weight:700;color:#e2e8f0;display:block;margin-bottom:.18rem}
+.text-lg{font-size:1.15rem}.text-base{font-size:1.05rem}.text-sm{font-size:.95rem}.text-xs{font-size:.82rem}
+.font-mono{font-family:ui-monospace,Menlo,Consolas,monospace}.font-bold{font-weight:700}.font-black{font-weight:900}
+.orange{color:#fb923c}.amber{color:#fbbf24}.green{color:#4ade80}.red{color:#f87171}.blue{color:#60a5fa}.slate{color:#94a3b8}
+.input{background:#0f172a;border:2px solid #475569;color:#fff;border-radius:.5rem;padding:.4rem .6rem;font-size:1.05rem;font-weight:700;outline:none;width:90px;text-align:center}
+.input:focus{border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,.3)}
+.btn{cursor:pointer;border:none;border-radius:.5rem;font-weight:700;font-size:.92rem;padding:.45rem .85rem;transition:all .12s;touch-action:manipulation}
+.btn-orange{background:#ea580c;color:#fff}.btn-orange:hover,.btn-orange:active{background:#f97316}
+.btn-dark{background:#1e293b;color:#e2e8f0;border:1px solid #475569}.btn-dark:hover,.btn-dark:active{background:#334155}
+.tab-bar{display:flex;overflow-x:auto;gap:.3rem;padding:.4rem .6rem;background:#0f172a;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0}
+.tab{display:flex;align-items:center;gap:.28rem;padding:.45rem .75rem;border-radius:.5rem;font-size:.85rem;font-weight:700;cursor:pointer;border:none;white-space:nowrap;transition:all .12s;background:transparent;color:#94a3b8;touch-action:manipulation}
+.tab:hover{background:#1e293b;color:#e2e8f0}
+.tab.on{background:#ea580c;color:#fff;box-shadow:0 3px 12px rgba(234,88,12,.45)}
+.card{background:rgba(30,41,59,.95);border:1px solid rgba(255,255,255,.12);border-radius:.85rem;padding:.85rem 1rem;display:flex;flex-direction:column}
+.row{display:flex;flex-wrap:wrap;gap:.55rem;align-items:flex-end;margin-bottom:.45rem}
+.result-box{background:#0f172a;border:1px solid #475569;border-radius:.65rem;padding:.65rem .85rem;font-size:1rem;line-height:1.45}
+.tip{margin-top:.35rem;padding:.55rem .8rem;background:rgba(251,191,36,.15);border-left:4px solid #fbbf24;border-radius:0 .5rem .5rem 0;font-size:.95rem;color:#f1f5f9;line-height:1.4}
+.slider{width:100%;accent-color:#f97316}
+.quiz-opt{width:100%;text-align:left;padding:.55rem .85rem;border-radius:.5rem;border:2px solid #334155;background:#1e293b;color:#f1f5f9;font-size:.98rem;font-weight:600;cursor:pointer;margin-bottom:.35rem;transition:all .12s}
+.quiz-opt:hover{border-color:#f97316;background:rgba(249,115,22,.15)}
+.quiz-opt.correct{background:rgba(16,185,129,.25);border-color:#34d399;color:#d1fae5}
+.quiz-opt.wrong{background:rgba(239,68,68,.25);border-color:#f87171;color:#fecaca}
+</style>
+</head>
+<body>
+<div id="root" class="viewport-wrapper"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useMemo } = React;
+
+class SoundEngine {
+  constructor(){ this.ctx=null; this.muted=false; }
+  init(){ if(!this.ctx) this.ctx=new (window.AudioContext||window.webkitAudioContext)(); }
+  play(f=580,t=0.06){ if(this.muted)return; this.init(); try{ const o=this.ctx.createOscillator(),g=this.ctx.createGain(); o.type='sine'; o.frequency.setValueAtTime(f,this.ctx.currentTime); g.gain.setValueAtTime(.1,this.ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,this.ctx.currentTime+t); o.connect(g); g.connect(this.ctx.destination); o.start(); o.stop(this.ctx.currentTime+t); }catch(e){} }
+}
+const sound = new SoundEngine();
+
+// Tab 1: Live Interactive Triangle & Three Squares
+function TriangleLab(){
+  const [a, setA] = useState(6);
+  const [b, setB] = useState(8);
+
+  const a2 = a * a;
+  const b2 = b * b;
+  const c2 = a2 + b2;
+  const c = Math.sqrt(c2);
+
+  // SVG dimensions
+  const scale = 14;
+  const ox = 180, oy = 220;
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>Geometric Theorem Visualizer (బౌధాయన–పైథాగరస్ సిద్ధాంతం)</h2>
+      <p className="sub">In a right-angled triangle, the area of the square on the hypotenuse equals the sum of areas of squares on the other two sides: \( c^2 = a^2 + b^2 \).</p>
+
+      <div className="flex flex-wrap gap-3 items-center justify-center">
+        <svg width="340" height="260" viewBox="0 0 340 260" style={{background:'#0f172a', borderRadius:'8px', border:'1px solid #334155'}}>
+          {/* Square on side a (bottom) */}
+          <rect x={ox - a*scale} y={oy} width={a*scale} height={a*scale} fill="rgba(59, 130, 246, 0.4)" stroke="#3b82f6" strokeWidth="1.5" />
+          <text x={ox - (a*scale)/2} y={oy + (a*scale)/2 + 5} fill="#93c5fd" fontSize="12" textAnchor="middle" fontWeight="bold">a² = {a2}</text>
+
+          {/* Square on side b (left) */}
+          <rect x={ox - b*scale} y={oy - b*scale} width={b*scale} height={b*scale} fill="rgba(249, 115, 22, 0.4)" stroke="#f97316" strokeWidth="1.5" />
+          <text x={ox - (b*scale)/2} y={oy - (b*scale)/2 + 5} fill="#fdba74" fontSize="12" textAnchor="middle" fontWeight="bold">b² = {b2}</text>
+
+          {/* Right triangle */}
+          <polygon points={`${ox},${oy} ${ox},${oy - b*scale} ${ox - a*scale},${oy}`} fill="rgba(16, 185, 129, 0.3)" stroke="#10b981" strokeWidth="2" />
+          {/* Right angle marker */}
+          <rect x={ox - 10} y={oy - 10} width="10" height="10" fill="none" stroke="#e2e8f0" strokeWidth="1" />
+
+          {/* Labels on triangle legs */}
+          <text x={ox + 8} y={oy - (b*scale)/2} fill="#fb923c" fontSize="12" fontWeight="bold">b={b}</text>
+          <text x={ox - (a*scale)/2} y={oy - 6} fill="#60a5fa" fontSize="12" fontWeight="bold">a={a}</text>
+          <text x={ox - (a*scale)/2 - 15} y={oy - (b*scale)/2 - 10} fill="#34d399" fontSize="13" fontWeight="bold">c={c.toFixed(2)}</text>
+        </svg>
+
+        <div className="flex flex-col gap-2 flex-1 min-w-[200px]">
+          <div>
+            <label>Leg a: <strong className="blue">{a}</strong></label>
+            <input type="range" min="3" max="12" value={a} onChange={e=>setA(parseInt(e.target.value))} className="slider" />
+          </div>
+          <div>
+            <label>Leg b: <strong className="orange">{b}</strong></label>
+            <input type="range" min="3" max="12" value={b} onChange={e=>setB(parseInt(e.target.value))} className="slider" />
+          </div>
+
+          <div className="result-box space-y-1">
+            <div>🟦 Area a² = <strong className="blue">{a}² = {a2}</strong></div>
+            <div>🟧 Area b² = <strong className="orange">{b}² = {b2}</strong></div>
+            <div>🟩 Hypotenuse c² = {a2} + {b2} = <strong className="green text-lg">{c2}</strong></div>
+            <div>📏 Hypotenuse c = √{c2} = <strong className="amber text-lg font-black">{c % 1 === 0 ? c : c.toFixed(3)}</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="tip">
+        📜 <strong>Baudhayana Sulba Sutra (800 BCE):</strong> "దీర్ఘచతురస్రం యొక్క కర్ణంపై గీసిన చతురస్ర వైశాల్యం, దాని పొడవు మరియు వెడల్పులపై గీసిన చతురస్రాల వైశాల్యాల మొత్తానికి సమానం."
+      </div>
+    </div>
+  );
+}
+
+// Tab 2: Doubling & Halving Square
+function HalvingTab(){
+  const [side, setSide] = useState(6);
+  const origArea = side * side;
+  const diag = Math.sqrt(2) * side;
+  const doubleArea = origArea * 2;
+  const halfArea = origArea / 2;
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>Doubling & Halving Squares (చతురస్రాన్ని రెట్టింపు / సగం చేయడం)</h2>
+      <p className="sub">Ancient Indian mathematicians discovered the theorem by joining diagonals of squares.</p>
+
+      <div className="row">
+        <div>
+          <label>Original Square Sidelength:</label>
+          <input type="number" min="2" max="20" value={side} onChange={e=>setSide(Math.max(2, parseInt(e.target.value)||2))} className="input" />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2">
+        <div className="result-box" style={{borderColor: '#60a5fa'}}>
+          <div className="text-blue font-bold">1. Half Square</div>
+          <div className="text-xs text-slate-300">Join midpoints of sides</div>
+          <div className="text-lg font-black green mt-1">Area = {halfArea}</div>
+          <div className="text-xs text-slate-400">Side = { (side / Math.sqrt(2)).toFixed(2) }</div>
+        </div>
+        <div className="result-box" style={{borderColor: '#f97316'}}>
+          <div className="text-orange font-bold">2. Original Square</div>
+          <div className="text-xs text-slate-300">Given side = {side}</div>
+          <div className="text-lg font-black amber mt-1">Area = {origArea}</div>
+          <div className="text-xs text-slate-400">Diagonal = {diag.toFixed(2)}</div>
+        </div>
+        <div className="result-box" style={{borderColor: '#34d399'}}>
+          <div className="text-emerald font-bold">3. Double Square</div>
+          <div className="text-xs text-slate-300">Square on Diagonal</div>
+          <div className="text-lg font-black green mt-1">Area = {doubleArea}</div>
+          <div className="text-xs text-slate-400">Side = Diagonal ({diag.toFixed(2)})</div>
+        </div>
+      </div>
+
+      <div className="tip">
+        ✨ <strong>Sulba Sutra Insight:</strong> A square built upon the diagonal of any square has <strong>exactly TWICE (రెట్టింపు)</strong> the area of the original square!
+      </div>
+    </div>
+  );
+}
+
+// Tab 3: Pythagorean Triples Generator
+function TriplesTab(){
+  const [m, setM] = useState(3);
+  const [n, setN] = useState(2);
+
+  const a = m*m - n*n;
+  const b = 2*m*n;
+  const c = m*m + n*n;
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>Pythagorean Triples Generator (పైథాగరియన్ త్రికాలు)</h2>
+      <p className="sub">A set of three natural numbers (a, b, c) where \( a^2 + b^2 = c^2 \) is called a Pythagorean Triple. Any triple can be generated using integers m &gt; n.</p>
+
+      <div className="row">
+        <div>
+          <label>Parameter m (m &gt; n):</label>
+          <input type="number" min="2" max="15" value={m} onChange={e=>{ const v=parseInt(e.target.value)||2; setM(v); if(v<=n) setN(v-1); }} className="input" />
+        </div>
+        <div>
+          <label>Parameter n:</label>
+          <input type="number" min="1" max={m-1} value={n} onChange={e=>setN(Math.min(m-1, Math.max(1, parseInt(e.target.value)||1)))} className="input" />
+        </div>
+      </div>
+
+      <div className="result-box space-y-1">
+        <div className="text-lg font-bold text-white">
+          Generated Triple: (<span className="blue">{a}</span>, <span className="orange">{b}</span>, <span className="green">{c}</span>)
+        </div>
+        <div className="text-sm font-mono text-slate-300">
+          a = m² - n² = {m}² - {n}² = {a}<br/>
+          b = 2mn = 2 × {m} × {n} = {b}<br/>
+          c = m² + n² = {m}² + {n}² = {c}
+        </div>
+        <div className="text-sm font-bold green mt-1">
+          Verification: {a}² + {b}² = {a*a} + {b*b} = {a*a + b*b} = {c}² ({c*c}) ✓
+        </div>
+      </div>
+
+      <div>
+        <label className="text-sm">Famous Fundamental Triples:</label>
+        <div className="flex flex-wrap gap-1 mt-1">
+          {[[3,4,5], [5,12,13], [7,24,25], [8,15,17], [9,40,41], [11,60,61], [12,35,37], [20,21,29]].map(([x,y,z], i) => (
+            <span key={i} className="tag text-xs" style={{background: 'rgba(249,115,22,0.15)', color: '#fb923c', border:'1px solid rgba(249,115,22,0.3)'}}>
+              ({x}, {y}, {z})
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Tab 4: Real-life Ladder Problem
+function LadderTab(){
+  const [wall, setWall] = useState(12);
+  const [ground, setGround] = useState(5);
+
+  const ladder = Math.sqrt(wall*wall + ground*ground);
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>Real-World Applications (నిజ జీవితంలో అనువర్తనాలు)</h2>
+      <p className="sub">Calculate required ladder lengths, shortest walking paths, and TV screen dimensions.</p>
+
+      <div className="row">
+        <div>
+          <label>Wall Height (m):</label>
+          <input type="number" min="1" max="50" value={wall} onChange={e=>setWall(parseInt(e.target.value)||1)} className="input" />
+        </div>
+        <div>
+          <label>Distance from Base (m):</label>
+          <input type="number" min="1" max="50" value={ground} onChange={e=>setGround(parseInt(e.target.value)||1)} className="input" />
+        </div>
+      </div>
+
+      <div className="result-box space-y-1">
+        <div>🪜 <strong>Required Ladder Length:</strong> <span className="green text-lg font-bold">{ladder % 1 === 0 ? ladder : ladder.toFixed(2)} meters</span></div>
+        <div className="text-sm text-slate-300 font-mono">
+          Length = √(Wall² + Ground²) = √({wall}² + {ground}²) = √({wall*wall} + {ground*ground}) = √{wall*wall + ground*ground} = {ladder.toFixed(2)} m
+        </div>
+      </div>
+
+      <div className="tip">
+        🚶 <strong>Shortest Route:</strong> Walking diagonally across a rectangular field of {wall}m × {ground}m takes only <strong>{ladder.toFixed(1)}m</strong>, saving you <strong>{(wall + ground - ladder).toFixed(1)} meters</strong> of walking!
+      </div>
+    </div>
+  );
+}
+
+function App(){
+  const [tab, setTab] = useState('triangle');
+  return (
+    <div className="simulation-container">
+      <div className="tab-bar">
+        <button className={`tab ${tab==='triangle'?'on':''}`} onClick={()=>{setTab('triangle');sound.play();}}>
+          📐 Triangle Lab
+        </button>
+        <button className={`tab ${tab==='halving'?'on':''}`} onClick={()=>{setTab('halving');sound.play();}}>
+          🔲 Halving & Doubling
+        </button>
+        <button className={`tab ${tab==='triples'?'on':''}`} onClick={()=>{setTab('triples');sound.play();}}>
+          🔢 Triples Generator
+        </button>
+        <button className={`tab ${tab==='ladder'?'on':''}`} onClick={()=>{setTab('ladder');sound.play();}}>
+          🪜 Real-life Ladder
+        </button>
+      </div>
+      <div className="flex-1 p-2 overflow-hidden">
+        {tab === 'triangle' && <TriangleLab />}
+        {tab === 'halving' && <HalvingTab />}
+        {tab === 'triples' && <TriplesTab />}
+        {tab === 'ladder' && <LadderTab />}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

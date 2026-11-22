@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Algebra Play • Ganita Prakash Grade 8</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100vw;height:100vh;background:#0b0f19;color:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow:hidden;display:flex;justify-content:center;align-items:center;touch-action:manipulation}
+.viewport-wrapper{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 25% 15%,#1e293b 0%,#0f172a 65%)}
+.simulation-container{width:100vw;height:56.25vw;max-height:100vh;max-width:177.78vh;position:relative;box-shadow:0 25px 50px -12px rgba(0,0,0,.75);display:flex;flex-direction:column;overflow:hidden;background:#0f172a;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(249,115,22,.6);border-radius:4px}
+.flex{display:flex}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.7rem}
+.w-full{width:100%}.h-full{height:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}
+.overflow-y-auto{overflow-y:auto}.overflow-hidden{overflow:hidden}.relative{position:relative}
+h2{font-size:1.35rem;font-weight:800;color:#fb923c;margin-bottom:.12rem;letter-spacing:-.02em}
+.sub{font-size:0.95rem;color:#94a3b8;margin-bottom:.45rem;line-height:1.4}
+label{font-size:.92rem;font-weight:700;color:#e2e8f0;display:block;margin-bottom:.18rem}
+.text-lg{font-size:1.15rem}.text-base{font-size:1.05rem}.text-sm{font-size:.95rem}.text-xs{font-size:.82rem}
+.font-mono{font-family:ui-monospace,Menlo,Consolas,monospace}.font-bold{font-weight:700}.font-black{font-weight:900}
+.orange{color:#fb923c}.amber{color:#fbbf24}.green{color:#4ade80}.red{color:#f87171}.blue{color:#60a5fa}.slate{color:#94a3b8}
+.btn{cursor:pointer;border:none;border-radius:.5rem;font-weight:700;font-size:.92rem;padding:.45rem .85rem;transition:all .12s;touch-action:manipulation}
+.btn-orange{background:#ea580c;color:#fff}.btn-orange:hover,.btn-orange:active{background:#f97316}
+.btn-dark{background:#1e293b;color:#e2e8f0;border:1px solid #475569}.btn-dark:hover,.btn-dark:active{background:#334155}
+.tab-bar{display:flex;overflow-x:auto;gap:.3rem;padding:.4rem .6rem;background:#0f172a;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0}
+.tab{display:flex;align-items:center;gap:.28rem;padding:.45rem .75rem;border-radius:.5rem;font-size:.85rem;font-weight:700;cursor:pointer;border:none;white-space:nowrap;transition:all .12s;background:transparent;color:#94a3b8;touch-action:manipulation}
+.tab:hover{background:#1e293b;color:#e2e8f0}
+.tab.on{background:#ea580c;color:#fff;box-shadow:0 3px 12px rgba(234,88,12,.45)}
+.card{background:rgba(30,41,59,.95);border:1px solid rgba(255,255,255,.12);border-radius:.85rem;padding:.85rem 1rem;display:flex;flex-direction:column}
+.result-box{background:#0f172a;border:1px solid #475569;border-radius:.65rem;padding:.65rem .85rem;font-size:1rem;line-height:1.45}
+.tip{margin-top:.35rem;padding:.55rem .8rem;background:rgba(251,191,36,.15);border-left:4px solid #fbbf24;border-radius:0 .5rem .5rem 0;font-size:.95rem;color:#f1f5f9;line-height:1.4}
+.slider{width:100%;accent-color:#f97316}
+</style>
+</head>
+<body>
+<div id="root" class="viewport-wrapper"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const { useState } = React;
+
+// Tab 1: Think of a Number Magic Trick
+function MagicTrickTab(){
+  const [x, setX] = useState(7);
+  const [showAlgebra, setShowAlgebra] = useState(false);
+
+  // Magic operations: ( (2x + 10) / 2 ) - x = 5
+  const step1 = x;
+  const step2 = x * 2;
+  const step3 = step2 + 10;
+  const step4 = step3 / 2;
+  const step5 = step4 - x;
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>"Think of a Number" Mind Reader (ఒక సంఖ్యను ఊహించండి)</h2>
+      <p className="sub">Algebra reveals why mathematical magic tricks always work regardless of the starting number.</p>
+
+      <div className="flex gap-2 items-center mb-2">
+        <label>Pick ANY Secret Number (x):</label>
+        <input type="number" min="1" max="100" value={x} onChange={e=>setX(parseInt(e.target.value)||1)} className="input" style={{width:'80px', background:'#0f172a', border:'2px solid #475569', color:'#fff', padding:'4px', borderRadius:'6px', textAlign:'center'}} />
+        <button className="btn btn-sm btn-orange ml-auto" onClick={()=>setShowAlgebra(!showAlgebra)}>
+          {showAlgebra ? 'Hide Secret Algebra' : '🔍 Reveal Secret Algebra'}
+        </button>
+      </div>
+
+      <div className="space-y-1">
+        <div className="result-box flex justify-between items-center text-sm">
+          <span>1. Your Secret Number:</span>
+          <span className="font-bold text-white">{step1} {showAlgebra && <strong className="orange font-mono">(x)</strong>}</span>
+        </div>
+        <div className="result-box flex justify-between items-center text-sm">
+          <span>2. Multiply by 2:</span>
+          <span className="font-bold text-white">{step2} {showAlgebra && <strong className="orange font-mono">(2x)</strong>}</span>
+        </div>
+        <div className="result-box flex justify-between items-center text-sm">
+          <span>3. Add 10:</span>
+          <span className="font-bold text-white">{step3} {showAlgebra && <strong className="orange font-mono">(2x + 10)</strong>}</span>
+        </div>
+        <div className="result-box flex justify-between items-center text-sm">
+          <span>4. Divide by 2:</span>
+          <span className="font-bold text-white">{step4} {showAlgebra && <strong className="orange font-mono">(x + 5)</strong>}</span>
+        </div>
+        <div className="result-box flex justify-between items-center text-sm" style={{borderColor: '#10b981'}}>
+          <span>5. Subtract your original number:</span>
+          <span className="font-black green text-lg">{step5} {showAlgebra && <strong className="green font-mono">((x+5) - x = 5)</strong>}</span>
+        </div>
+      </div>
+
+      <div className="tip">
+        🎩 <strong>The Secret:</strong> Notice how \(x - x = 0\)! The starting secret number completely eliminates itself, leaving only the constant result <strong>5</strong>!
+      </div>
+    </div>
+  );
+}
+
+// Tab 2: Number Pyramids
+function PyramidTab(){
+  const [a, setA] = useState(3);
+  const [b, setB] = useState(5);
+  const [c, setC] = useState(2);
+
+  const ab = a + b;
+  const bc = b + c;
+  const top = ab + bc;
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>Number Pyramids (సంఖ్యా పిరమిడ్లు)</h2>
+      <p className="sub">In a number pyramid, each brick equals the sum of the two bricks directly beneath it.</p>
+
+      <div className="flex flex-col items-center gap-2 my-2">
+        {/* Top */}
+        <div className="p-2 px-5 rounded-lg bg-orange-600 font-black text-white text-lg border border-orange-400">
+          {top}
+        </div>
+        {/* Mid */}
+        <div className="flex gap-2">
+          <div className="p-2 px-4 rounded bg-blue-700 font-bold text-white border border-blue-400">{ab}</div>
+          <div className="p-2 px-4 rounded bg-blue-700 font-bold text-white border border-blue-400">{bc}</div>
+        </div>
+        {/* Base */}
+        <div className="flex gap-2">
+          <input type="number" value={a} onChange={e=>setA(parseInt(e.target.value)||0)} style={{width:'50px', textAlign:'center', background:'#1e293b', border:'2px solid #64748b', color:'#fff', borderRadius:'6px', padding:'4px', fontWeight:'bold'}} />
+          <input type="number" value={b} onChange={e=>setB(parseInt(e.target.value)||0)} style={{width:'50px', textAlign:'center', background:'#1e293b', border:'2px solid #64748b', color:'#fff', borderRadius:'6px', padding:'4px', fontWeight:'bold'}} />
+          <input type="number" value={c} onChange={e=>setC(parseInt(e.target.value)||0)} style={{width:'50px', textAlign:'center', background:'#1e293b', border:'2px solid #64748b', color:'#fff', borderRadius:'6px', padding:'4px', fontWeight:'bold'}} />
+        </div>
+      </div>
+
+      <div className="result-box space-y-1">
+        <div>🧱 <strong>Algebraic Formula for Top Brick:</strong></div>
+        <div className="text-base font-mono green font-bold">
+          Top = (a + b) + (b + c) = a + 2b + c = {a} + 2({b}) + {c} = {top}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App(){
+  const [tab, setTab] = useState('magic');
+  return (
+    <div className="simulation-container">
+      <div className="tab-bar">
+        <button className={`tab ${tab==='magic'?'on':''}`} onClick={()=>setTab('magic')}>🪄 Mind Reader</button>
+        <button className={`tab ${tab==='pyr'?'on':''}`} onClick={()=>setTab('pyr')}>🧱 Number Pyramid</button>
+      </div>
+      <div className="flex-1 p-2 overflow-hidden">
+        {tab === 'magic' && <MagicTrickTab />}
+        {tab === 'pyr' && <PyramidTab />}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Exploring Geometric Themes • Ganita Prakash Grade 8</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100vw;height:100vh;background:#0b0f19;color:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow:hidden;display:flex;justify-content:center;align-items:center;touch-action:manipulation}
+.viewport-wrapper{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 25% 15%,#1e293b 0%,#0f172a 65%)}
+.simulation-container{width:100vw;height:56.25vw;max-height:100vh;max-width:177.78vh;position:relative;box-shadow:0 25px 50px -12px rgba(0,0,0,.75);display:flex;flex-direction:column;overflow:hidden;background:#0f172a;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(249,115,22,.6);border-radius:4px}
+.flex{display:flex}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.7rem}
+.w-full{width:100%}.h-full{height:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}
+.overflow-y-auto{overflow-y:auto}.overflow-hidden{overflow:hidden}.relative{position:relative}
+h2{font-size:1.35rem;font-weight:800;color:#fb923c;margin-bottom:.12rem;letter-spacing:-.02em}
+.sub{font-size:0.95rem;color:#94a3b8;margin-bottom:.45rem;line-height:1.4}
+label{font-size:.92rem;font-weight:700;color:#e2e8f0;display:block;margin-bottom:.18rem}
+.text-lg{font-size:1.15rem}.text-base{font-size:1.05rem}.text-sm{font-size:.95rem}.text-xs{font-size:.82rem}
+.font-mono{font-family:ui-monospace,Menlo,Consolas,monospace}.font-bold{font-weight:700}.font-black{font-weight:900}
+.orange{color:#fb923c}.amber{color:#fbbf24}.green{color:#4ade80}.red{color:#f87171}.blue{color:#60a5fa}.slate{color:#94a3b8}
+.btn{cursor:pointer;border:none;border-radius:.5rem;font-weight:700;font-size:.92rem;padding:.45rem .85rem;transition:all .12s;touch-action:manipulation}
+.btn-orange{background:#ea580c;color:#fff}.btn-orange:hover,.btn-orange:active{background:#f97316}
+.tab-bar{display:flex;overflow-x:auto;gap:.3rem;padding:.4rem .6rem;background:#0f172a;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0}
+.tab{display:flex;align-items:center;gap:.28rem;padding:.45rem .75rem;border-radius:.5rem;font-size:.85rem;font-weight:700;cursor:pointer;border:none;white-space:nowrap;transition:all .12s;background:transparent;color:#94a3b8;touch-action:manipulation}
+.tab:hover{background:#1e293b;color:#e2e8f0}
+.tab.on{background:#ea580c;color:#fff;box-shadow:0 3px 12px rgba(234,88,12,.45)}
+.card{background:rgba(30,41,59,.95);border:1px solid rgba(255,255,255,.12);border-radius:.85rem;padding:.85rem 1rem;display:flex;flex-direction:column}
+.result-box{background:#0f172a;border:1px solid #475569;border-radius:.65rem;padding:.65rem .85rem;font-size:1rem;line-height:1.45}
+.tip{margin-top:.35rem;padding:.55rem .8rem;background:rgba(251,191,36,.15);border-left:4px solid #fbbf24;border-radius:0 .5rem .5rem 0;font-size:.95rem;color:#f1f5f9;line-height:1.4}
+.slider{width:100%;accent-color:#f97316}
+</style>
+</head>
+<body>
+<div id="root" class="viewport-wrapper"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// Tab 1: Sierpinski Fractal
+function FractalTab(){
+  const [level, setLevel] = useState(3);
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0,0,w,h);
+
+    const drawTri = (p1, p2, p3) => {
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.lineTo(p3.x, p3.y);
+      ctx.closePath();
+      ctx.fillStyle = '#f97316';
+      ctx.fill();
+    };
+
+    const mid = (p1, p2) => ({ x: (p1.x+p2.x)/2, y: (p1.y+p2.y)/2 });
+
+    const sierpinski = (p1, p2, p3, d) => {
+      if(d === 0) {
+        drawTri(p1, p2, p3);
+      } else {
+        const m1 = mid(p1, p2);
+        const m2 = mid(p2, p3);
+        const m3 = mid(p3, p1);
+        sierpinski(p1, m1, m3, d - 1);
+        sierpinski(m1, p2, m2, d - 1);
+        sierpinski(m3, m2, p3, d - 1);
+      }
+    };
+
+    const top = { x: w / 2, y: 15 };
+    const left = { x: 20, y: h - 15 };
+    const right = { x: w - 20, y: h - 15 };
+    sierpinski(top, left, right, level);
+  }, [level]);
+
+  const triCount = Math.pow(3, level);
+  const areaRatio = Math.pow(3/4, level);
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>Sierpinski Triangle Fractal (ఫ్రాక్టల్స్ - స్వీయ పోలిక)</h2>
+      <p className="sub">Fractals are geometric patterns that repeat at every scale (self-similarity).</p>
+
+      <div className="flex flex-wrap gap-3 items-center justify-center">
+        <canvas ref={canvasRef} width="280" height="230" style={{background:'#0f172a', borderRadius:'8px', border:'1px solid #334155'}}></canvas>
+
+        <div className="flex flex-col gap-2 flex-1 min-w-[200px]">
+          <div>
+            <label>Recursion Depth (Level): <strong className="orange">{level}</strong></label>
+            <input type="range" min="0" max="5" value={level} onChange={e=>setLevel(parseInt(e.target.value))} className="slider" />
+          </div>
+
+          <div className="result-box space-y-1">
+            <div>🔺 <strong>Number of Triangles:</strong> 3^{level} = <strong className="amber">{triCount}</strong></div>
+            <div>📐 <strong>Remaining Area Ratio:</strong> (3/4)^{level} = <strong className="green">{(areaRatio * 100).toFixed(1)}%</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="tip">
+        🌀 <strong>Fractal Fact:</strong> As the depth goes to infinity, the number of triangles reaches infinity, yet the total area shrinks to <strong>ZERO</strong>!
+      </div>
+    </div>
+  );
+}
+
+// Tab 2: Euler's Formula for Polyhedra
+function EulerTab(){
+  const solids = [
+    { name: "Cube (సమఘనం)", v: 8, e: 12, f: 6 },
+    { name: "Tetrahedron (చతుర్ముఖి)", v: 4, e: 6, f: 4 },
+    { name: "Octahedron (అష్టముఖి)", v: 6, e: 12, f: 8 },
+    { name: "Triangular Prism (త్రిభుజాకార పట్టకం)", v: 6, e: 9, f: 5 },
+    { name: "Square Pyramid (చతురస్రాకార పిరమిడ్)", v: 5, e: 8, f: 5 },
+    { name: "Hexagonal Prism (షడ్భుజి పట్టకం)", v: 12, e: 18, f: 8 }
+  ];
+
+  const [idx, setIdx] = useState(0);
+  const s = solids[idx];
+  const euler = s.v - s.e + s.f;
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>Euler's Formula: V – E + F = 2 (ఆయిలర్ సూత్రం)</h2>
+      <p className="sub">For any convex polyhedron with V vertices, E edges, and F faces, the relationship V - E + F = 2 always holds true.</p>
+
+      <div className="flex flex-wrap gap-2 mb-2">
+        {solids.map((item, i) => (
+          <button key={i} className={`btn btn-sm ${i===idx?'btn-orange':'btn-dark'}`} onClick={()=>setIdx(i)}>
+            {item.name}
+          </button>
+        ))}
+      </div>
+
+      <div className="result-box space-y-2">
+        <div className="text-lg font-bold orange">{s.name}</div>
+        <div className="grid grid-cols-3 gap-2 text-center">
+          <div className="p-2 rounded bg-blue-950/40 border border-blue-800">
+            <div className="text-xs text-slate-300">Vertices (V)</div>
+            <div className="text-xl font-black text-blue">{s.v}</div>
+          </div>
+          <div className="p-2 rounded bg-orange-950/40 border border-orange-800">
+            <div className="text-xs text-slate-300">Edges (E)</div>
+            <div className="text-xl font-black text-orange">{s.e}</div>
+          </div>
+          <div className="p-2 rounded bg-emerald-950/40 border border-emerald-800">
+            <div className="text-xs text-slate-300">Faces (F)</div>
+            <div className="text-xl font-black text-green">{s.f}</div>
+          </div>
+        </div>
+
+        <div className="p-2 rounded bg-slate-900 border border-slate-700 text-center">
+          <span className="text-base font-mono">
+            V - E + F = {s.v} - {s.e} + {s.f} = <strong className="green text-xl font-black">{euler}</strong> ✓
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App(){
+  const [tab, setTab] = useState('fractal');
+  return (
+    <div className="simulation-container">
+      <div className="tab-bar">
+        <button className={`tab ${tab==='fractal'?'on':''}`} onClick={()=>setTab('fractal')}>❄️ Sierpinski Fractal</button>
+        <button className={`tab ${tab==='euler'?'on':''}`} onClick={()=>setTab('euler')}>🧊 Euler's Polyhedra</button>
+      </div>
+      <div className="flex-1 p-2 overflow-hidden">
+        {tab === 'fractal' && <FractalTab />}
+        {tab === 'euler' && <EulerTab />}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

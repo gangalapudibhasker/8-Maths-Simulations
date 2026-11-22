@@ -1394,6 +1394,154 @@
       gap: 0.4rem;
     }
 
+    
+    /* Simulations Studio Styles */
+    .sims-view {
+      display: none;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 1.5rem 2rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .sims-studio-header {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      border-radius: 16px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    .sims-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      color: #fb923c;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .sims-studio-header h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 0.4rem 0;
+      letter-spacing: -0.02em;
+    }
+    .sims-studio-header p {
+      color: #94a3b8;
+      font-size: 0.92rem;
+      max-width: 800px;
+      line-height: 1.5;
+      margin: 0;
+    }
+    .sims-tabs-bar {
+      display: flex;
+      overflow-x: auto;
+      gap: 0.5rem;
+      padding: 0.4rem 0;
+      scrollbar-width: thin;
+    }
+    .sims-select-tab {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 0.5rem 0.9rem;
+      color: #94a3b8;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .sims-select-tab:hover {
+      background: #334155;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .sims-select-tab.active {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: #fff;
+      border-color: #f97316;
+      box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4);
+    }
+    .sims-tab-badge {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 0.1rem 0.4rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+    }
+    .sims-player-container {
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+    .sims-player-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      background: rgba(15, 23, 42, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .sims-player-iframe-wrap {
+      position: relative;
+      width: 100%;
+      height: 720px;
+      background: #0b0f19;
+    }
+    .sims-player-iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .sims-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+    .sim-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .sim-card:hover {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(249, 115, 22, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .sim-card.active {
+      border-color: #f97316;
+      background: rgba(30, 41, 59, 0.95);
+      box-shadow: 0 0 0 1px #f97316, 0 8px 24px rgba(234, 88, 12, 0.25);
+    }
+
     /* Textbooks Studio Styles */
     .textbooks-view {
       flex: 1;
@@ -1938,6 +2086,9 @@
         <button class="nav-tab active" id="tabNavCurriculum" onclick="switchMainView('curriculum')">
           📚 Curriculum
         </button>
+        <button class="nav-tab" id="tabNavSims" onclick="switchMainView('sims')">
+          🎮 Simulations <span class="badge-tab-count">14</span>
+        </button>
         <button class="nav-tab" id="tabNavTextbooks" onclick="switchMainView('textbooks')">
           📖 Textbooks <span class="badge-tab-count">2</span>
         </button>
@@ -1966,13 +2117,14 @@
         <div class="hero-badge">📘 NCERT Curriculum Aligned</div>
         <h2>Unified Notes & Interactive Simulations</h2>
         <p>
-          Seven complete chapters for Class 8 Math — squares & cubes, exponents,
-          number systems, geometry, algebra, and proportional reasoning. Study concepts and interact with active simulations side-by-side.
+          Fourteen complete chapters across Semester 1 and Semester 2 for Class 8 Math. Study complete bilingual topic-wise solutions and interact with active simulations side-by-side.
         </p>
         <div class="stats">
           <div class="stat"><strong>14</strong><span>Chapters</span></div>
           <div class="stat"><strong style="color: #c084fc;">28</strong><span>Full Solved (EM & TM)</span></div>
-          <div class="stat"><strong>70+</strong><span>Simulations</span></div>
+          <div class="stat" onclick="switchMainView('sims')" style="cursor: pointer; border-color: rgba(249,115,22,0.3);" title="Explore 14 Chapter Interactive Simulation Suites">
+            <strong style="color: #fb923c;">14</strong><span>Sim Suites</span>
+          </div>
           <div class="stat" onclick="switchMainView('textbooks')" style="cursor: pointer; border-color: rgba(52,211,153,0.3);" title="Explore Class 8 SCERT Official Textbooks">
             <strong style="color: #34d399;">2</strong><span>Textbooks</span>
           </div>
@@ -2005,6 +2157,68 @@
 
       <div class="grid" id="chaptersGrid">
         <!-- Injected dynamically by JS -->
+      </div>
+    </main>
+
+        <!-- Simulations Dedicated Studio Tab View -->
+    <main class="sims-view" id="simsView" style="display: none;">
+      <section class="sims-studio-header">
+        <div>
+          <div class="sims-badge-pill">🎮 14 Chapter Interactive Simulation Suites</div>
+          <h2>Class 8 Mathematics Interactive Simulations Studio</h2>
+          <p>
+            Experience hands-on visual simulations for all 14 chapters across Semester 1 and Semester 2. Move sliders, manipulate shapes, test probabilities, and explore mathematical concepts dynamically side-by-side with theory.
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+          <div class="curriculum-filter-tabs">
+            <button class="curr-filter-btn active" id="btnSimFilterAll" onclick="filterSimsStudio('all', this)">All (14)</button>
+            <button class="curr-filter-btn" id="btnSimFilterSem1" onclick="filterSimsStudio('sem1', this)">📘 Sem 1 (1–7)</button>
+            <button class="curr-filter-btn" id="btnSimFilterSem2" onclick="filterSimsStudio('sem2', this)">📗 Sem 2 (8–14)</button>
+          </div>
+          <button class="btn btn-orange" onclick="switchMainView('curriculum')">
+            ← Back to Curriculum
+          </button>
+        </div>
+      </section>
+
+      <!-- Selection Tabs -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.6rem;">
+          ⚙️ Select Simulation Suite:
+        </div>
+        <div class="sims-tabs-bar" id="simsStudioTabs">
+          <!-- Injected dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Active Player Container -->
+      <section class="sims-player-container" id="simsStudioPlayer">
+        <div class="sims-player-top" id="simsPlayerTop">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span class="tag" id="simStudioChapterTag" style="background: rgba(249,115,22,0.15); color: var(--orange-bright); border: 1px solid rgba(249,115,22,0.3);">Chapter 1 • Sem 1</span>
+            <h3 style="font-size: 1.05rem; font-weight: 800; color: #fff;" id="simStudioPlayerTitle">A Square and a Cube</h3>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button class="btn-control" onclick="reloadSimStudioIframe()" title="Reload Simulation">🔄 Reload</button>
+            <button class="btn-control" onclick="toggleSimStudioFullscreen()" title="Fullscreen View">⛶ Fullscreen</button>
+            <button class="btn-control" onclick="openSimStudioStandalone()" title="Open in New Tab">↗ Open Full Tab</button>
+          </div>
+        </div>
+
+        <div class="sims-player-iframe-wrap" id="simsIframeWrap">
+          <iframe id="iframeStudioSim" src="about:blank" allowfullscreen></iframe>
+        </div>
+      </section>
+
+      <!-- Grid of all 14 simulation cards -->
+      <div>
+        <div class="section-title" style="font-size: 0.95rem; margin-bottom: 0.75rem;">
+          📚 All 14 Chapter Interactive Simulation Suites
+        </div>
+        <div class="sims-cards-grid" id="simsStudioCards">
+          <!-- Injected dynamically by JS -->
+        </div>
       </div>
     </main>
 
@@ -2575,7 +2789,7 @@
         icon: "％",
         desc: "Fractions as percentages, finding percentage of a quantity, profit & loss applications, simple and compound interest with complete solutions.",
         tags: ["Percentages", "Profit & Loss", "Compound Interest"],
-        simFile: null,
+        simFile: "Simulations/8. Fractions_in_Disguise.html",
         notesFileEM: "Notes/Ch8_Fractions_in_Disguise_EM.pdf",
         notesFileTM: "Notes/Ch8_Fractions_in_Disguise_TM.pdf",
         pagesEM: "8 Pages",
@@ -2589,7 +2803,7 @@
         icon: "📐",
         desc: "Doubling and halving squares, hypotenuse of right isosceles triangles, Pythagorean triples, real-world applications, and full solutions.",
         tags: ["Geometry", "Pythagoras", "Triples"],
-        simFile: null,
+        simFile: "Simulations/9. Baudhayana_Pythagoras_Theorem.html",
         notesFileEM: "Notes/Ch9_Baudhayana_Pythagoras_Theorem_EM.pdf",
         notesFileTM: "Notes/Ch9_Baudhayana_Pythagoras_Theorem_TM.pdf",
         pagesEM: "5 Pages",
@@ -2603,7 +2817,7 @@
         icon: "🗺️",
         desc: "Recap of proportionality, scale ratios in maps, multi-term ratios, dividing a whole into given ratios, inverse proportions, and solved exercises.",
         tags: ["Maps & Scale", "Inverse Proportion", "Ratio Division"],
-        simFile: null,
+        simFile: "Simulations/10. Proportional_Reasoning_2.html",
         notesFileEM: "Notes/Ch10_Proportional_Reasoning_2_EM.pdf",
         notesFileTM: "Notes/Ch10_Proportional_Reasoning_2_TM.pdf",
         pagesEM: "4 Pages",
@@ -2617,7 +2831,7 @@
         icon: "❄️",
         desc: "Self-similarity, fractals, Sierpinski triangle, visualising 3D solids, Euler's formula for polyhedra, nets, isometric views, and full solutions.",
         tags: ["Fractals", "3D Solids", "Euler's Formula"],
-        simFile: null,
+        simFile: "Simulations/11. Exploring_Geometric_Themes.html",
         notesFileEM: "Notes/Ch11_Exploring_Geometric_Themes_EM.pdf",
         notesFileTM: "Notes/Ch11_Exploring_Geometric_Themes_TM.pdf",
         pagesEM: "5 Pages",
@@ -2631,7 +2845,7 @@
         icon: "📊",
         desc: "Mean as balancing act, median, mode, visualising data distributions, misleading graphs, infographics, and step-by-step problem solutions.",
         tags: ["Statistics", "Mean & Median", "Infographics"],
-        simFile: null,
+        simFile: "Simulations/12. Tales_by_Dots_and_Lines.html",
         notesFileEM: "Notes/Ch12_Tales_by_Dots_and_Lines_EM.pdf",
         notesFileTM: "Notes/Ch12_Tales_by_Dots_and_Lines_TM.pdf",
         pagesEM: "5 Pages",
@@ -2645,7 +2859,7 @@
         icon: "🪄",
         desc: "Think of a number tricks, number pyramids, algebraic generalizations, calendar grid math, maximizing products, and complete question answers.",
         tags: ["Algebraic Generalization", "Number Tricks", "Pyramids"],
-        simFile: null,
+        simFile: "Simulations/13. Algebra_Play.html",
         notesFileEM: "Notes/Ch13_Algebra_Play_EM.pdf",
         notesFileTM: "Notes/Ch13_Algebra_Play_TM.pdf",
         pagesEM: "3 Pages",
@@ -2659,7 +2873,7 @@
         icon: "📏",
         desc: "Areas of rectangles, triangles, parallelograms, rhombuses, trapeziums, irregular polygons, real-life land measurement, and full solved questions.",
         tags: ["Area", "Polygons", "Trapezium & Rhombus"],
-        simFile: null,
+        simFile: "Simulations/14. Area.html",
         notesFileEM: "Notes/Ch14_Area_EM.pdf",
         notesFileTM: "Notes/Ch14_Area_TM.pdf",
         pagesEM: "5 Pages",
@@ -2953,6 +3167,7 @@
 
     // DOM Elements
     const dashboardView = document.getElementById('dashboardView');
+    const simsView = document.getElementById('simsView');
     const robocompassView = document.getElementById('robocompassView');
     const basicsView = document.getElementById('basicsView');
     const textbooksView = document.getElementById('textbooksView');
@@ -3013,7 +3228,7 @@
             <button class="btn btn-glass" onclick="launchWorkspace(${ch.id}, 'notes', 'tm')" style="${currentMedium === 'tm' ? 'border-color: rgba(192, 132, 252, 0.6); background: rgba(192, 132, 252, 0.15); color: #d8b4fe;' : 'border-color: rgba(192, 132, 252, 0.3); color: #d8b4fe;'}" title="తెలుగు మీడియం నోట్స్ మరియు ప్రశ్నల సాధనలను చదవండి">
               📗 తెలుగు నోట్స్
             </button>
-            ${ch.simFile ? `<button class="btn btn-orange" onclick="launchWorkspace(${ch.id}, 'sim')">▶ Run Sim</button>` : `<button class="btn btn-glass" style="opacity: 0.6; cursor: default;" title="Simulation for Semester 2 in development">🎮 Sim Soon</button>`}
+            ${ch.simFile ? `<button class="btn btn-orange" onclick="launchWorkspace(${ch.id}, 'sim')" title="Launch Chapter ${ch.id} Interactive Simulation">▶ Run Sim</button>` : ''}
             ${ch.hasRobo ? `<button class="btn btn-glass" onclick="switchMainView('robo')" style="border-color: rgba(249,115,22,0.4); color: var(--orange-bright);">📐 3D Robo</button>` : ''}
           </div>
         `;
@@ -3100,9 +3315,10 @@
       document.body.removeChild(a);
     }
 
-    // Top Navigation between Main Curriculum, RoboCompass Studio, Basics, Textbooks, and All Solutions
+    // Top Navigation between Main Curriculum, Simulations, RoboCompass Studio, Basics, Textbooks, and All Solutions
     function switchMainView(view) {
       const tabCurriculum = document.getElementById('tabNavCurriculum');
+      const tabSims = document.getElementById('tabNavSims');
       const tabRobo = document.getElementById('tabNavRobo');
       const tabBasics = document.getElementById('tabNavBasics');
       const tabTextbooks = document.getElementById('tabNavTextbooks');
@@ -3114,49 +3330,68 @@
 
       if (view === 'curriculum') {
         if (tabCurriculum) tabCurriculum.classList.add('active');
+        if (tabSims) tabSims.classList.remove('active');
         if (tabRobo) tabRobo.classList.remove('active');
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
         if (tabSolutions) tabSolutions.classList.remove('active');
         dashboardView.style.display = 'flex';
+        if (simsView) simsView.style.display = 'none';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'none';
-      if (solutionsView) solutionsView.style.display = 'none';
         if (solutionsView) solutionsView.style.display = 'none';
+      } else if (view === 'sims') {
+        if (tabCurriculum) tabCurriculum.classList.remove('active');
+        if (tabSims) tabSims.classList.add('active');
+        if (tabRobo) tabRobo.classList.remove('active');
+        if (tabBasics) tabBasics.classList.remove('active');
+        if (tabTextbooks) tabTextbooks.classList.remove('active');
+        if (tabSolutions) tabSolutions.classList.remove('active');
+        dashboardView.style.display = 'none';
+        if (simsView) simsView.style.display = 'flex';
+        robocompassView.style.display = 'none';
+        if (basicsView) basicsView.style.display = 'none';
+        if (textbooksView) textbooksView.style.display = 'none';
+        if (solutionsView) solutionsView.style.display = 'none';
+        initSimsStudio();
       } else if (view === 'robo') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
+        if (tabSims) tabSims.classList.remove('active');
         if (tabRobo) tabRobo.classList.add('active');
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
         if (tabSolutions) tabSolutions.classList.remove('active');
         dashboardView.style.display = 'none';
+        if (simsView) simsView.style.display = 'none';
         robocompassView.style.display = 'flex';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'none';
-      if (solutionsView) solutionsView.style.display = 'none';
         if (solutionsView) solutionsView.style.display = 'none';
         initRoboStudio();
       } else if (view === 'basics') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
+        if (tabSims) tabSims.classList.remove('active');
         if (tabRobo) tabRobo.classList.remove('active');
-        if (tabBasics) tabBasics.classList.remove('active');
+        if (tabBasics) tabBasics.classList.add('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
         if (tabSolutions) tabSolutions.classList.remove('active');
         dashboardView.style.display = 'none';
+        if (simsView) simsView.style.display = 'none';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'flex';
         if (textbooksView) textbooksView.style.display = 'none';
-      if (solutionsView) solutionsView.style.display = 'none';
         if (solutionsView) solutionsView.style.display = 'none';
         initBasicsStudio();
       } else if (view === 'textbooks') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
+        if (tabSims) tabSims.classList.remove('active');
         if (tabRobo) tabRobo.classList.remove('active');
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.add('active');
         if (tabSolutions) tabSolutions.classList.remove('active');
         dashboardView.style.display = 'none';
+        if (simsView) simsView.style.display = 'none';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'flex';
@@ -3164,18 +3399,156 @@
         initTextbooksStudio();
       } else if (view === 'solutions') {
         if (tabCurriculum) tabCurriculum.classList.remove('active');
+        if (tabSims) tabSims.classList.remove('active');
         if (tabRobo) tabRobo.classList.remove('active');
         if (tabBasics) tabBasics.classList.remove('active');
         if (tabTextbooks) tabTextbooks.classList.remove('active');
         if (tabSolutions) tabSolutions.classList.add('active');
         dashboardView.style.display = 'none';
+        if (simsView) simsView.style.display = 'none';
         robocompassView.style.display = 'none';
         if (basicsView) basicsView.style.display = 'none';
         if (textbooksView) textbooksView.style.display = 'none';
-      if (solutionsView) solutionsView.style.display = 'none';
         if (solutionsView) solutionsView.style.display = 'flex';
         initSolutionsStudio();
       }
+      return; // done
+    }
+    function old_switchMainView_unused(view) {
+    }
+
+
+    // Simulations Studio State and Functions
+    let currentSimIndex = 0;
+    let currentSimStudioFilter = 'all';
+
+    function initSimsStudio() {
+      const tabsWrap = document.getElementById('simsStudioTabs');
+      const cardsWrap = document.getElementById('simsStudioCards');
+      if (!tabsWrap) return;
+
+      renderSimsStudioContent();
+      selectSimStudio(currentSimIndex);
+    }
+
+    function filterSimsStudio(sem, btn) {
+      currentSimStudioFilter = sem;
+      document.querySelectorAll('#simsView .curr-filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderSimsStudioContent();
+    }
+
+    function renderSimsStudioContent() {
+      const tabsWrap = document.getElementById('simsStudioTabs');
+      const cardsWrap = document.getElementById('simsStudioCards');
+      if (!tabsWrap || !cardsWrap) return;
+
+      tabsWrap.innerHTML = '';
+      cardsWrap.innerHTML = '';
+
+      const filtered = chapters.filter(ch => {
+        if (currentSimStudioFilter === 'sem1') return ch.sem === 1;
+        if (currentSimStudioFilter === 'sem2') return ch.sem === 2;
+        return true;
+      });
+
+      filtered.forEach((ch, idx) => {
+        const originalIndex = chapters.findIndex(c => c.id === ch.id);
+
+        // Tab button
+        const btn = document.createElement('button');
+        btn.className = `sims-select-tab ${originalIndex === currentSimIndex ? 'active' : ''}`;
+        btn.id = `sim-tab-${originalIndex}`;
+        btn.onclick = () => selectSimStudio(originalIndex);
+        btn.innerHTML = `
+          <span class="sims-tab-badge">Ch ${ch.id}</span>
+          <span>${ch.title}</span>
+        `;
+        tabsWrap.appendChild(btn);
+
+        // Card
+        const card = document.createElement('div');
+        card.className = `sim-card ${originalIndex === currentSimIndex ? 'active' : ''}`;
+        card.id = `sim-card-${originalIndex}`;
+        card.onclick = () => {
+          selectSimStudio(originalIndex);
+          document.getElementById('simsStudioPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; gap: 0.35rem; align-items: center;">
+              <span class="tag" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3);">Sem ${ch.sem}</span>
+              <span class="tag" style="background: rgba(249, 115, 22, 0.15); color: var(--orange-bright); border: 1px solid rgba(249, 115, 22, 0.3);">Chapter ${ch.id}</span>
+            </div>
+            <span style="font-size: 1.25rem;">${ch.icon}</span>
+          </div>
+          <h3 style="font-size: 1.08rem; font-weight: 800; color: #fff; margin: 0.2rem 0 0 0;">${ch.title}</h3>
+          <h4 style="font-size: 0.85rem; color: #a78bfa; font-weight: 600; margin: 0 0 0.3rem 0;">${ch.titleTel}</h4>
+          <p style="font-size: 0.85rem; color: var(--slate); line-height: 1.45; flex: 1;">${ch.desc}</p>
+          <div class="tags">
+            ${ch.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.65rem; margin-top: 0.4rem;">
+            <button class="btn btn-orange" style="padding: 0.38rem 0.8rem; font-size: 0.78rem;" onclick="event.stopPropagation(); selectSimStudio(${originalIndex}); document.getElementById('simsStudioPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });">
+              ▶ Launch Sim
+            </button>
+            <a href="${encodeURI(ch.simFile)}" target="_blank" class="btn btn-glass" style="padding: 0.38rem 0.7rem; font-size: 0.78rem;" onclick="event.stopPropagation();" title="Open in new window">
+              ↗ Standalone
+            </a>
+          </div>
+        `;
+        cardsWrap.appendChild(card);
+      });
+    }
+
+    function selectSimStudio(index) {
+      currentSimIndex = index;
+      const ch = chapters[index];
+      if (!ch) return;
+
+      document.querySelectorAll('.sims-select-tab').forEach((tab) => {
+        tab.classList.toggle('active', tab.id === `sim-tab-${index}`);
+      });
+      document.querySelectorAll('.sim-card').forEach((card) => {
+        card.classList.toggle('active', card.id === `sim-card-${index}`);
+      });
+
+      const chapterTag = document.getElementById('simStudioChapterTag');
+      const title = document.getElementById('simStudioPlayerTitle');
+      const iframe = document.getElementById('iframeStudioSim');
+
+      if (chapterTag) chapterTag.textContent = `Chapter ${ch.id} • Semester ${ch.sem}`;
+      if (title) title.innerHTML = `${ch.title} <span style="font-size: 0.85rem; font-weight: normal; color: #a78bfa; margin-left: 6px;">(${ch.titleTel})</span>`;
+
+      const simPath = encodeURI(ch.simFile);
+      if (iframe && iframe.src.indexOf(simPath) === -1) {
+        iframe.src = simPath;
+      }
+    }
+
+    function reloadSimStudioIframe() {
+      const iframe = document.getElementById('iframeStudioSim');
+      const ch = chapters[currentSimIndex];
+      if (iframe && ch) {
+        const curSrc = iframe.src;
+        iframe.src = 'about:blank';
+        setTimeout(() => { iframe.src = curSrc; }, 150);
+      }
+    }
+
+    function toggleSimStudioFullscreen() {
+      const wrap = document.getElementById('simsIframeWrap');
+      if (!document.fullscreenElement) {
+        if (wrap.requestFullscreen) wrap.requestFullscreen();
+        else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function openSimStudioStandalone() {
+      const ch = chapters[currentSimIndex];
+      if (ch) window.open(encodeURI(ch.simFile), '_blank');
     }
 
     // Dedicated RoboCompass Studio

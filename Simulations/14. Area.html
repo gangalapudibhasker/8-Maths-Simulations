@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Area • Ganita Prakash Grade 8</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100vw;height:100vh;background:#0b0f19;color:#f1f5f9;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow:hidden;display:flex;justify-content:center;align-items:center;touch-action:manipulation}
+.viewport-wrapper{width:100vw;height:100vh;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 25% 15%,#1e293b 0%,#0f172a 65%)}
+.simulation-container{width:100vw;height:56.25vw;max-height:100vh;max-width:177.78vh;position:relative;box-shadow:0 25px 50px -12px rgba(0,0,0,.75);display:flex;flex-direction:column;overflow:hidden;background:#0f172a;border-radius:12px;border:1px solid rgba(255,255,255,.12)}
+::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(249,115,22,.6);border-radius:4px}
+.flex{display:flex}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.7rem}
+.w-full{width:100%}.h-full{height:100%}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}
+.overflow-y-auto{overflow-y:auto}.overflow-hidden{overflow:hidden}.relative{position:relative}
+h2{font-size:1.35rem;font-weight:800;color:#fb923c;margin-bottom:.12rem;letter-spacing:-.02em}
+.sub{font-size:0.95rem;color:#94a3b8;margin-bottom:.45rem;line-height:1.4}
+label{font-size:.92rem;font-weight:700;color:#e2e8f0;display:block;margin-bottom:.18rem}
+.text-lg{font-size:1.15rem}.text-base{font-size:1.05rem}.text-sm{font-size:.95rem}.text-xs{font-size:.82rem}
+.font-mono{font-family:ui-monospace,Menlo,Consolas,monospace}.font-bold{font-weight:700}.font-black{font-weight:900}
+.orange{color:#fb923c}.amber{color:#fbbf24}.green{color:#4ade80}.red{color:#f87171}.blue{color:#60a5fa}.slate{color:#94a3b8}
+.btn{cursor:pointer;border:none;border-radius:.5rem;font-weight:700;font-size:.92rem;padding:.45rem .85rem;transition:all .12s;touch-action:manipulation}
+.btn-orange{background:#ea580c;color:#fff}.btn-orange:hover,.btn-orange:active{background:#f97316}
+.tab-bar{display:flex;overflow-x:auto;gap:.3rem;padding:.4rem .6rem;background:#0f172a;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0}
+.tab{display:flex;align-items:center;gap:.28rem;padding:.45rem .75rem;border-radius:.5rem;font-size:.85rem;font-weight:700;cursor:pointer;border:none;white-space:nowrap;transition:all .12s;background:transparent;color:#94a3b8;touch-action:manipulation}
+.tab:hover{background:#1e293b;color:#e2e8f0}
+.tab.on{background:#ea580c;color:#fff;box-shadow:0 3px 12px rgba(234,88,12,.45)}
+.card{background:rgba(30,41,59,.95);border:1px solid rgba(255,255,255,.12);border-radius:.85rem;padding:.85rem 1rem;display:flex;flex-direction:column}
+.result-box{background:#0f172a;border:1px solid #475569;border-radius:.65rem;padding:.65rem .85rem;font-size:1rem;line-height:1.45}
+.tip{margin-top:.35rem;padding:.55rem .8rem;background:rgba(251,191,36,.15);border-left:4px solid #fbbf24;border-radius:0 .5rem .5rem 0;font-size:.95rem;color:#f1f5f9;line-height:1.4}
+.slider{width:100%;accent-color:#f97316}
+</style>
+</head>
+<body>
+<div id="root" class="viewport-wrapper"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const { useState } = React;
+
+// Tab 1: Triangle Cavalieri Shearing
+function TriangleShearTab(){
+  const [shearX, setShearX] = useState(150);
+  const base = 200;
+  const height = 120;
+  const area = 0.5 * base * height;
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>Triangle Shearing Lab (త్రిభుజ వైశాల్యం - స్థిర సూత్రం)</h2>
+      <p className="sub">As long as the base and height remain constant, shearing the top vertex anywhere along a parallel line does NOT change the area: \( \text{Area} = \frac{1}{2} b h \).</p>
+
+      <div className="flex flex-col items-center">
+        <svg width="340" height="170" viewBox="0 0 340 170" style={{background:'#0f172a', borderRadius:'8px', border:'1px solid #334155'}}>
+          {/* Parallel top line */}
+          <line x1="20" y1="30" x2="320" y2="30" stroke="#475569" strokeDasharray="4" />
+          {/* Triangle */}
+          <polygon points={`70,150 270,150 ${shearX},30`} fill="rgba(249, 115, 22, 0.35)" stroke="#f97316" strokeWidth="2" />
+          {/* Base */}
+          <line x1="70" y1="150" x2="270" y2="150" stroke="#3b82f6" strokeWidth="3" />
+          {/* Top vertex draggable point */}
+          <circle cx={shearX} cy="30" r="7" fill="#10b981" stroke="#fff" strokeWidth="2" />
+          {/* Height line */}
+          <line x1={shearX} y1="30" x2={shearX} y2="150" stroke="#fbbf24" strokeDasharray="3" />
+          <text x={shearX + 5} y="90" fill="#fbbf24" fontSize="11">h={height}</text>
+          <text x="170" y="165" fill="#60a5fa" fontSize="12" textAnchor="middle" fontWeight="bold">b = {base} px</text>
+        </svg>
+
+        <div className="w-full mt-2">
+          <label>Drag Top Vertex along Parallel Line (Shear X):</label>
+          <input type="range" min="40" max="300" value={shearX} onChange={e=>setShearX(parseInt(e.target.value))} className="slider" />
+        </div>
+      </div>
+
+      <div className="result-box space-y-1">
+        <div>📐 <strong>Base b:</strong> 20 cm | <strong>Height h:</strong> 12 cm</div>
+        <div>✨ <strong>Constant Area:</strong> <span className="green text-lg font-black">{0.5 * 20 * 12} cm²</span> (Invariant under shearing!)</div>
+      </div>
+    </div>
+  );
+}
+
+// Tab 2: Trapezium & Parallelogram Dissection
+function TrapeziumTab(){
+  const [a, setA] = useState(8);
+  const [b, setB] = useState(14);
+  const [h, setH] = useState(6);
+
+  const area = 0.5 * (a + b) * h;
+
+  return (
+    <div className="card h-full overflow-y-auto space-y-2">
+      <h2>Trapezium Dissection Lab (ట్రెపీజియం వైశాల్యం)</h2>
+      <p className="sub">Rotating a copy of a trapezium by 180° creates a parallelogram of base (a + b) and height h. Hence: \( \text{Area} = \frac{1}{2}(a+b)h \).</p>
+
+      <div className="row">
+        <div>
+          <label>Top Base a (cm):</label>
+          <input type="number" min="2" max="30" value={a} onChange={e=>setA(parseInt(e.target.value)||2)} className="input" style={{width:'80px', background:'#0f172a', border:'2px solid #475569', color:'#fff', padding:'4px', borderRadius:'6px', textAlign:'center'}} />
+        </div>
+        <div>
+          <label>Bottom Base b (cm):</label>
+          <input type="number" min="2" max="30" value={b} onChange={e=>setB(parseInt(e.target.value)||2)} className="input" style={{width:'80px', background:'#0f172a', border:'2px solid #475569', color:'#fff', padding:'4px', borderRadius:'6px', textAlign:'center'}} />
+        </div>
+        <div>
+          <label>Height h (cm):</label>
+          <input type="number" min="1" max="20" value={h} onChange={e=>setH(parseInt(e.target.value)||1)} className="input" style={{width:'80px', background:'#0f172a', border:'2px solid #475569', color:'#fff', padding:'4px', borderRadius:'6px', textAlign:'center'}} />
+        </div>
+      </div>
+
+      <div className="result-box space-y-1">
+        <div>📏 <strong>Sum of Parallel Sides (a + b):</strong> {a} + {b} = <strong className="orange">{a + b} cm</strong></div>
+        <div>📐 <strong>Formula:</strong> Area = \(\frac{1}{2} \times (a + b) \times h = \frac{1}{2} \times {a+b} \times {h}\)</div>
+        <div className="text-lg font-black green">Trapezium Area = {area} sq. cm</div>
+      </div>
+    </div>
+  );
+}
+
+function App(){
+  const [tab, setTab] = useState('triangle');
+  return (
+    <div className="simulation-container">
+      <div className="tab-bar">
+        <button className={`tab ${tab==='triangle'?'on':''}`} onClick={()=>setTab('triangle')}>📐 Triangle Shearing</button>
+        <button className={`tab ${tab==='trap'?'on':''}`} onClick={()=>setTab('trap')}>▱ Trapezium Dissection</button>
+      </div>
+      <div className="flex-1 p-2 overflow-hidden">
+        {tab === 'triangle' && <TriangleShearTab />}
+        {tab === 'trap' && <TrapeziumTab />}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
